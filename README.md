@@ -30,6 +30,7 @@ Add the following lines to your `CMakeLists.txt`:
 You can also specify the version/tag of amber you want to use like so:
 
 `CPMAddPackage("gh:Fryy55/amber@v1.0.0")` - version
+
 `CPMAddPackage("gh:Fryy55/amber#b492c63")` - tag/branch/commit hash
 
 ## Using
@@ -38,7 +39,7 @@ Simply include headers (e.g. `#include <amber/QuickNotification.hpp>`) and use t
 There is also a general "include everything" header (`<amber/amber.hpp>`), as well as grouped headers (e.g. `<amber/utils/utils.hpp>`).
 
 > [!TIP]
-> Normally, every utility/class/etc. is located in the `amber::` namespace, however `using namespace geode::prelude` also uses amber's namespace, so you can use these classes directly if you're used to `geode::prelude`.
+> Normally, every utility/class/etc. is located in the `amber::*` namespace, however, `using namespace geode::prelude` also uses amber's namespace, so you can use these classes directly if you're used to `geode::prelude`.
 
 # License
 This project is distributed under the **Apache-2.0 License**.
