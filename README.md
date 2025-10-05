@@ -25,7 +25,7 @@ Offers general purpose classes/utilities I made for using in my Geode mods!
 Add the following lines to your `CMakeLists.txt`:
 
 ```
-CPMAddPackage("gh:Fryy55/amber")`
+CPMAddPackage("gh:Fryy55/amber")
 target_link_libraries(${PROJECT_NAME} amber)
 ```
 
