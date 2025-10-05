@@ -8,15 +8,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(GLOB_RECURSE SOURCES src/*.cpp)
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
 
-set(ROOT "${PROJECT_SOURCE_DIR}")
+set(INCLUDE "${PROJECT_SOURCE_DIR}/include")
 target_include_directories(${PROJECT_NAME}
     PUBLIC
-        ${ROOT}/amber
+        ${INCLUDE}/amber
     PRIVATE
-        ${ROOT}/amber/actions
-        ${ROOT}/amber/settingsV3
-        ${ROOT}/amber/utils
-        ${ROOT}/prelude
+        ${INCLUDE}/amber/actions
+        ${INCLUDE}/amber/settingsV3
+        ${INCLUDE}/amber/utils
+        ${INCLUDE}/prelude
 )
 
 
