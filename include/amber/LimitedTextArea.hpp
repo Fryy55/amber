@@ -1,6 +1,6 @@
 #pragma once
 
-#include "prelude.hpp" // IWYU pragma: keep
+#include <prelude/prelude.hpp> // IWYU pragma: keep
 
 #include <Geode/cocos/base_nodes/CCNode.h>
 

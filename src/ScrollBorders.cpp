@@ -1,4 +1,4 @@
-#include "ScrollBorders.hpp"
+#include <amber/ScrollBorders.hpp>
 
 using namespace geode::prelude;
 

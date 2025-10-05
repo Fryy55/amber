@@ -1,4 +1,4 @@
-#include "LimitedTextArea.hpp"
+#include <amber/LimitedTextArea.hpp>
 
 using namespace geode::prelude;
 

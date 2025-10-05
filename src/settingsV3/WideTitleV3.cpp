@@ -1,4 +1,4 @@
-#include "WideTitleV3.hpp"
+#include <amber/settingsV3/WideTitleV3.hpp>
 
 using namespace geode::prelude;
 

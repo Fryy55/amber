@@ -1,4 +1,4 @@
-#include "ScrollTextArea.hpp"
+#include <amber/ScrollTextArea.hpp>
 
 using namespace geode::prelude;
 

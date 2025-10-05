@@ -1,4 +1,4 @@
-#include "QuickNotification.hpp"
+#include <amber/QuickNotification.hpp>
 
 #include <stack>
 

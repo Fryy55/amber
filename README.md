@@ -25,13 +25,13 @@ Offers general purpose classes/utilities I made for using in my Geode mods!
 Add the following lines to your `CMakeLists.txt`:
 
 ```
-CPMAddPackage("gh:Fryy55/amber@1.0.0...<2.0.0")
+CPMAddPackage("gh:Fryy55/amber@1.0.0")
 target_link_libraries(${PROJECT_NAME} amber)
 ```
+Replace `1.0.0` with the version you want to use.
 
-You can also use a specific version/tag of amber like this:
+You can also use a specific tag/branch/commit of amber like this:
 
-`CPMAddPackage("gh:Fryy55/amber@v1.1.0")` - version
 `CPMAddPackage("gh:Fryy55/amber#b492c63")` - tag/branch/commit hash
 
 ## Using
