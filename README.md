@@ -1,5 +1,5 @@
 # amber
-Finally, a repo name isn't an acronym, waow.
+Finally, a repo name that isn't an acronym, waow.
 
 Offers general purpose classes/utilities I made for using in my Geode mods!
 
