@@ -12,11 +12,11 @@ set(INCLUDE "${PROJECT_SOURCE_DIR}/include")
 target_include_directories(${PROJECT_NAME}
     PUBLIC
         ${INCLUDE}
+        ${INCLUDE}/prelude
     PRIVATE
         ${INCLUDE}/amber/actions
         ${INCLUDE}/amber/settingsV3
         ${INCLUDE}/amber/utils
-        ${INCLUDE}/prelude
 )
 
 
