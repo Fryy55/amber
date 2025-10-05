@@ -27,7 +27,7 @@ Add the following lines to your `CMakeLists.txt`:
 `CPMAddPackage("gh:Fryy55/amber")`
 
 `target_link_libraries(${PROJECT_NAME} amber)`
-
+---
 You can also specify the version/tag of amber you want to use like so:
 
 `CPMAddPackage("gh:Fryy55/amber@v1.0.0")` - version
