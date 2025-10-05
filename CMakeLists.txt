@@ -11,7 +11,7 @@ add_library(${PROJECT_NAME} STATIC ${SOURCES})
 set(INCLUDE "${PROJECT_SOURCE_DIR}/include")
 target_include_directories(${PROJECT_NAME}
     PUBLIC
-        ${INCLUDE}/amber
+        ${INCLUDE}
     PRIVATE
         ${INCLUDE}/amber/actions
         ${INCLUDE}/amber/settingsV3
