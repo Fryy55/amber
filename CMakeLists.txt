@@ -8,10 +8,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(GLOB_RECURSE SOURCES src/*.cpp)
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
 
-set(INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
 target_include_directories(${PROJECT_NAME}
     PUBLIC
-        ${INCLUDE_DIR}
+        ${PROJECT_SOURCE_DIR}/include
 )
 
 
