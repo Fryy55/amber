@@ -1,6 +1,6 @@
 #pragma once
 
-#include <prelude/prelude.hpp> // IWYU pragma: keep
+#include <amber/prelude.hpp> // IWYU pragma: keep
 
 #include <Geode/ui/Notification.hpp>
 
