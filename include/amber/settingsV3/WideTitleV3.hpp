@@ -51,4 +51,4 @@ protected:
 	cocos2d::CCLabelBMFont* m_label;
 };
 
-} // namespace amber
+} // namespace amber::settingsV3

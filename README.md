@@ -8,6 +8,8 @@ Offers general purpose classes/utilities I made for using in my Geode mods!
 # Features
 - Actions
     - `ContentTo`
+- Layouts
+    - `ListLayout` - a layout you can quickly apply to, for example, a `geode::ScrollLayer::m_contentLayer` for a nice, scrollable list
 - Custom settings
     - `WideTitleV3` - info titles in settings
 - Utilities

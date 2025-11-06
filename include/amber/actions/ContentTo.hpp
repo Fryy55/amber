@@ -30,4 +30,4 @@ private:
 	float m_endY;
 };
 
-} // namespace amber
+} // namespace amber::actions
