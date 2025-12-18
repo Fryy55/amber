@@ -9,8 +9,8 @@ namespace amber::utils {
 
 template <typename T>
 	requires std::is_arithmetic_v<T>
-inline T random(T min, T max) {
-	thread_local std::mt19937_64 mt{std::random_device{}()};
+inline std::type_identity_t<T> random(T min, std::type_identity_t<T> max) {
+	auto& mt = getMT();
 
 	if constexpr (std::is_integral_v<T>) {
 		std::uniform_int_distribution<T> dist(min, max);
@@ -19,6 +19,12 @@ inline T random(T min, T max) {
 		std::uniform_real_distribution<T> dist(min, max);
 		return dist(mt);
 	}
+}
+
+inline std::mt19937_64& getMT() {
+	thread_local std::mt19937_64 mt{std::random_device{}()};
+
+	return mt;
 }
 
 } // namespace amber::utils
