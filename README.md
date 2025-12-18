@@ -3,7 +3,7 @@ Finally, a repo name that isn't an acronym, waow.
 
 Offers general purpose classes/utilities I made for using in my Geode mods!
 
-`CMakeLists.txt` shamelessly taken and modified from [cue](https://github.com/dankmeme01/cue), another Geode library.
+Check out [cue](https://github.com/dankmeme01/cue), another Geode library!
 
 # Features
 - Actions
