@@ -12,8 +12,6 @@ Check out [cue](https://github.com/dankmeme01/cue), another Geode library!
     - `ListLayout` - a layout you can quickly apply to, for example, a `geode::ScrollLayer::m_contentLayer` for a nice, scrollable list
 - Custom settings
     - `WideTitleV3` - info titles in settings
-- Utilities
-    - `random.hpp`
 - Convenience classes
     - `LimitedTextArea` - a text **display** node that is similar to a `geode::TextInput` in appearance, but is not intended for text input; setting its string to a string longer than its maximum configured length will add ellipsis at the end, massively helping render times of `cocos2d::CCLabelBMFont` used in it
     - `Padding` for `geode::Layout`s
