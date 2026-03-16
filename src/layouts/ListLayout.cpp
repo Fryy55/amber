@@ -3,17 +3,12 @@
 using namespace geode::prelude;
 
 
-ListLayout* ListLayout::create(float scrollLayerHeight, float gap) {
-	auto ret = new ListLayout(scrollLayerHeight, gap);
-
-	ret->autorelease();
-	return ret;
-}
-
-ListLayout::ListLayout(float scrollLayerHeight, float gap) : ColumnLayout() {
-	this
+AxisLayout* ListLayout::create(float scrollLayerHeight, float gap) {
+	auto ret = ColumnLayout::create()
 		->setGap(gap)
 		->setAxisReverse(true)
 		->setAxisAlignment(AxisAlignment::End)
 		->setAutoGrowAxis(scrollLayerHeight);
+
+	return ret;
 }
