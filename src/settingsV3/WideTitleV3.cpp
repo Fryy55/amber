@@ -72,6 +72,11 @@ bool WideTitleNodeV3::init(
 
 	menu->addChildAtPosition(m_label, Anchor::Center);
 
+	if (auto descBtn = this->getDescriptionButton()) {
+		descBtn->removeFromParent();
+		menu->addChildAtPosition(descBtn, Anchor::TopRight, { 0.f, -8.f });
+	}
+
 	this->updateState(nullptr);
 
 	return true;
@@ -89,6 +94,6 @@ void WideTitleNodeV3::updateState(CCNode* invoker) {
 
 
 $on_mod(Loaded) {
-	if (!Mod::get()->registerCustomSettingType("wide-title", &WideTitleV3::parse))
+	if (!Mod::get()->registerCustomSettingType("amber-wide-title", &WideTitleV3::parse))
 		log::error("Failed to register 'wide-title' setting");
 }
