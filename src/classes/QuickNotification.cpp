@@ -11,6 +11,7 @@
 	replace `CCLabelBMFont` with `ColoredLabel` in `init` for `m_impl->label`
 	remove all mentions of `s_queue` and `showNextNotification`, adjust code logically
 	replace "info-alert.png"_spr with "geode.loader/info-alert.png", silence the warning
+	add `CCRemoveSelf` before `nullptr` in `hide`
 */
 #include <amber/classes/QuickNotification.hpp>
 
@@ -247,6 +248,7 @@ void QuickNotification::hide() {
 		}),
 
 		CCDelayTime::create(NOTIFICATION_FADEOUT * .75f),
+		CCRemoveSelf::create(),
 		nullptr
 	));
 }
