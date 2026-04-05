@@ -1,5 +1,6 @@
-#include <amber/LimitedTextArea.hpp>
+#include <amber/classes/LimitedTextArea.hpp>
 
+using namespace amber;
 using namespace geode::prelude;
 
 

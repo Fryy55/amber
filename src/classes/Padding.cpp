@@ -1,5 +1,6 @@
-#include <amber/Padding.hpp>
+#include <amber/classes/Padding.hpp>
 
+using namespace amber;
 using namespace geode::prelude;
 
 

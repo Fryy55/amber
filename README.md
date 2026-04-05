@@ -20,6 +20,7 @@ Check out [cue](https://github.com/dankmeme01/cue), another Geode library!
     - `ScrollBorders` - an accurately positioned border for lists, similar to level lists
     - `ScrollTextArea` - an `MDTextArea`-like display with no Markdown support and a color tags integration
     - `Separator` - a visual separator; similar to `edit_vLine_001.png`, but with customizable length, width, fade length and color
+    - `TextboxChain` and `TextboxObject` - classes, that extend `DialogLayer` and `DialogObject` to have better API and are targeted at custom portraits
 
 # Usage
 ## Installing

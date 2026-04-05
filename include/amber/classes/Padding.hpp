@@ -1,7 +1,5 @@
 #pragma once
 
-#include <amber/prelude.hpp> // IWYU pragma: keep
-
 #include <Geode/cocos/base_nodes/CCNode.h>
 
 

@@ -1,5 +1,6 @@
-#include <amber/ScrollBorders.hpp>
+#include <amber/classes/ScrollBorders.hpp>
 
+using namespace amber;
 using namespace geode::prelude;
 
 

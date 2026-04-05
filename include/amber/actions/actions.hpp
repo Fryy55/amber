@@ -1,3 +1,5 @@
 #pragma once
 
-#include "ContentTo.hpp" // IWYU pragma: keep
+// IWYU pragma: begin_exports
+#include "ContentTo.hpp"
+// IWYU pragma: end_exports

@@ -1,21 +1,125 @@
-#include <amber/QuickNotification.hpp>
+/*
+	vendored and modified from https://github.com/geode-sdk/geode/blob/main/loader/src/ui/nodes/Notification.cpp
+	a90d204
 
-#include <stack>
+	list of changes:
+	remove `showNextNotification`
+	replace `Notification` with `QuickNotification`
+	replace #include for `Notification` to `QuickNotification`
+	add `using namespace amber;`
+	remove constexpr globals as they are defined in `QuickNotification.hpp`
+	replace `CCLabelBMFont` with `ColoredLabel` in `init` for `m_impl->label`
+	remove all mentions of `s_queue` and `showNextNotification`, adjust code logically
+	replace "info-alert.png"_spr with "geode.loader/info-alert.png", silence the warning
+*/
+#include <amber/classes/QuickNotification.hpp>
+
+#include <amber/classes/ColoredLabel.hpp>
+
+#include <Geode/loader/Mod.hpp>
+#include <Geode/ui/LoadingSpinner.hpp>
+#include <Geode/ui/OverlayManager.hpp>
 
 using namespace geode::prelude;
+using namespace amber;
 
 
-QuickNotification* QuickNotification::create(
-	std::string const& text, NotificationIcon icon, float time
-) {
-	return create(text, createIcon(icon), time);
+class QuickNotification::Impl final {
+public:
+	NineSlice* bg;
+	CCLabelBMFont* label;
+	CCNodeRGBA* content;
+	CCNode* icon = nullptr;
+	float time;
+	bool showing = false;
+};
+
+QuickNotification::QuickNotification() : m_impl(std::make_unique<Impl>()) { }
+
+QuickNotification::~QuickNotification() { }
+
+bool QuickNotification::init(ZStringView text, CCNode* icon, float time) {
+	if (!CCNodeRGBA::init()) return false;
+
+	m_impl->icon = icon;
+	m_impl->time = time;
+
+	m_impl->bg = NineSlice::create("square02b_small.png", { 0, 0, 40, 40 });
+	m_impl->bg->setColor({ 0, 0, 0 });
+	this->addChild(m_impl->bg);
+
+	m_impl->content = cocos2d::CCNodeRGBA::create();
+	m_impl->content->setAnchorPoint({ .5f, .5f });
+	m_impl->content->setCascadeOpacityEnabled(true);
+	m_impl->content->setLayout(
+		RowLayout::create()
+			->setGap(5.f)
+			->setAutoGrowAxis(0.f)
+			->setAutoScale(false)
+	);
+	this->addChild(m_impl->content);
+
+	if (icon) {
+		m_impl->content->addChild(icon);
+	}
+
+	m_impl->label = ColoredLabel::create(text.c_str(), "bigFont.fnt");
+	m_impl->label->setScale(.6f);
+	m_impl->content->addChild(m_impl->label);
+
+	this->setScale(.75f);
+	this->updateLayout();
+
+	return true;
 }
 
-QuickNotification* QuickNotification::create(
-	std::string const& text, CCSprite* icon, float time
-) {
-	auto ret = new QuickNotification;
+void QuickNotification::updateLayout() {
+	if (m_impl->icon) {
+		limitNodeWidth(m_impl->icon, 19.f, 1.f, 0.f);
+	}
 
+	m_impl->content->updateLayout();
+	auto size = m_impl->content->getContentSize();
+	m_impl->bg->setContentSize(size + CCSize{ 10.f, 10.f });
+}
+
+CCNode* QuickNotification::createIcon(NotificationIcon icon) {
+	switch (icon) {
+		default:
+		case NotificationIcon::None: {
+			return nullptr;
+		} break;
+
+		case NotificationIcon::Loading: {
+			// gets resized later so size doesn't matter
+			return LoadingSpinner::create(20.f);
+		} break;
+
+		case NotificationIcon::Success: {
+			return CCSprite::createWithSpriteFrameName("GJ_completesIcon_001.png");
+		} break;
+
+		case NotificationIcon::Warning: {
+			// @geode-ignore(unknown-resource)
+			return CCSprite::createWithSpriteFrameName("geode.loader/info-alert.png");
+		} break;
+
+		case NotificationIcon::Error: {
+			return CCSprite::createWithSpriteFrameName("GJ_deleteIcon_001.png");
+		} break;
+
+		case NotificationIcon::Info: {
+			return CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png");
+		} break;
+	}
+}
+
+QuickNotification* QuickNotification::create(ZStringView text, NotificationIcon icon, float time) {
+	return QuickNotification::create(text, createIcon(icon), time);
+}
+
+QuickNotification* QuickNotification::create(ZStringView text, CCNode* icon, float time) {
+	auto ret = new QuickNotification();
 	if (ret->init(text, icon, time)) {
 		ret->autorelease();
 		return ret;
@@ -25,232 +129,128 @@ QuickNotification* QuickNotification::create(
 	return nullptr;
 }
 
-// NOOOO, my DRY collection :WHY:
-bool QuickNotification::init(std::string const& text, CCSprite* icon, float time) {
-	if (!CCNodeRGBA::init())
-		return false;
-
-	m_time = time;
-
-	m_bg = CCScale9Sprite::create("square02b_small.png", { 0, 0, 40, 40 });
-	m_bg->setColor({ 0, 0, 0 });
-	this->addChild(m_bg);
-
-	m_icon = icon;
-
-	m_label = parseText(text);
-	if (!m_label) {
-		m_label = parseText("<cr>Failed to parse text.</c>"); // this won't nullptr TRUST :pray:
-		m_icon = createIcon(NotificationIcon::Error);
-	}
-
-	m_label->setScale(0.6f);
-	m_bg->addChild(m_label);
-
-	if (m_icon) {
-		m_bg->addChild(m_icon);
-	}
-
-	this->setScale(0.75f);
+void QuickNotification::setString(ZStringView text) {
+	m_impl->label->setString(text.c_str());
 	this->updateLayout();
-
-	return true;
 }
 
-CCLabelBMFont* QuickNotification::parseText(std::string const& string) {
-	std::string resultStr = "";
-	std::size_t labelSize = 0u;
-	std::size_t stringSize = string.size();
+void QuickNotification::setIcon(NotificationIcon icon) {
+	this->setIcon(createIcon(icon));
+}
 
-	std::deque<std::tuple<std::size_t, std::size_t, ccColor3B>> colors{};
-	std::stack<std::pair<std::size_t, ccColor3B>> colorsStack{};
-
-	auto pushColor = [&colorsStack, &labelSize](ccColor3B const& color) {
-		colorsStack.emplace(labelSize, color);
-	};
-
-	//! before calling check if stack is empty
-	auto popColor = [&colorsStack, &labelSize, &colors]() {
-		colors.emplace_front(colorsStack.top().first, labelSize, colorsStack.top().second);
-		colorsStack.pop();
-	};
-
-	for (std::size_t i = 0u; i < stringSize; ++i) {
-		char c = string[i];
-		if (c == '<') {
-			if (i + 1 >= stringSize)
-				return nullptr;
-
-			if (char c1 = string[i + 1]; c1 == 'c') {
-				auto tagOpt = collectTag(i, string);
-				if (!tagOpt)
-					return nullptr;
-				auto const& tag = tagOpt.value();
-
-				pushColor(colorForTag(tag));
-
-				// v
-				// <cg>
-				// 01234
-				// tag - "g"
-				// 0 + 1 + *2* = 3 ('>'), 4 on next iteration
-				i += tag.size() + 2;
-
-				continue; // skip adding anything to the result
-			} else if (auto tagOpt = collectTag(i, string); c1 == '/') {
-				if (!tagOpt)
-					return nullptr;
-
-				auto const& tag = tagOpt.value();
-
-				if (tag != "c")
-					goto skip; // safe equivalent of `c1 == '/' && tag == "c"` in `if`
-
-				if (!colorsStack.empty())
-					popColor();
-
-				// v
-				// </c>
-				// 01234
-				// tag - "c"
-				// 0 + 1 + *2* = 3 ('>'), 4 on next iteration
-				i += tag.size() + 2;
-
-				continue; // skip adding anything to the result
-			}
-		}
-		skip:
-
-		// only executes when tag isn't a color tag or when there's no tag things in general i think
-		if (c != '\n')
-			++labelSize;
-		resultStr.append(1, c);
+void QuickNotification::setIcon(CCNode* icon) {
+	if (m_impl->icon) {
+		m_impl->icon->removeFromParent();
 	}
 
-	auto label = CCLabelBMFont::create(resultStr.c_str(), "bigFont.fnt");
-	auto letters = CCArrayExt<CCFontSprite*>(label->getChildren());
+	m_impl->icon = icon;
 
-	// color the thing
-	for (auto& [begin, end, color] : colors) {
-		for (; begin < end; ++begin) {
-			if (begin < labelSize)
-				letters[begin]->setColor(color);
-		}
+	if (icon) {
+		m_impl->content->addChild(icon);
 	}
 
-	return label;
+	this->updateLayout();
 }
 
-std::optional<std::string> QuickNotification::collectTag(std::size_t curPos, std::string const& string) {
-	std::string colorTag = "";
-	auto stringSize = string.size();
-
-	for (std::size_t offset = 2u;; ++offset) {
-		if (curPos + offset >= stringSize)
-			return std::nullopt;
-
-		// replace the `for` condition
-		if (auto c = string[curPos + offset]; c == '>')
-			break;
-		else
-			colorTag.append(1, c);
-	};
-
-	return colorTag;
+CCNode* QuickNotification::getIcon() {
+	return m_impl->icon;
 }
 
-ccColor3B QuickNotification::colorForTag(std::string const& tag) {
-	// tags are passed like "l", "f", "-ff00ff" etc
+void QuickNotification::setTime(float time) {
+	m_impl->time = time;
+	this->waitThenHide(); // reset timer
+}
 
-	// substr will throw otherwise
-	if (!tag.size())
-		return { 255, 255, 255 };
+float QuickNotification::getTime() {
+	return m_impl->time;
+}
 
-	// check for base tags
-	if (tag == "b")
-		return { 74, 82, 225 };
-	else if (tag == "g")
-		return { 64, 227, 72 };
-	else if (tag == "l")
-		return { 96, 171, 239 };
-	else if (tag == "j")
-		return { 50, 200, 255 };
-	else if (tag == "y")
-		return { 255, 255, 0 };
-	else if (tag == "o")
-		return { 255, 165, 75 };
-	else if (tag == "r")
-		return { 255, 90, 90 };
-	else if (tag == "p")
-		return { 255, 0, 255 };
-	else if (tag == "a")
-		return { 150, 50, 255 };
-	else if (tag == "d")
-		return { 255, 150, 255 };
-	else if (tag == "c")
-		return { 255, 255, 150 };
-	else if (tag == "f")
-		return { 150, 255, 255 };
-	else if (tag == "s")
-		return { 255, 220, 65 };
+NineSlice* QuickNotification::getBG() {
+	return m_impl->bg;
+}
 
-	// parse the "-ff00ff" things
-	return cc3bFromHexString(tag.substr(1, tag.size() - 1)).unwrapOr(ccColor3B(255, 255, 255));
+CCLabelBMFont* QuickNotification::getLabel() {
+	return m_impl->label;
+}
+
+CCNodeRGBA* QuickNotification::getContent() {
+	return m_impl->content;
+}
+
+bool QuickNotification::isShowing() {
+	return m_impl->showing;
 }
 
 void QuickNotification::show() {
-	if (!m_showing) {
-		if (!this->getParent()) {
-			auto winSize = CCDirector::get()->getWinSize();
-			this->setPosition(winSize.width / 2, winSize.height / 4);
-			this->setZOrder(CCScene::get()->getChildrenCount() > 0 ? CCScene::get()->getHighestChildZ() + 2 : 10);
-		}
-		SceneManager::get()->keepAcrossScenes(this);
-		m_showing = true;
-	}
+	if (m_impl->showing) return;
+
+	auto winSize = CCDirector::get()->getWinSize();
+	this->setPosition(winSize.width / 2, winSize.height / 4);
+	this->setZOrder(CCScene::get()->getChildrenCount() > 0 ? CCScene::get()->getHighestChildZ() + 2 : 10);
+
+	OverlayManager::get()->addChild(this);
+	m_impl->showing = true;
+
+	m_impl->content->setOpacity(0);
+	m_impl->content->setScale(.6f);
+	m_impl->content->setPositionY(-60.f);
+	m_impl->bg->setOpacity(0);
+	m_impl->bg->setScale(.6f);
+	m_impl->bg->setPositionY(-60.f);
+
 	this->runAction(CCSequence::create(
-		CCCallFunc::create(this, callfunc_selector(QuickNotification::animateIn)),
-		// wait for fade-in to finish
-		CCDelayTime::create(0.3f),
-		CCCallFunc::create(this, callfunc_selector(QuickNotification::wait)),
+		CallFuncExt::create([this] {
+			m_impl->content->runAction(CCFadeTo::create(NOTIFICATION_FADEIN, 255));
+			m_impl->content->runAction(CCEaseExponentialOut::create(CCScaleTo::create(NOTIFICATION_FADEIN, 1.f, 1.f)));
+			m_impl->content->runAction(CCEaseExponentialOut::create(CCMoveBy::create(NOTIFICATION_FADEIN, { 0.f, 60.f })));
+
+			m_impl->bg->runAction(CCFadeTo::create(NOTIFICATION_FADEIN, 150));
+			m_impl->bg->runAction(CCEaseExponentialOut::create(CCScaleTo::create(NOTIFICATION_FADEIN, 1.f, 1.f)));
+			m_impl->bg->runAction(CCEaseExponentialOut::create(CCMoveBy::create(NOTIFICATION_FADEIN, { 0.f, 60.f })));
+		}),
+
+		CCDelayTime::create(NOTIFICATION_FADEIN),
+		CCCallFunc::create(this, callfunc_selector(QuickNotification::waitThenHide)),
 		nullptr
 	));
-
-	return;
 }
 
-void QuickNotification::hide() {
+void QuickNotification::waitThenHide() {
 	this->stopAllActions();
-	this->runAction(CCSequence::create(
-		CCCallFunc::create(this, callfunc_selector(QuickNotification::animateOut)),
-		// wait for fade-out to finish
-		CCDelayTime::create(1.f),
-		CCCallFunc::create(this, callfunc_selector(QuickNotification::kill)),
-		nullptr
-	));
 
-	return;
-}
-
-void QuickNotification::wait() {
-	this->stopAllActions();
-	if (m_time) {
+	if (m_impl->time != 0.f) {
 		this->runAction(CCSequence::create(
-			CCDelayTime::create(m_time),
+			CCDelayTime::create(m_impl->time),
 			CCCallFunc::create(this, callfunc_selector(QuickNotification::hide)),
 			nullptr
 		));
 	}
-
-	return;
 }
 
-void QuickNotification::kill() {
-	m_showing = false;
+void QuickNotification::hide() {
+	this->stopAllActions();
 
-	SceneManager::get()->forget(this);
+	this->runAction(CCSequence::create(
+		CallFuncExt::create([this] {
+			m_impl->content->runAction(CCEaseExponentialIn::create(CCFadeTo::create(NOTIFICATION_FADEOUT, 0)));
+			m_impl->content->runAction(CCEaseExponentialIn::create(CCMoveBy::create(NOTIFICATION_FADEOUT, { 0.f, -25.f })));
 
-	this->removeFromParent();
+			m_impl->bg->runAction(CCEaseExponentialIn::create(CCFadeTo::create(NOTIFICATION_FADEOUT, 0)));
+			m_impl->bg->runAction(CCEaseExponentialIn::create(CCMoveBy::create(NOTIFICATION_FADEOUT, { 0.f, -25.f })));
+		}),
 
-	return;
+		CCDelayTime::create(NOTIFICATION_FADEOUT * .25f),
+
+		CallFuncExt::create([this] {
+			m_impl->content->runAction(CCEaseExponentialIn::create(CCScaleTo::create(NOTIFICATION_FADEOUT, .2f, .2f)));
+			m_impl->bg->runAction(CCEaseExponentialIn::create(CCScaleTo::create(NOTIFICATION_FADEOUT, .2f, .2f)));
+		}),
+
+		CCDelayTime::create(NOTIFICATION_FADEOUT * .75f),
+		nullptr
+	));
+}
+
+void QuickNotification::cancel() {
+	if (m_impl->showing) return this->hide();
 }

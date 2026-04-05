@@ -1,44 +1,81 @@
-// vendored and modified from https://github.com/geode-sdk/geode/blob/main/loader/include/Geode/ui/Notification.hpp
-// 1376878
-// 
+/*
+	vendored and modified from https://github.com/geode-sdk/geode/blob/main/loader/include/Geode/ui/Notification.hpp
+	1376878
 
+	list of changes:
+	replace `namespace geode` with `namespace amber`
+	remove `GEODE_DLL`
+	remove doxygen
+	replace `Notification` with `QuickNotification`
+	remove `NotificationIcon` enum
+	put constexpr globals as static members (including globals from `Notification.cpp`)
+	adjust namespace indent
+	make the dtor `override`
+	add `geode::` qualification wherever needed
+	add `final` and change `protected` to `private`
+	remove `showNextNotification`
+*/
 #pragma once
 
-#include <amber/prelude.hpp> // IWYU pragma: keep
-
-#include <Geode/ui/Notification.hpp>
-
+#include <cocos2d.h>
+#include <cocos-ext.h>
+#include <Geode/binding/TextAlertPopup.hpp>
+#include <Geode/ui/NineSlice.hpp>
 
 namespace amber {
 
-class QuickNotification final : public geode::Notification {
-public:
-	static QuickNotification* create(
-		std::string const& text,
-		geode::NotificationIcon icon = geode::NotificationIcon::None,
-		float time = geode::NOTIFICATION_DEFAULT_TIME
-	);
-
-	static QuickNotification* create(
-		std::string const& text,
-		cocos2d::CCSprite* icon,
-		float time = geode::NOTIFICATION_DEFAULT_TIME
-	);
-
+class QuickNotification final : public cocos2d::CCNodeRGBA {
+	class Impl;
+	std::unique_ptr<Impl> m_impl;
 private:
-	bool init(std::string const&, cocos2d::CCSprite*, float);
+	QuickNotification();
+	~QuickNotification() override;
 
-	cocos2d::CCLabelBMFont* parseText(std::string const&);
-	std::optional<std::string> collectTag(std::size_t, std::string const&);
-	cocos2d::ccColor3B colorForTag(std::string const& tag);
+	bool init(geode::ZStringView text, cocos2d::CCNode* icon, float time);
+	void updateLayout();
+
+	static cocos2d::CCNode* createIcon(geode::NotificationIcon icon);
+
+	void waitThenHide();
+
+	geode::NineSlice* getBG();
+	cocos2d::CCLabelBMFont* getLabel();
+	cocos2d::CCNodeRGBA* getContent();
 
 public:
+	static QuickNotification* create(
+		geode::ZStringView text,
+		geode::NotificationIcon icon = geode::NotificationIcon::None,
+		float time = NOTIFICATION_DEFAULT_TIME
+	);
+
+	static QuickNotification* create(
+		geode::ZStringView text,
+		cocos2d::CCNode* icon,
+		float time = NOTIFICATION_DEFAULT_TIME
+	);
+
+	void setString(geode::ZStringView text);
+	void setIcon(geode::NotificationIcon icon);
+	void setIcon(cocos2d::CCNode* icon);
+	cocos2d::CCNode* getIcon();
+	void setTime(float time);
+
+	float getTime();
+	bool isShowing();
+
 	void show();
+
 	void hide();
 
-private:
-	void wait();
-	void kill();
+	void cancel();
+
+// Fields
+public:
+	static constexpr float NOTIFICATION_DEFAULT_TIME = 1.8f;
+	static constexpr float NOTIFICATION_LONG_TIME = 4.f;
+	static constexpr float NOTIFICATION_FADEIN = .3f;
+	static constexpr float NOTIFICATION_FADEOUT = .5f;
 };
 
-}
+} // namespace amber
