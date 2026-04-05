@@ -4,10 +4,10 @@ using namespace amber::actions;
 using namespace geode::prelude;
 
 
-ContentTo* ContentTo::create(float duration, float x, float y) {
+ContentTo* ContentTo::create(float duration, float width, float height) {
 	auto ret = new ContentTo;
-	if (ret -> initWithDuration(duration, x, y)) {
-		ret -> autorelease();
+	if (ret->initWithDuration(duration, width, height)) {
+		ret->autorelease();
 		return ret;
 	}
 
@@ -15,12 +15,16 @@ ContentTo* ContentTo::create(float duration, float x, float y) {
 	return nullptr;
 }
 
-bool ContentTo::initWithDuration(float duration, float x, float y) {
+ContentTo* ContentTo::create(float duration, CCSize const& size) {
+	return create(duration, size.width, size.height);
+}
+
+bool ContentTo::initWithDuration(float duration, float width, float height) {
 	if (!CCActionInterval::initWithDuration(duration))
 		return false;
 	
-	m_endX = x;
-	m_endY = y;
+	m_endW = width;
+	m_endH = height;
 
 	return true;
 }
@@ -28,24 +32,24 @@ bool ContentTo::initWithDuration(float duration, float x, float y) {
 void ContentTo::startWithTarget(CCNode* target) {
 	CCActionInterval::startWithTarget(target);
 
-	m_startX = target -> getContentWidth();
-	m_startY = target -> getContentHeight();
+	m_startW = target->getContentWidth();
+	m_startH = target->getContentHeight();
 
-	if (!m_endX)
-		m_endX = m_startX;
-	if (!m_endY)
-		m_endY = m_startY;
+	if (!m_endW)
+		m_endW = m_startW;
+	if (!m_endH)
+		m_endH = m_startH;
 
-	m_deltaX = m_endX - m_startX;
-	m_deltaY = m_endY - m_startY;
+	m_deltaW = m_endW - m_startW;
+	m_deltaH = m_endH - m_startH;
 
 	return;
 }
 
 void ContentTo::update(float dt) {
 	if (m_pTarget) {
-		m_pTarget -> setContentWidth(m_startX + m_deltaX * dt);
-		m_pTarget -> setContentWidth(m_startX + m_deltaX * dt);
+		m_pTarget->setContentWidth(m_startW + m_deltaW * dt);
+		m_pTarget->setContentWidth(m_startW + m_deltaW * dt);
 	}
 
 	return;

@@ -7,7 +7,8 @@ namespace amber::actions {
 
 class ContentTo final : public cocos2d::CCActionInterval {
 public:
-	static ContentTo* create(float duration, float x = 0.f, float y = 0.f);
+	static ContentTo* create(float duration, float width = 0.f, float height = 0.f);
+	static ContentTo* create(float duration, cocos2d::CCSize const& size = { 0.f, 0.f });
 
 private:
 	bool initWithDuration(float, float, float);
@@ -15,12 +16,12 @@ private:
 	void update(float) override;
 
 	// Fields
-	float m_startX;
-	float m_startY;
-	float m_deltaX;
-	float m_deltaY;
-	float m_endX;
-	float m_endY;
+	float m_startW;
+	float m_startH;
+	float m_deltaW;
+	float m_deltaH;
+	float m_endW;
+	float m_endH;
 };
 
 } // namespace amber::actions
