@@ -75,9 +75,11 @@ ScrollTextArea::~ScrollTextArea() {
 	m_textRenderer->release();
 }
 
-void ScrollTextArea::setText(std::string_view text) {
+void ScrollTextArea::setText(std::string_view text, bool updateLabel) {
 	m_text = text;
-	this->updateLabel();
+
+	if (updateLabel)
+		this->updateLabel();
 
 	return;
 }

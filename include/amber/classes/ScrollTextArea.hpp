@@ -33,7 +33,7 @@ public:
 	[[nodiscard]] float getFontScale() const { return m_fontScale; }
 	void setFontScale(float fontScale) { m_fontScale = fontScale; }
 	[[nodiscard]] geode::ZStringView getText() const { return m_text; }
-	void setText(std::string_view text);
+	void setText(std::string_view text, bool updateLabel = true);
 
 	void updateLabel();
 
