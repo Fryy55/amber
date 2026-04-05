@@ -86,3 +86,9 @@ void WideTitleNodeV3::updateState(CCNode* invoker) {
 
 	return;
 }
+
+
+$on_mod(Loaded) {
+	if (!Mod::get()->registerCustomSettingType("wide-title", &WideTitleV3::parse))
+		log::error("Failed to register 'wide-title' setting");
+}
