@@ -5,10 +5,10 @@ using namespace geode::prelude;
 
 
 ScrollTextArea* ScrollTextArea::create(
-	std::string const& text,
+	std::string_view text,
 	cocos2d::CCSize const& size,
 	float fontScale,
-	char const* font,
+	std::string_view font,
 	cocos2d::ccColor4B const& bgColor
 ) {
 	auto ret = new ScrollTextArea;
@@ -23,10 +23,10 @@ ScrollTextArea* ScrollTextArea::create(
 }
 
 bool ScrollTextArea::init(
-	std::string const& text,
+	std::string_view text,
 	cocos2d::CCSize const& size,
 	float fontScale,
-	char const* font,
+	std::string_view font,
 	cocos2d::ccColor4B const& bgColor
 ) {
 	if (!CCNode::init())
@@ -45,7 +45,7 @@ bool ScrollTextArea::init(
 
 
 
-	auto bg = CCScale9Sprite::create("square02b_001.png");
+	auto bg = NineSlice::create("square02b_001.png");
 	bg->setContentSize(size);
 	bg->setColor(to3B(bgColor));
 	bg->setOpacity(bgColor.a);
@@ -75,7 +75,7 @@ ScrollTextArea::~ScrollTextArea() {
 	m_textRenderer->release();
 }
 
-void ScrollTextArea::setText(std::string const& text) {
+void ScrollTextArea::setText(std::string_view text) {
 	m_text = text;
 	this->updateLabel();
 
@@ -85,7 +85,7 @@ void ScrollTextArea::setText(std::string const& text) {
 void ScrollTextArea::updateLabel() {
 	m_textRenderer->begin(m_contentMenu, { 0.f, 0.f }, m_size);
 
-	m_textRenderer->pushBMFont(m_font);
+	m_textRenderer->pushBMFont(m_font.c_str());
 	m_textRenderer->pushScale(m_fontScale);
 
 	if (!this->parseAndRenderText()) {

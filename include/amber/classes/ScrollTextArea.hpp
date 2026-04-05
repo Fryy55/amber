@@ -9,31 +9,31 @@ namespace amber {
 class ScrollTextArea final : public cocos2d::CCNode {
 public:
 	static ScrollTextArea* create(
-		std::string const& text,
+		std::string_view text,
 		cocos2d::CCSize const& size,
 		float fontScale = 0.75f,
-		char const* bmFont = "chatFont.fnt",
+		std::string_view bmFont = "chatFont.fnt",
 		cocos2d::ccColor4B const& bgColor = { 0, 0, 0, 75 }
 	);
 
 private:
 	bool init(
-		std::string const&,
+		std::string_view,
 		cocos2d::CCSize const&,
 		float,
-		char const*,
+		std::string_view,
 		cocos2d::ccColor4B const&
 	);
 
 public:
 	~ScrollTextArea() override;
 
-	[[nodiscard]] char const* getFont() const { return m_font; }
-	void setFont(char const* bmFont) { m_font = bmFont; }
+	[[nodiscard]] geode::ZStringView getFont() const { return m_font; }
+	void setFont(std::string_view bmFont) { m_font = bmFont; }
 	[[nodiscard]] float getFontScale() const { return m_fontScale; }
 	void setFontScale(float fontScale) { m_fontScale = fontScale; }
-	[[nodiscard]] std::string const& getText() const { return m_text; }
-	void setText(std::string const& text);
+	[[nodiscard]] geode::ZStringView getText() const { return m_text; }
+	void setText(std::string_view text);
 
 	void updateLabel();
 
@@ -44,7 +44,7 @@ private:
 
 	// Fields
 	float m_fontScale;
-	char const* m_font;
+	std::string m_font;
 	std::string m_text;
 	cocos2d::CCSize m_size;
 	geode::ScrollLayer* m_scrollLayer;
