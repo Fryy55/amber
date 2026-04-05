@@ -11,7 +11,7 @@ public:
 		cocos2d::CCSize const& size,
 		geode::ZStringView text,
 		std::size_t charLimit = 16,
-		char const* font = "bigFont.fnt",
+		geode::ZStringView font = "bigFont.fnt",
 		cocos2d::CCPoint const& textOffset = { 0.f, 2.f },
 		cocos2d::ccColor4B const& bgColor = { 0, 0, 0, 90 }
 	);
@@ -21,7 +21,7 @@ private:
 		cocos2d::CCSize const&,
 		geode::ZStringView,
 		std::size_t,
-		char const*,
+		geode::ZStringView,
 		cocos2d::CCPoint const&,
 		cocos2d::ccColor4B const&
 	);

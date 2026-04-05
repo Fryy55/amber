@@ -8,7 +8,7 @@ LimitedTextArea* LimitedTextArea::create(
 	CCSize const& size,
 	ZStringView text,
 	std::size_t charLimit,
-	char const* font,
+	ZStringView font,
 	cocos2d::CCPoint const& textOffset,
 	ccColor4B const& bgColor
 ) {
@@ -27,7 +27,7 @@ bool LimitedTextArea::init(
 	CCSize const& size,
 	ZStringView text,
 	std::size_t charLimit,
-	char const* font,
+	ZStringView font,
 	cocos2d::CCPoint const& textOffset,
 	ccColor4B const& bgColor
 ) {
@@ -45,7 +45,7 @@ bool LimitedTextArea::init(
 	m_bg->setID("background");
 
 
-	m_textLabel = CCLabelBMFont::create("", font);
+	m_textLabel = CCLabelBMFont::create("", font.c_str());
 	m_textLabel->setID("text-label");
 
 
