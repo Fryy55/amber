@@ -122,7 +122,7 @@ bool ScrollTextArea::parseAndRenderText() {
 		char c = m_text[i];
 		if (c == '<') {
 			if (i + 1 >= textSize)
-				return false;
+				goto skip;
 
 			m_textRenderer->renderString(buffer);
 			buffer.clear();

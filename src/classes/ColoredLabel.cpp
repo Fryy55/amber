@@ -63,7 +63,7 @@ bool ColoredLabel::renderText(ZStringView text) {
 		char c = textView[i];
 		if (c == '<') {
 			if (i + 1 >= stringSize)
-				return false;
+				goto skip;
 
 			if (char c1 = textView[i + 1]; c1 == 'c') {
 				auto tagOpt = collectTag(i, text);
