@@ -1,7 +1,8 @@
 #pragma once
 
-#include "classes.hpp" // IWYU pragma: keep
-
-#include "actions/actions.hpp" // IWYU pragma: keep
-#include "layouts/layouts.hpp" // IWYU pragma: keep
-#include "settingsV3/settingsV3.hpp" // IWYU pragma: keep
+// IWYU pragma: begin_exports
+#include "actions/actions.hpp"
+#include "classes/classes.hpp"
+#include "layouts/layouts.hpp"
+#include "settingsV3/settingsV3.hpp"
+// IWYU pragma: end_exports

@@ -1,3 +1,7 @@
+// vendored and modified from https://github.com/geode-sdk/geode/blob/main/loader/include/Geode/ui/Notification.hpp
+// 1376878
+// 
+
 #pragma once
 
 #include <amber/prelude.hpp> // IWYU pragma: keep

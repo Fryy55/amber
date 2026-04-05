@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.31)
-project(amber VERSION 1.0.0)
+cmake_minimum_required(VERSION 3.24)
+project(amber VERSION 2.0.0)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -19,6 +19,16 @@ target_include_directories(${PROJECT_NAME}
     PUBLIC
         ${PROJECT_SOURCE_DIR}/include
 )
+
+if (DEFINED AMBER_USE_NAMESPACE)
+    message(STATUS "AMBER_USE_NAMESPACE set. Adding to PCH.")
+    target_precompile_headers(${PROJECT_NAME}
+        PUBLIC
+            pch/namespace.hpp
+    )
+else()
+    message(STATUS "AMBER_USE_NAMESPACE not set. Not using the namespace.")
+endif()
 
 
 if (NOT DEFINED ENV{GEODE_SDK})
