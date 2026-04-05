@@ -27,7 +27,7 @@ private:
 	);
 
 public:
-	[[nodiscard]] std::string_view getText() const { return m_text; }
+	[[nodiscard]] geode::ZStringView getText() const { return m_text; }
 	void setText(geode::ZStringView text);
 	[[nodiscard]] cocos2d::CCLabelBMFont* getLabel() const { return m_textLabel; }
 
