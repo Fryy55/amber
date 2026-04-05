@@ -9,7 +9,7 @@ class LimitedTextArea final : public cocos2d::CCNode {
 public:
 	static LimitedTextArea* create(
 		cocos2d::CCSize const& size,
-		std::string const& text,
+		geode::ZStringView text,
 		std::size_t charLimit = 16,
 		char const* font = "bigFont.fnt",
 		cocos2d::CCPoint const& textOffset = { 0.f, 2.f },
@@ -19,7 +19,7 @@ public:
 private:
 	bool init(
 		cocos2d::CCSize const&,
-		std::string const&,
+		geode::ZStringView,
 		std::size_t,
 		char const*,
 		cocos2d::CCPoint const&,
@@ -27,8 +27,8 @@ private:
 	);
 
 public:
-	[[nodiscard]] std::string const& getText() const { return m_text; }
-	void setText(std::string const& text);
+	[[nodiscard]] std::string_view getText() const { return m_text; }
+	void setText(geode::ZStringView text);
 	[[nodiscard]] cocos2d::CCLabelBMFont* getLabel() const { return m_textLabel; }
 
 	void setContentSize(cocos2d::CCSize const& size) override;
@@ -39,7 +39,7 @@ private:
 	void updateLabelWidth();
 
 	// Fields
-	cocos2d::extension::CCScale9Sprite* m_bg;
+	geode::NineSlice* m_bg;
 	std::string m_text;
 	cocos2d::CCLabelBMFont* m_textLabel;
 	std::size_t m_charLimit;

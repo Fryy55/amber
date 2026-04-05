@@ -6,7 +6,7 @@ using namespace geode::prelude;
 
 LimitedTextArea* LimitedTextArea::create(
 	CCSize const& size,
-	std::string const& text,
+	ZStringView text,
 	std::size_t charLimit,
 	char const* font,
 	cocos2d::CCPoint const& textOffset,
@@ -25,7 +25,7 @@ LimitedTextArea* LimitedTextArea::create(
 
 bool LimitedTextArea::init(
 	CCSize const& size,
-	std::string const& text,
+	ZStringView text,
 	std::size_t charLimit,
 	char const* font,
 	cocos2d::CCPoint const& textOffset,
@@ -38,7 +38,7 @@ bool LimitedTextArea::init(
 
 
 
-	m_bg = CCScale9Sprite::create("square02b_001.png");
+	m_bg = NineSlice::create("square02b_001.png");
 	m_bg->setScale(0.5f);
 	m_bg->setColor(to3B(bgColor));
 	m_bg->setOpacity(bgColor.a);
@@ -57,11 +57,11 @@ bool LimitedTextArea::init(
 	return true;
 }
 
-void LimitedTextArea::setText(std::string const& text) {
+void LimitedTextArea::setText(ZStringView text) {
 	m_text = text;
 
 	if (text.size() > m_charLimit)
-		m_textLabel->setString(text.substr(0, m_charLimit).append("...").c_str());
+		m_textLabel->setString(fmt::format("{}...", text.view().substr(0, m_charLimit)).c_str());
 	else
 		m_textLabel->setString(text.c_str());
 
