@@ -49,7 +49,7 @@ void ContentTo::startWithTarget(CCNode* target) {
 void ContentTo::update(float dt) {
 	if (m_pTarget) {
 		m_pTarget->setContentWidth(m_startW + m_deltaW * dt);
-		m_pTarget->setContentWidth(m_startW + m_deltaW * dt);
+		m_pTarget->setContentHeight(m_startH + m_deltaH * dt);
 	}
 
 	return;

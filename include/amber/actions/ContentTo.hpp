@@ -8,7 +8,7 @@ namespace amber::actions {
 class ContentTo final : public cocos2d::CCActionInterval {
 public:
 	static ContentTo* create(float duration, float width = 0.f, float height = 0.f);
-	static ContentTo* create(float duration, cocos2d::CCSize const& size = { 0.f, 0.f });
+	static ContentTo* create(float duration, cocos2d::CCSize const& size);
 
 private:
 	bool initWithDuration(float, float, float);
