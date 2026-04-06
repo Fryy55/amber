@@ -75,6 +75,24 @@ ScrollTextArea::~ScrollTextArea() {
 	m_textRenderer->release();
 }
 
+void ScrollTextArea::setFont(std::string_view bmFont, bool updateLabel) {
+	m_font = bmFont;
+
+	if (updateLabel)
+		this->updateLabel();
+
+	return;
+}
+
+void ScrollTextArea::setFontScale(float fontScale, bool updateLabel) {
+	m_fontScale = fontScale;
+
+	if (updateLabel)
+		this->updateLabel();
+
+	return;
+}
+
 void ScrollTextArea::setText(std::string_view text, bool updateLabel) {
 	m_text = text;
 

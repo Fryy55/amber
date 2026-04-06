@@ -29,9 +29,9 @@ public:
 	~ScrollTextArea() override;
 
 	[[nodiscard]] geode::ZStringView getFont() const { return m_font; }
-	void setFont(std::string_view bmFont) { m_font = bmFont; }
+	void setFont(std::string_view bmFont, bool updateLabel = true);
 	[[nodiscard]] float getFontScale() const { return m_fontScale; }
-	void setFontScale(float fontScale) { m_fontScale = fontScale; }
+	void setFontScale(float fontScale, bool updateLabel = true);
 	[[nodiscard]] geode::ZStringView getText() const { return m_text; }
 	void setText(std::string_view text, bool updateLabel = true);
 
