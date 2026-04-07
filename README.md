@@ -19,8 +19,8 @@ Check out [cue](https://github.com/dankmeme01/cue), another Geode library!
     - `QuickNotification`, a `geode::Notification` derivative that has _no_ queue, allowing them to quickly fade away without stacking + a color tags integration
     - `ScrollBorders` - an accurately positioned border for lists, similar to level lists
     - `ScrollTextArea` - an `MDTextArea`-like display with no Markdown support and a color tags integration
-    - `Separator` - a visual separator; similar to `edit_vLine_001.png`, but with customizable length, width, fade length and color
-    - `TextboxChain` and `TextboxObject` - classes, that extend `DialogLayer` and `DialogObject` to have better API and are targeted at custom portraits
+    - `Separator` - a visual separator; similar to `edit_vLine_001.png`, but with customizable length, width, fade length, color and dynamic resizing
+    - `TextboxObject` and `TextboxChain` - classes that extend `DialogObject` and `DialogLayer` to have better API and work great with custom portraits
 
 # Usage
 ## Installing

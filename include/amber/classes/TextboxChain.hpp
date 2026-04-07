@@ -19,12 +19,28 @@ public:
 		Transparent
 	};
 
-	template <typename ...Objects>
-		requires (std::same_as<TextboxObject*, Objects> && ...)
+	enum class StartAnimation : std::uint8_t {
+		NoAnimation,
+		FromCenter,
+		FromLeft,
+		FromRight,
+		FromTop,
+		Random
+	};
+
+	enum class TextboxPosition : std::uint8_t {
+		Center,
+		Top,
+		Bottom
+	};
+
+public:
+	template <typename ...TextboxObjects>
+		requires (std::same_as<TextboxObject*, TextboxObjects> && ...)
 	static TextboxChain* create(
 		Background background,
 		TextboxObject* object,
-		Objects... objects
+		TextboxObjects... objects
 	) {
 		auto ret = new TextboxChain;
 
@@ -38,12 +54,15 @@ public:
 	}
 
 private:
-	template <typename ...Objects>
+	template <typename ...TextboxObjects>
 	bool init(
 		Background background,
 		TextboxObject* object,
-		Objects... objects
+		TextboxObjects... objects
 	) {
+		// init calls displayDialogObject so we set the flag early
+		this->setUserFlag("amber-instance"_spr);
+
 		if constexpr (sizeof...(objects) == 0u) {
 			if (!DialogLayer::init(object, nullptr, static_cast<int>(background)))
 				return false;
@@ -60,7 +79,12 @@ private:
 	}
 
 public:
-	void displayDialogObject(DialogObject* object);
+	void show(
+		StartAnimation startAnimation = StartAnimation::Random,
+		TextboxPosition position = TextboxPosition::Center
+	);
+
+	void setTextboxPosition(TextboxPosition position);
 };
 
 } // namespace amber
