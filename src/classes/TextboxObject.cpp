@@ -7,7 +7,7 @@ using namespace geode::prelude;
 TextboxObject* TextboxObject::create(
 	std::string_view name, std::string_view text,
 	cocos2d::CCSprite* sprite,
-	cocos2d::ccColor3B const& nameColor,
+	cocos2d::ccColor3B const& baseNameColor,
 	float textScale, float spriteScale,
 	cocos2d::CCPoint const& spriteOffset, bool skippable
 ) {
@@ -16,7 +16,7 @@ TextboxObject* TextboxObject::create(
 	if (ret->init(
 		name, text,
 		sprite,
-		nameColor,
+		baseNameColor,
 		textScale, spriteScale,
 		spriteOffset, skippable
 	)) {
@@ -31,14 +31,14 @@ TextboxObject* TextboxObject::create(
 TextboxObject* TextboxObject::create(
 	std::string_view name, std::string_view text,
 	ZStringView spriteFrameName,
-	cocos2d::ccColor3B const& nameColor,
+	cocos2d::ccColor3B const& baseNameColor,
 	float textScale, float spriteScale,
 	cocos2d::CCPoint const& spriteOffset, bool skippable
 ) {
 	return create(
 		name, text,
 		CCSprite::createWithSpriteFrameName(spriteFrameName.c_str()),
-		nameColor,
+		baseNameColor,
 		textScale, spriteScale,
 		spriteOffset, skippable
 	);
@@ -47,7 +47,7 @@ TextboxObject* TextboxObject::create(
 TextboxObject* TextboxObject::create(
 	std::string_view name, std::string_view text,
 	DefaultSprite sprite,
-	cocos2d::ccColor3B const& nameColor,
+	cocos2d::ccColor3B const& baseNameColor,
 	float textScale, float spriteScale,
 	cocos2d::CCPoint const& spriteOffset, bool skippable
 ) {
@@ -56,7 +56,7 @@ TextboxObject* TextboxObject::create(
 	if (ret->init(
 		name, text,
 		sprite,
-		nameColor,
+		baseNameColor,
 		textScale, spriteScale,
 		spriteOffset, skippable
 	)) {
@@ -71,13 +71,13 @@ TextboxObject* TextboxObject::create(
 bool TextboxObject::init(
 	std::string_view name, std::string_view text,
 	cocos2d::CCSprite* sprite,
-	cocos2d::ccColor3B const& nameColor,
+	cocos2d::ccColor3B const& baseNameColor,
 	float textScale, float spriteScale,
 	cocos2d::CCPoint const& spriteOffset, bool skippable
 ) {
 	if (!DialogObject::init(
 		{ name.data(), name.size() }, { text.data(), text.size() },
-		1, textScale, !skippable, nameColor
+		1, textScale, !skippable, baseNameColor
 	)) return false;
 
 	m_sprite = sprite;
@@ -90,13 +90,13 @@ bool TextboxObject::init(
 bool TextboxObject::init(
 	std::string_view name, std::string_view text,
 	DefaultSprite sprite,
-	cocos2d::ccColor3B const& nameColor,
+	cocos2d::ccColor3B const& baseNameColor,
 	float textScale, float spriteScale,
 	cocos2d::CCPoint const& spriteOffset, bool skippable
 ) {
 	if (!DialogObject::init(
 		{ name.data(), name.size() }, { text.data(), text.size() },
-		static_cast<int>(sprite), textScale, !skippable, nameColor
+		static_cast<int>(sprite), textScale, !skippable, baseNameColor
 	)) return false;
 
 	m_sprite = nullptr;

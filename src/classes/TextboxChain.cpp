@@ -1,5 +1,7 @@
 #include <amber/classes/TextboxChain.hpp>
 
+#include <amber/classes/ColoredLabel.hpp>
+
 #include <Geode/modify/DialogLayer.hpp>
 
 using namespace amber;
@@ -43,6 +45,20 @@ struct HDialogLayer final : Modify<HDialogLayer, DialogLayer> {
 		log::debug("amber::TextboxObject shown (from {})", Mod::get()->getID());
 
 		auto obj = static_cast<TextboxObject*>(object);
+
+		auto label = ColoredLabel::create("");
+		auto pos = m_characterLabel->getPosition();
+		label->setPosition(pos.x, pos.y);
+		label->setScale(m_characterLabel->getScale());
+		label->setColor(obj->m_color);
+		label->setText(obj->m_character);
+		label->setAnchorPoint(m_characterLabel->getAnchorPoint());
+		label->setID("amber/custom-label");
+
+		m_mainLayer->addChild(label, m_characterLabel->getZOrder());
+		m_characterLabel->removeFromParent();
+		m_characterLabel = label;
+
 		auto sprite = obj->m_sprite.data();
 
 		if (!sprite) {

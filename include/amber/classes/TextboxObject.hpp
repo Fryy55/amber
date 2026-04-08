@@ -81,21 +81,21 @@ public:
 	static TextboxObject* create(
 		std::string_view name, std::string_view text,
 		cocos2d::CCSprite* sprite,
-		cocos2d::ccColor3B const& nameColor = { .r=255u, .g=255u, .b=255u },
+		cocos2d::ccColor3B const& baseNameColor = { .r=255u, .g=255u, .b=255u },
 		float textScale = 1.f, float spriteScale = 1.f,
 		cocos2d::CCPoint const& spriteOffset = { 0.f, 0.f }, bool skippable = true
 	);
 	static TextboxObject* create(
 		std::string_view name, std::string_view text,
 		geode::ZStringView spriteFrameName,
-		cocos2d::ccColor3B const& nameColor = { .r=255u, .g=255u, .b=255u },
+		cocos2d::ccColor3B const& baseNameColor = { .r=255u, .g=255u, .b=255u },
 		float textScale = 1.f, float spriteScale = 1.f,
 		cocos2d::CCPoint const& spriteOffset = { 0.f, 0.f }, bool skippable = true
 	);
 	static TextboxObject* create(
 		std::string_view name, std::string_view text,
 		DefaultSprite sprite,
-		cocos2d::ccColor3B const& nameColor = { .r=255u, .g=255u, .b=255u },
+		cocos2d::ccColor3B const& baseNameColor = { .r=255u, .g=255u, .b=255u },
 		float textScale = 1.f, float spriteScale = 1.f,
 		cocos2d::CCPoint const& spriteOffset = { 0.f, 0.f }, bool skippable = true
 	);
@@ -104,14 +104,14 @@ private:
 	bool init(
 		std::string_view name, std::string_view text,
 		cocos2d::CCSprite* sprite,
-		cocos2d::ccColor3B const& nameColor,
+		cocos2d::ccColor3B const& baseNameColor,
 		float textScale, float spriteScale,
 		cocos2d::CCPoint const& spriteOffset, bool skippable
 	);
 	bool init(
 		std::string_view name, std::string_view text,
 		DefaultSprite sprite,
-		cocos2d::ccColor3B const& nameColor,
+		cocos2d::ccColor3B const& baseNameColor,
 		float textScale, float spriteScale,
 		cocos2d::CCPoint const& spriteOffset, bool skippable
 	);
