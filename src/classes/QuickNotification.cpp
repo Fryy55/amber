@@ -64,7 +64,7 @@ bool QuickNotification::init(ZStringView text, CCNode* icon, float time) {
 		m_impl->content->addChild(icon);
 	}
 
-	m_impl->label = ColoredLabel::create(text.c_str(), "bigFont.fnt");
+	m_impl->label = ColoredLabel::create(text.c_str());
 	m_impl->label->setScale(.6f);
 	m_impl->content->addChild(m_impl->label);
 

@@ -8,7 +8,7 @@ namespace amber {
 
 class ColoredLabel final : public cocos2d::CCLabelBMFont {
 public:
-	static ColoredLabel* create(geode::ZStringView text, geode::ZStringView font, bool nullptrOnFail = false);
+	static ColoredLabel* create(geode::ZStringView text, geode::ZStringView font = "bigFont.fnt", bool nullptrOnFail = false);
 
 private:
 	bool init(geode::ZStringView, geode::ZStringView, bool);
