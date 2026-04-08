@@ -77,6 +77,8 @@ public:
 		WraithQuarterFace_56
 	};
 
+	using OpenCallback = geode::Function<void(TextboxChain* chain)>;
+
 public:
 	static TextboxObject* create(
 		std::string_view name, std::string_view text,
@@ -117,13 +119,11 @@ private:
 	);
 
 public:
-	TextboxObject* setOpenCallback(
-		geode::Function<void(TextboxChain* chain)> callback
-	);
+	TextboxObject* setOpenCallback(OpenCallback callback);
 
 // Fields
 private:
-	geode::Function<void(TextboxChain*)> m_callback{};
+	OpenCallback m_callback{};
 	geode::Ref<cocos2d::CCSprite> m_sprite;
 	cocos2d::CCPoint m_spriteOffset;
 	float m_spriteScale;
