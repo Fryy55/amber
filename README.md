@@ -8,10 +8,6 @@ Check out [cue](https://github.com/dankmeme01/cue), another Geode library!
 # Features
 - Actions
     - `ContentTo`
-- Layouts
-    - `ListLayout` - a layout you can quickly apply to, for example, a `geode::ScrollLayer::m_contentLayer` for a nice, scrollable list
-- Custom settings
-    - `WideTitleV3` - info titles in settings
 - General classes
     - `ColoredLabel` - a `cocos2d::CCLabelBMFont` that supports color tags (including custom ones like `<c-ff00ff>`)
     - `LimitedTextArea` - a text **display** node that is similar to a `geode::TextInput` in appearance, but is not intended for text input; setting its string to a string longer than its maximum configured length will add ellipsis at the end, massively helping render times of `cocos2d::CCLabelBMFont` used in it
@@ -21,6 +17,12 @@ Check out [cue](https://github.com/dankmeme01/cue), another Geode library!
     - `ScrollTextArea` - an `MDTextArea`-like display with no Markdown support and a color tags integration
     - `Separator` - a visual separator; similar to `edit_vLine_001.png`, but with customizable length, width, fade length, color and dynamic resizing
     - `TextboxObject` and `TextboxChain` - classes that extend `DialogObject` and `DialogLayer` to have better API and work great with custom portraits
+- Layouts
+    - `ListLayout` - a layout you can quickly apply to, for example, a `geode::ScrollLayer::m_contentLayer` for a nice, scrollable list
+- Custom settings
+    - `WideTitleV3` - info titles in settings
+- Utilities
+    - `geometry.hpp` - geometry-related helper functions (mainly related to `CCRect`)
 
 # Usage
 ## Installing
