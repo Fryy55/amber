@@ -42,7 +42,7 @@ struct HDialogLayer final : Modify<HDialogLayer, DialogLayer> {
 			return;
 
 
-		log::debug("amber::TextboxObject shown (from {})", Mod::get()->getID());
+		log::debug("[amber] amber::TextboxObject shown (from {})", Mod::get()->getID());
 
 		auto obj = static_cast<TextboxObject*>(object);
 

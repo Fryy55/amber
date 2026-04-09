@@ -95,5 +95,5 @@ void WideTitleNodeV3::updateState(CCNode* invoker) {
 
 $on_mod(Loaded) {
 	if (!Mod::get()->registerCustomSettingType("amber-wide-title", &WideTitleV3::parse))
-		log::error("Failed to register 'wide-title' setting");
+		log::error("[amber] Failed to register 'wide-title' setting");
 }
