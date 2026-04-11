@@ -10,11 +10,11 @@ Check out [cue](https://github.com/dankmeme01/cue), another Geode library!
     - `ContentTo`
 - General classes
     - `ColoredLabel` - a `cocos2d::CCLabelBMFont` that supports color tags (including custom ones like `<c-ff00ff>`)
-    - `DraggableButton` - a draggable button with customizable behavior and no `CCMenu` requirements
+    - `DraggableButton` - a draggable button with customizable behavior and no `cocos2d::CCMenu` requirements
     - `LimitedTextArea` - a text **display** node that is similar to a `geode::TextInput` in appearance, but is not intended for text input; setting its string to a string longer than its maximum configured length will add ellipsis at the end, massively helping render times of `cocos2d::CCLabelBMFont` used in it
-    - `QuickNotification` - a `geode::Notification` that has _no_ queue, allowing them to quickly fade away without stacking + a color tags integration
+    - `QuickNotification` - a `geode::Notification` that has _no_ queue, allowing them to quickly fade away without stacking and a color tags integration
     - `ScrollBorders` - an accurately positioned border for lists, similar to level lists
-    - `ScrollTextArea` - an `MDTextArea`-like display with no Markdown support and a color tags integration
+    - `ScrollTextArea` - a `geode::MDTextArea`-like display with no Markdown support and a color tags integration
     - `Separator` - a visual separator; similar to `edit_vLine_001.png`, but with customizable length, width, fade length, color and dynamic resizing
     - `TextboxObject` and `TextboxChain` - classes that extend `DialogObject` and `DialogLayer` to have better API and work great with custom portraits
 - Layouts
@@ -22,7 +22,7 @@ Check out [cue](https://github.com/dankmeme01/cue), another Geode library!
 - Custom settings
     - `WideTitleV3` - info titles in settings
 - Utilities
-    - `geometry.hpp` - geometry-related helper functions (mainly related to `CCRect`)
+    - `geometry.hpp` - geometry-related helper functions (mainly related to `cocos2d::CCRect`)
 
 See [amber documentation](docs/reference) for full reference and examples
 
