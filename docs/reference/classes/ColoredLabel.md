@@ -27,7 +27,7 @@ Sets colored text to display
 # Usage
 ```c++
 if (auto label = amber::ColoredLabel::create("Hello <cj>world</c>", "gjFont55.fnt", true))
-    this->addChildAtPosition(label, geode::Anchor::Center);
+    this->addChildAtPosition(label, Anchor::Center);
 ```
 
 
