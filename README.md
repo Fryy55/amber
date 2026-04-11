@@ -10,6 +10,7 @@ Check out [cue](https://github.com/dankmeme01/cue), another Geode library!
     - `ContentTo`
 - General classes
     - `ColoredLabel` - a `cocos2d::CCLabelBMFont` that supports color tags (including custom ones like `<c-ff00ff>`)
+    - `DraggableButton` - a draggable button with customizable behavior and no `CCMenu` requirements
     - `LimitedTextArea` - a text **display** node that is similar to a `geode::TextInput` in appearance, but is not intended for text input; setting its string to a string longer than its maximum configured length will add ellipsis at the end, massively helping render times of `cocos2d::CCLabelBMFont` used in it
     - `QuickNotification` - a `geode::Notification` that has _no_ queue, allowing them to quickly fade away without stacking + a color tags integration
     - `ScrollBorders` - an accurately positioned border for lists, similar to level lists
