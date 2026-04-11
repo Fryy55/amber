@@ -9,7 +9,11 @@ Any application `cocos2d::CCLabelBMFont` would be useful in
 # Key Methods
 ## Static
 ```c++
-ColoredLabel* create(geode::ZStringView text, geode::ZStringView font = "bigFont.fnt", bool nullptrOnFail = false);
+ColoredLabel* create(
+    geode::ZStringView text,
+    geode::ZStringView font = "bigFont.fnt",
+    bool nullptrOnFail = false
+);
 ```
 `create` function. Setting the `nullptrOnFail` parameter to `true` returns `nullptr` if color tag parsing critically failed; by default/with `false` it returns a valid label with a red `Failed to parse text.` message
 

@@ -9,8 +9,14 @@ Dynamic animations with content size-responsive nodes like `geode::NineSlice`
 # Key Methods
 ## Static
 ```c++
-ContentTo* create(float duration, float width = 0.f, float height = 0.f);
-ContentTo* create(float duration, cocos2d::CCSize const& size);
+ContentTo* create(
+    float duration,
+    float width = 0.f, float height = 0.f
+);
+ContentTo* create(
+    float duration,
+    cocos2d::CCSize const& size
+);
 ```
 `create` functions. Doesn't change content size by default (see [Notes](#notes))
 
