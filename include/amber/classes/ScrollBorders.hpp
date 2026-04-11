@@ -12,13 +12,13 @@ public:
 	static ScrollBorders* create(cocos2d::CCSize const& size);
 	static ScrollBorders* create(
 		cocos2d::CCSize const& size,
-		char const* title,
-		char const* font = "bigFont.fnt"
+		geode::ZStringView title,
+		geode::ZStringView font = "bigFont.fnt"
 	);
 	static ScrollBorders* create(geode::ScrollLayer* childScrollLayer);
 
 private:
-	bool init(cocos2d::CCSize const&, char const*, char const*);
+	bool init(cocos2d::CCSize const&, geode::ZStringView, geode::ZStringView);
 
 public:
 	void addBackground(geode::ZStringView sprite = "GJ_square01.png");

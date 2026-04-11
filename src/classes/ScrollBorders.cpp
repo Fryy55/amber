@@ -8,7 +8,7 @@ ScrollBorders* ScrollBorders::create(CCSize const& size) {
 	return create(size, "");
 }
 
-ScrollBorders* ScrollBorders::create(CCSize const& size, char const* title, char const* font) {
+ScrollBorders* ScrollBorders::create(CCSize const& size, ZStringView title, ZStringView font) {
 	auto ret = new ScrollBorders;
 
 	if (ret->init(size, title, font)) {
@@ -31,7 +31,7 @@ ScrollBorders* ScrollBorders::create(ScrollLayer* childScrollLayer) {
 	return ret;
 }
 
-bool ScrollBorders::init(CCSize const& size, char const* title, char const* font) {
+bool ScrollBorders::init(CCSize const& size, ZStringView title, ZStringView font) {
 	if (!CCNode::init())
 		return false;
 
