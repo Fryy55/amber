@@ -3,7 +3,6 @@
 // IWYU pragma: begin_exports
 #include "ColoredLabel.hpp"
 #include "LimitedTextArea.hpp"
-#include "Padding.hpp"
 #include "QuickNotification.hpp"
 #include "ScrollBorders.hpp"
 #include "ScrollTextArea.hpp"
