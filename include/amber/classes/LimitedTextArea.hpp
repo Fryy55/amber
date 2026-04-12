@@ -10,10 +10,10 @@ public:
 	static LimitedTextArea* create(
 		cocos2d::CCSize const& size,
 		geode::ZStringView text,
-		std::size_t charLimit = 16,
+		std::size_t charLimit = 16z,
 		geode::ZStringView font = "bigFont.fnt",
 		cocos2d::CCPoint const& textOffset = { 0.f, 2.f },
-		cocos2d::ccColor4B const& bgColor = { 0, 0, 0, 90 }
+		cocos2d::ccColor4B const& bgColor = { .r=0u, .g=0u, .b=0u, .a=90u }
 	);
 
 private:
