@@ -8,27 +8,28 @@
 	replace #include for `Notification` to `QuickNotification`
 	add `using namespace amber;`
 	remove constexpr globals as they are defined in `QuickNotification.hpp`
-	replace `CCLabelBMFont` with `ColoredLabel` in `init` for `m_impl->label`
+	replace `CCLabelBMFont` with `ColoredLabel` in:
+		`Impl`
+		all broken definitions
+	update the string setter to use `ColoredLabel::setText`
 	remove all mentions of `s_queue` and `showNextNotification`, adjust code logically
 	replace "info-alert.png"_spr with "geode.loader/info-alert.png", silence the warning
 	add `CCRemoveSelf` before `nullptr` in `hide`
 */
 #include <amber/classes/QuickNotification.hpp>
 
-#include <amber/classes/ColoredLabel.hpp>
-
 #include <Geode/loader/Mod.hpp>
 #include <Geode/ui/LoadingSpinner.hpp>
 #include <Geode/ui/OverlayManager.hpp>
 
-using namespace geode::prelude;
 using namespace amber;
+using namespace geode::prelude;
 
 
 class QuickNotification::Impl final {
 public:
 	NineSlice* bg;
-	CCLabelBMFont* label;
+	ColoredLabel* label;
 	CCNodeRGBA* content;
 	CCNode* icon = nullptr;
 	float time;
@@ -64,7 +65,7 @@ bool QuickNotification::init(ZStringView text, CCNode* icon, float time) {
 		m_impl->content->addChild(icon);
 	}
 
-	m_impl->label = ColoredLabel::create(text.c_str());
+	m_impl->label = ColoredLabel::create(text);
 	m_impl->label->setScale(.6f);
 	m_impl->content->addChild(m_impl->label);
 
@@ -131,7 +132,7 @@ QuickNotification* QuickNotification::create(ZStringView text, CCNode* icon, flo
 }
 
 void QuickNotification::setString(ZStringView text) {
-	m_impl->label->setString(text.c_str());
+	m_impl->label->setText(text);
 	this->updateLayout();
 }
 
@@ -170,7 +171,7 @@ NineSlice* QuickNotification::getBG() {
 	return m_impl->bg;
 }
 
-CCLabelBMFont* QuickNotification::getLabel() {
+ColoredLabel* QuickNotification::getLabel() {
 	return m_impl->label;
 }
 

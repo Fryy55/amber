@@ -12,10 +12,12 @@
 	adjust namespace indent
 	make the dtor `override`
 	add `geode::` qualification wherever needed
-	add `final` and change `protected` to `private`
+	include `ColoredLabel` and replace `CCLabelBMFont` with it in the getter
 	remove `showNextNotification`
 */
 #pragma once
+
+#include <amber/classes/ColoredLabel.hpp>
 
 #include <cocos2d.h>
 #include <cocos-ext.h>
@@ -24,10 +26,10 @@
 
 namespace amber {
 
-class QuickNotification final : public cocos2d::CCNodeRGBA {
+class QuickNotification : public cocos2d::CCNodeRGBA {
 	class Impl;
 	std::unique_ptr<Impl> m_impl;
-private:
+protected:
 	QuickNotification();
 	~QuickNotification() override;
 
@@ -39,7 +41,7 @@ private:
 	void waitThenHide();
 
 	geode::NineSlice* getBG();
-	cocos2d::CCLabelBMFont* getLabel();
+	ColoredLabel* getLabel();
 	cocos2d::CCNodeRGBA* getContent();
 
 public:
