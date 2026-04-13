@@ -35,7 +35,7 @@ Getter for the `cocos2d::CCLabelBMFont` that is used for display
 
 # Usage
 ```c++
-auto area = LimitedTextArea::create(
+auto area = amber::LimitedTextArea::create(
     { 150.f, 30.f },
     "Data", 20z, "goldFont.fnt",
     { 0.f, 2.f }, { .r=0u, .g=0u, .b=0u, .a=40u }
