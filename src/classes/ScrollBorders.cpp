@@ -25,6 +25,10 @@ ScrollBorders* ScrollBorders::create(ScrollLayer* childScrollLayer) {
 		childScrollLayer->getScaledContentSize() + CCSize(40.f, 23.f)
 	);
 
+	if (!ret)
+		return nullptr;
+
+	childScrollLayer->removeFromParent();
 	childScrollLayer->setPosition(20.f, 31.f);
 	ret->addChild(childScrollLayer);
 
@@ -60,6 +64,14 @@ bool ScrollBorders::init(CCSize const& size, ZStringView title, ZStringView font
 	this->setContentSize(size);
 
 	return true;
+}
+
+void ScrollBorders::addBackground(Background background) {
+	this->addBackground(
+		fmt::format("GJ_square0{}.png", static_cast<int>(background))
+	);
+
+	return;
 }
 
 void ScrollBorders::addBackground(ZStringView sprite) {

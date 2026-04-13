@@ -9,6 +9,17 @@ namespace amber {
 
 class ScrollBorders final : public cocos2d::CCNode {
 public:
+	enum class Background : std::uint8_t {
+		Brown = 1u,
+		Blue,
+		Green,
+		Purple,
+		Gray,
+		White,
+		Transparent
+	};
+
+public:
 	static ScrollBorders* create(cocos2d::CCSize const& size);
 	static ScrollBorders* create(
 		cocos2d::CCSize const& size,
@@ -21,7 +32,8 @@ private:
 	bool init(cocos2d::CCSize const&, geode::ZStringView, geode::ZStringView);
 
 public:
-	void addBackground(geode::ZStringView sprite = "GJ_square01.png");
+	void addBackground(Background background = Background::Brown);
+	void addBackground(geode::ZStringView sprite);
 
 private:
 	void positionBG();
