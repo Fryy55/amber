@@ -13,7 +13,7 @@ public:
 		cocos2d::CCSize const& size,
 		float fontScale = 0.75f,
 		std::string_view bmFont = "chatFont.fnt",
-		cocos2d::ccColor4B const& bgColor = { 0, 0, 0, 75 }
+		cocos2d::ccColor4B const& bgColor = { .r=0u, .g=0u, .b=0u, .a=75u }
 	);
 
 private:
