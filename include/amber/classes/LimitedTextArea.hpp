@@ -32,8 +32,6 @@ public:
 	[[nodiscard]] cocos2d::CCLabelBMFont* getLabel() const { return m_textLabel; }
 
 	void setContentSize(cocos2d::CCSize const& size) override;
-	void setContentWidth(float width) { setContentSize({ width, getContentHeight() }); }
-	void setContentHeight(float height) { setContentSize({ getContentWidth(), height }); }
 
 private:
 	void updateLabelWidth();
