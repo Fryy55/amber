@@ -43,8 +43,6 @@ public:
 	void setString(geode::ZStringView title);
 
 	void setContentSize(cocos2d::CCSize const& size) override;
-	void setContentWidth(float width) { setContentSize({ width, getContentHeight() }); }
-	void setContentHeight(float height) { setContentSize({ getContentWidth(), height }); }
 
 // Fields
 private:
