@@ -18,10 +18,10 @@ public:
 	void setColor(cocos2d::ccColor3B const& color);
 	void setOpacity(GLubyte opacity);
 
-	void setContentWidth(float) = delete;
-	void setContentHeight(float) = delete;
-	void setContentSize(float) = delete;
-	void setScaledContentSize(cocos2d::CCSize) = delete;
+	void setContentWidth() = delete;
+	void setContentHeight() = delete;
+	void setContentSize() = delete;
+	void setScaledContentSize() = delete;
 
 private:
 	bool init(cocos2d::ccColor3B const&, float, float, float);
