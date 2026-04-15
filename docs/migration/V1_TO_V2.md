@@ -12,6 +12,7 @@ amber v2.0.0 introduced a lot of new utilities and classes, but it also _broke_ 
 - [API Changes](#api-changes)
   - [`WideTitleV3`](#widetitlev3)
   - [`ScrollBorders`](#scrollborders)
+  - [`Separator`](#separator)
   - [`LimitedTextArea` and `ScrollTextArea`](#limitedtextarea-and-scrolltextarea)
   - [More on `ScrollTextArea`](#more-on-scrolltextarea)
 - [Fixes and Improvements](#fixes-and-improvements)
@@ -39,6 +40,9 @@ Random utilities (`random.hpp`) and `Padding` classes have been removed entirely
 
 ## `ScrollBorders`
 An API got completely revamped. You can read more about it at [ScrollBorders.md](../reference/classes/ScrollBorders.md), but in short this class now can be created directly from a `geode::ScrollLayer` and will add it as its child. Its title now supports color tags, you can add a background to it and it was optimized with `geode::ZStringView` parameters and `geode::NineSlice` parts. Its content size now also perfectly matches its boundaries
+
+## `Separator`
+An API got completely revamped. Conventional "width" is now content height, `resize` was replaced with dynamic content size editing methods which are now the way to resize the separator. See [Separator.md](../reference/classes/Separator.md) for more info
 
 ## `LimitedTextArea` and `ScrollTextArea`
 A lot of string function parameters have been replaced with views. This is unlikely to break something, but is still worth knowing
