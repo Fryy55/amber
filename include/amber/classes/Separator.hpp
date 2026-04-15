@@ -7,7 +7,12 @@ namespace amber {
 
 class Separator final : public cocos2d::CCNode {
 public:
-	static Separator* create(cocos2d::ccColor3B const& color, float fadeLength = 50.f, float totalLength = 160.f, float width = 2.f);
+	static Separator* create(
+		cocos2d::ccColor3B const& color,
+		float fadeLength = 50.f,
+		float totalLength = 160.f,
+		float width = 2.f
+	);
 
 	void resize(float newLength);
 	void setColor(cocos2d::ccColor3B const& color);
