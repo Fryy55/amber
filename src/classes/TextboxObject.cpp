@@ -113,3 +113,9 @@ TextboxObject* TextboxObject::setOpenCallback(
 
 	return this;
 }
+
+TextboxObject* TextboxObject::setSkippable(bool skippable) {
+	m_skippable = skippable;
+
+	return this;
+}

@@ -120,6 +120,7 @@ private:
 
 public:
 	TextboxObject* setOpenCallback(OpenCallback callback);
+	TextboxObject* setSkippable(bool skippable);
 
 // Fields
 private:
