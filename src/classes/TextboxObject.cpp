@@ -115,7 +115,9 @@ TextboxObject* TextboxObject::setOpenCallback(
 }
 
 TextboxObject* TextboxObject::setSkippable(bool skippable) {
-	m_skippable = skippable;
+	// robtop :troll:
+	// (tbf this is bindings peoples not calling it correctly smh my head)
+	m_skippable = !skippable;
 
 	return this;
 }
