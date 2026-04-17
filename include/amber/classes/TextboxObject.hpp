@@ -121,13 +121,17 @@ private:
 public:
 	TextboxObject* setOpenCallback(OpenCallback callback);
 	TextboxObject* setSkippable(bool skippable);
+	TextboxObject* setSpriteScaleX(float scaleX);
+	TextboxObject* setSpriteScaleY(float scaleY);
+	TextboxObject* setSpriteScales(float scaleX, float scaleY);
 
 // Fields
 private:
 	OpenCallback m_callback{};
 	geode::Ref<cocos2d::CCSprite> m_sprite;
 	cocos2d::CCPoint m_spriteOffset;
-	float m_spriteScale;
+	float m_spriteScaleX;
+	float m_spriteScaleY;
 };
 
 } // namespace amber

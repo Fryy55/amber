@@ -63,8 +63,11 @@ struct HDialogLayer final : Modify<HDialogLayer, DialogLayer> {
 			m_characterSprite->setPosition(
 				m_characterSprite->getPosition() + obj->m_spriteOffset
 			);
-			m_characterSprite->setScale(
-				m_characterSprite->getScale() * obj->m_spriteScale
+			m_characterSprite->setScaleX(
+				m_characterSprite->getScaleX() * obj->m_spriteScaleX
+			);
+			m_characterSprite->setScaleY(
+				m_characterSprite->getScaleY() * obj->m_spriteScaleY
 			);
 		} else {
 			sprite->setPosition(
@@ -72,10 +75,10 @@ struct HDialogLayer final : Modify<HDialogLayer, DialogLayer> {
 			);
 			auto scaledCS = m_characterSprite->getScaledContentSize();
 			sprite->setScaleX(
-				scaledCS.width / sprite->getContentWidth() * obj->m_spriteScale
+				scaledCS.width / sprite->getContentWidth() * obj->m_spriteScaleX
 			);
 			sprite->setScaleY(
-				scaledCS.height / sprite->getContentHeight() * obj->m_spriteScale
+				scaledCS.height / sprite->getContentHeight() * obj->m_spriteScaleY
 			);
 			sprite->setID("amber/custom-sprite");
 

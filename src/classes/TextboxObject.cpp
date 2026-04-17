@@ -82,7 +82,8 @@ bool TextboxObject::init(
 
 	m_sprite = sprite;
 	m_spriteOffset = spriteOffset;
-	m_spriteScale = spriteScale;
+	m_spriteScaleX = spriteScale;
+	m_spriteScaleY = spriteScale;
 
 	return true;
 }
@@ -101,7 +102,8 @@ bool TextboxObject::init(
 
 	m_sprite = nullptr;
 	m_spriteOffset = spriteOffset;
-	m_spriteScale = spriteScale;
+	m_spriteScaleX = spriteScale;
+	m_spriteScaleY = spriteScale;
 
 	return true;
 }
@@ -118,6 +120,25 @@ TextboxObject* TextboxObject::setSkippable(bool skippable) {
 	// robtop :troll:
 	// (tbf this is bindings peoples not calling it correctly smh my head)
 	m_skippable = !skippable;
+
+	return this;
+}
+
+TextboxObject* TextboxObject::setSpriteScaleX(float scaleX) {
+	m_spriteScaleX = scaleX;
+
+	return this;
+}
+
+TextboxObject* TextboxObject::setSpriteScaleY(float scaleY) {
+	m_spriteScaleY = scaleY;
+
+	return this;
+}
+
+TextboxObject* TextboxObject::setSpriteScales(float scaleX, float scaleY) {
+	m_spriteScaleX = scaleX;
+	m_spriteScaleY = scaleY;
 
 	return this;
 }
