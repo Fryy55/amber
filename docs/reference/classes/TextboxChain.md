@@ -54,7 +54,7 @@ amber::TextboxChain::create(
         "A sprite example",
         "This passes a <cf>raw sprite</c>,<d025> that is then <cg>resized</c> automatically",
         CCSprite::create("GJ_square01.png")
-    )->setOpenCallback([](amber::TextboxChain* chain) static {
+    )->setShowCallback([](amber::TextboxChain* chain) static {
         chain->setTextboxPosition(amber::TextboxChain::TextboxPosition::Bottom);
     })->setSkippable(false)
 )->show(amber::TextboxChain::StartAnimation::FromCenter);
