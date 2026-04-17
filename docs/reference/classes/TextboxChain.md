@@ -1,5 +1,5 @@
 # TextboxChain
-A `DialogLayer`-like class for displaying dialogs with better API and full custom portraits support. See [TextboxObject](TextboxObject.md) for a textbox "blueprint" object
+A `DialogLayer`-like class for displaying dialogs with better API and full custom portraits support. See [TextboxObject.md](TextboxObject.md) for a textbox "blueprint" object
 
 
 # Useful in
@@ -15,7 +15,7 @@ TextboxChain* create(
     TextboxObjects... objects
 );
 ```
-`create` function. `Background` enum has all default colors. [TextboxObject](TextboxObject.md)s passed will be the ones used for the chain; you can pass however many you want from 1 to [very big number]
+`create` function. `Background` enum has all default colors. [`amber::TextboxObject`](TextboxObject.md)s passed will be the ones used for the chain; you can pass however many you want from 1 to [very big number]
 
 ## Member
 ```c++
@@ -29,7 +29,7 @@ A convenience method to quickly add the chain at the `position` with a `startAni
 ```c++
 void setTextboxPosition(TextboxPosition position);
 ```
-Sets the position of the textbox. _Can be used dynamically in `TextboxObject` callbacks_
+Sets the position of the textbox. _Can be used dynamically in `amber::TextboxObject` callbacks_
 
 
 # Usage
@@ -49,7 +49,7 @@ amber::TextboxChain::create(
         "<cl>nothing stops you from <i150>skipping</i></c>\n"
         "<cl>it <s050>altogether</s></c>",
         "GJ_coinsIcon2_001.png"
-    ),
+    )->setSpriteScales(0.5f, 2.f),
     amber::TextboxObject::create(
         "A sprite example",
         "This passes a <cf>raw sprite</c>,<d025> that is then <cg>resized</c> automatically",
