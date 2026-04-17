@@ -59,34 +59,30 @@ struct HDialogLayer final : Modify<HDialogLayer, DialogLayer> {
 		m_characterLabel->removeFromParent();
 		m_characterLabel = label;
 
-		auto sprite = obj->m_sprite.data();
-
-		if (!sprite) {
+		if (auto sprite = obj->m_sprite.data(); !sprite) { // if default sprite
 			m_characterSprite->setPosition(
 				m_characterSprite->getPosition() + obj->m_spriteOffset
 			);
 			m_characterSprite->setScale(
 				m_characterSprite->getScale() * obj->m_spriteScale
 			);
+		} else {
+			sprite->setPosition(
+				m_characterSprite->getPosition() + obj->m_spriteOffset
+			);
+			auto scaledCS = m_characterSprite->getScaledContentSize();
+			sprite->setScaleX(
+				scaledCS.width / sprite->getContentWidth() * obj->m_spriteScale
+			);
+			sprite->setScaleY(
+				scaledCS.height / sprite->getContentHeight() * obj->m_spriteScale
+			);
+			sprite->setID("amber/custom-sprite");
 
-			return;
+			m_mainLayer->addChild(sprite, m_characterSprite->getZOrder());
+			m_characterSprite->removeFromParent();
+			m_characterSprite = sprite;
 		}
-
-		sprite->setPosition(
-			m_characterSprite->getPosition() + obj->m_spriteOffset
-		);
-		auto scaledCS = m_characterSprite->getScaledContentSize();
-		sprite->setScaleX(
-			scaledCS.width / sprite->getContentWidth() * obj->m_spriteScale
-		);
-		sprite->setScaleY(
-			scaledCS.height / sprite->getContentHeight() * obj->m_spriteScale
-		);
-		sprite->setID("amber/custom-sprite");
-
-		m_mainLayer->addChild(sprite, m_characterSprite->getZOrder());
-		m_characterSprite->removeFromParent();
-		m_characterSprite = sprite;
 
 		if (auto& callback = obj->m_callback)
 			callback(reinterpret_cast<TextboxChain*>(this));
