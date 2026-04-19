@@ -3,8 +3,17 @@
 #include <Geode/ui/Layout.hpp>
 
 
-namespace amber::layouts::ListLayout {
+namespace amber::layouts {
 
-geode::AxisLayout* create(float scrollLayerHeight, float gap = 0.f);
+class ListLayout final : public geode::AxisLayout {
+private:
+	ListLayout();
 
-} // namespace amber::layouts::ListLayout
+public:
+	static ListLayout* create(float scrollLayerHeight, float gap = 0.f);
+
+private:
+	bool init(float, float);
+};
+
+} // namespace amber::layouts
