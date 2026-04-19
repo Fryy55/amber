@@ -108,8 +108,8 @@ bool TextboxObject::init(
 	return true;
 }
 
-TextboxObject* TextboxObject::setOpenCallback(
-	OpenCallback callback
+TextboxObject* TextboxObject::setShowCallback(
+	ShowCallback callback
 ) {
 	m_callback = std::move(callback);
 
