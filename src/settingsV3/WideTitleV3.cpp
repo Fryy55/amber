@@ -61,9 +61,9 @@ bool WideTitleNodeV3::init(
 	auto menu = this->getButtonMenu();
 	this->getNameLabel()->setVisible(false);
 
-	auto const menuCW = this->getContentWidth() - padding * 2.f;
+	float menuCW = this->getContentWidth() - padding * 2.f;
 
-	m_label = CCLabelBMFont::create(this->getSetting()->getDisplayName().c_str(), font);
+	m_label = ColoredLabel::create(this->getSetting()->getDisplayName(), font);
 	m_label->limitLabelWidth(menuCW, 5.f, 0.1f);
 
 	menu->setPositionX(padding);
@@ -77,6 +77,21 @@ bool WideTitleNodeV3::init(
 		menu->addChildAtPosition(descBtn, Anchor::TopRight, { 0.f, -8.f });
 	}
 
+	auto statusLabel = this->getStatusLabel();
+	statusLabel->setPositionY(7.f);
+	statusLabel->setZOrder(7);
+
+	m_statusBG = NineSlice::create("square02b_small.png");
+	m_statusBG->setPosition(
+		statusLabel->getPosition()
+		-
+		CCPoint{ s_statusBGPaddingWidth / 2.f, 0.f }
+	);
+	m_statusBG->setAnchorPoint({ 0.f, 0.5f });
+	m_statusBG->setColor({ .r=0u, .g=0u, .b=0u });
+	m_statusBG->setOpacity(120u);
+	this->addChild(m_statusBG, 6);
+
 	this->updateState(nullptr);
 
 	return true;
@@ -85,8 +100,17 @@ bool WideTitleNodeV3::init(
 void WideTitleNodeV3::updateState(CCNode* invoker) {
 	SettingNodeV3::updateState(invoker);
 
+	bool shouldEnable = this->getSetting()->shouldEnable();
+
 	m_label->setColor(
-		this->getSetting()->shouldEnable() ? ccc3(255, 255, 255) : ccc3(166, 166, 166)
+		shouldEnable ? ccc3(255, 255, 255) : ccc3(166, 166, 166)
+	);
+
+	m_statusBG->setVisible(!shouldEnable);
+	m_statusBG->setContentSize(
+		this->getStatusLabel()->getScaledContentSize()
+		+
+		CCSize{ s_statusBGPaddingWidth, 5.f }
 	);
 
 	return;
@@ -94,6 +118,6 @@ void WideTitleNodeV3::updateState(CCNode* invoker) {
 
 
 $on_mod(Loaded) {
-	if (!Mod::get()->registerCustomSettingType("amber-wide-title", &WideTitleV3::parse))
-		log::error("[amber] Failed to register 'wide-title' setting");
+	if (!Mod::get()->registerCustomSettingType("wide-title", &WideTitleV3::parse))
+		log::error("Failed to register 'wide-title' setting");
 }

@@ -36,7 +36,7 @@ Random utilities (`random.hpp`) and `Padding` classes have been removed entirely
 
 # API Changes
 ## `WideTitleV3`
-`WideTitleV3` now registers itself as `"amber-wide-title"` automatically. You can expect this behavior in all potential future settings, at least for v2
+Now registers itself automatically, as all (potential) settings + slightly revamped. See [WideTitleV3.md](../reference/settingsV3/WideTitleV3.md) for the current API
 
 ## `ScrollBorders`
 An API got completely revamped. You can read more about it at [ScrollBorders.md](../reference/classes/ScrollBorders.md), but in short this class now can be created directly from a `geode::ScrollLayer` and will add it as its child. Its title now supports color tags, you can add a background to it and it was optimized with `geode::ZStringView` parameters and `geode::NineSlice` parts. Its content size now also perfectly matches its boundaries

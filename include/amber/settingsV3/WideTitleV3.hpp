@@ -2,6 +2,8 @@
 
 #include <Geode/loader/SettingV3.hpp>
 
+#include <amber/classes/ColoredLabel.hpp>
+
 
 namespace amber::settingsV3 {
 
@@ -46,7 +48,10 @@ public:
 
 protected:
 	// Fields
-	cocos2d::CCLabelBMFont* m_label;
+	static constexpr float s_statusBGPaddingWidth = 10.f;
+
+	amber::ColoredLabel* m_label;
+	geode::NineSlice* m_statusBG;
 };
 
 } // namespace amber::settingsV3
