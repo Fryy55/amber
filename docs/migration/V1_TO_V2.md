@@ -24,7 +24,7 @@ amber v2.0.0 introduced a lot of new utilities and classes, but it also _broke_ 
 
 # Structure Changes
 ## `geode::prelude`
-Prior to v2, amber added all its namespaces into `geode::prelude`. This was handy in case you are fine with having amber entities everywhere, but ultimately was removed in favor of a more voluntary option. Now, akin to most of my libraries, amber supports PCH-based namespace inclusion - if you want to automatically use the amber namespace in _all_ your TUs without a single `using namespace` statement, you can set a CMake variable `AMBER_USE_NAMESPACE` to `TRUE`/`ON` in your `CMakeLists.txt` right before adding amber with CPM. This can be done with `set(AMBER_USE_NAMESPACE TRUE)`, once again, _before_ `CPMAddPackage`
+Prior to v2, amber added all its namespaces into `geode::prelude`. This was handy in case you are fine with having amber entities everywhere, but ultimately was removed. Due to the dynamic nature of amber v2, _there is currently no way to automatically use amber's namespace_
 
 ## `<amber/classes/...>`
 Previously all _classes_ were accessible directly at the root of the amber include directory (e.g. `<amber/QuickNotification.hpp>`). Now all classes have their own subdirectory `classes/`, so the example include will become `<amber/classes/QuickNotification.hpp>`. Classes, of course, have their own "include everything header" at `<amber/classes/classes.hpp>`

@@ -45,9 +45,6 @@ Simply include headers (e.g. `#include <amber/classes/QuickNotification.hpp>`) a
 
 There is also a general "include everything" header (`<amber/amber.hpp>`), as well as grouped headers (e.g. `<amber/classes/classes.hpp>`).
 
-> [!TIP]
-> Normally, every utility/class/etc. is located in the `amber::*` namespace, however, if you are fine with leaking amber to every TU, you can add `set(AMBER_USE_NAMESPACE TRUE)` to your `CMakeLists.txt`. This will precompile the header that solely uses the namespace, thus enabling you to use features directly without explicitly using the namespace everywhere.
-
 # Migration
 To help you migrate between major amber versions (e.g. from v1.x.x to v2.0.0) there is special [documentation](docs/migration). All relevant information is contained in files there (e.g. `V1_TO_V2.md` for v1 to v2 migration)
 

@@ -1,10 +1,9 @@
 # Workspace
 *.code-workspace
 
-# Build
+# Local dev stuff
 .cache/
 build/
 
 # Local test files
-mod.json
 test/

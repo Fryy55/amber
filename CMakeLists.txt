@@ -1,34 +1,25 @@
 cmake_minimum_required(VERSION 3.24)
-project(amber VERSION 2.0.0)
-
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "iOS" OR IOS)
+    set(CMAKE_OSX_ARCHITECTURES "arm64")
+else()
+    set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64")
+endif()
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
+project(amber VERSION 2.0.0)
 # Local bindings repo
 #set(GEODE_BINDINGS_REPO_PATH $ENV{GEODE_BINDINGS})
 
-file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/*.cpp test/*.cpp)
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/*.cpp)
 
-if (PROJECT_IS_TOP_LEVEL)
-    add_library(${PROJECT_NAME} SHARED ${SOURCES})
-else()
-    add_library(${PROJECT_NAME} STATIC ${SOURCES})
-endif()
+add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
 target_include_directories(${PROJECT_NAME}
-    PUBLIC
+    PRIVATE
         ${PROJECT_SOURCE_DIR}/include
 )
-
-if (DEFINED AMBER_USE_NAMESPACE)
-    message(STATUS "AMBER_USE_NAMESPACE set. Adding to PCH.")
-    target_precompile_headers(${PROJECT_NAME}
-        PUBLIC
-            pch/namespace.hpp
-    )
-else()
-    message(STATUS "AMBER_USE_NAMESPACE not set. Not using the namespace.")
-endif()
 
 
 if (NOT DEFINED ENV{GEODE_SDK})
@@ -37,12 +28,13 @@ else()
     message(STATUS "Found Geode: $ENV{GEODE_SDK}")
 endif()
 
-if (PROJECT_IS_TOP_LEVEL)
-    add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
+add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
 
-    setup_geode_mod(${PROJECT_NAME})
-else()
-    target_compile_definitions(${PROJECT_NAME} PRIVATE GEODE_MOD_ID="_amber")
+setup_geode_mod(${PROJECT_NAME})
 
-    target_link_libraries(${PROJECT_NAME} geode-sdk)
+
+if (DEFINED FRYY_LOCAL)
+    message(STATUS "Adding tests")
+
+    add_subdirectory(${PROJECT_SOURCE_DIR}/test ${CMAKE_CURRENT_BINARY_DIR}/amber-test)
 endif()

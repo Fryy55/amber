@@ -1,0 +1,24 @@
+{
+	"geode": "5.6.1",
+	"gd": {
+		"win": "2.2081",
+		"android": "2.2081",
+		"mac": "2.2081",
+		"ios": "2.2081"
+	},
+	"id": "fryy_55.amber",
+	"name": "amber",
+	"version": "v2.0.0",
+	"developer": "Fryy_55",
+	"description": "My collection of classes/utilities for Geode",
+	"tags": [
+		"api",
+		"developer",
+		"interface",
+		"utility"
+	],
+	"links": {
+		"source": "https://github.com/Fryy55/amber",
+		"community": "https://discord.com/invite/4vqtjfdhTk"
+	}
+}
