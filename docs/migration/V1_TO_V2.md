@@ -23,7 +23,7 @@ amber v2.0.0 introduced a lot of new utilities and classes, but it also _broke_ 
 
 # Structure Changes
 ## `geode::prelude`
-Prior to v2, amber added all its namespaces into `geode::prelude`. This was handy in case you are fine with having amber entities everywhere, but ultimately was removed. Due to the dynamic nature of amber v2, _there is currently no way to automatically use amber's namespace_
+Prior to v2, amber added all its namespaces into `geode::prelude`. This was handy in case you are fine with having amber entities everywhere, but ultimately was removed. Now you can use an amber-specific `using namespace amber::prelude;` to bring all of amber to the global namespace
 
 ## Include Paths
 Due to a migration to a dynamic library the common `<amber/` prefix now becomes `<fryy_55.amber/include/`. For example, `#include <amber/actions/ContentTo.hpp>` will now be `#include <fryy_55.amber/include/actions/ContentTo.hpp>`

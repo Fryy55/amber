@@ -39,6 +39,9 @@ After that simply include headers (e.g. `#include <fryy_55.amber/include/classes
 
 There is also a general "include everything" header (`<fryy_55.amber/include/amber.hpp>`), as well as grouped headers (e.g. `<fryy_55.amber/include/classes/classes.hpp>`)
 
+> [!TIP]
+> If you want to bring all amber entities to the global namespace you can use a `using namespace amber::prelude;` directive
+
 # Migration
 To help you migrate between major amber versions (e.g. from v1.x.x to v2.0.0) there is special [documentation](docs/migration). All relevant information is contained in files there (e.g. `V1_TO_V2.md` for v1 to v2 migration)
 

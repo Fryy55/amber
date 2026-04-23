@@ -1,5 +1,6 @@
 # 2.0.0
 - amber is now a _dynamic library_
+- `geode::prelude` behavior moved to `amber::prelude`
 - Removed `random.hpp` and `Padding` due to Geode implementing these utilities
 - Removed amber entities from `geode::prelude`
 - Moved classes to `classes/` instead of raw root at `amber/`
