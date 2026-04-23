@@ -10,6 +10,7 @@ amber v2.0.0 introduced a lot of new utilities and classes, but it also _broke_ 
   - [Include Paths](#include-paths)
 - [Removals](#removals)
 - [API Changes](#api-changes)
+  - [`final`](#final)
   - [`WideTitleV3`](#widetitlev3)
   - [`ScrollBorders`](#scrollborders)
   - [`Separator`](#separator)
@@ -36,6 +37,9 @@ Random utilities (`random.hpp`) and `Padding` classes have been removed entirely
 
 
 # API Changes
+## `final`
+None of the classes in v2 have `final`, meaning you can freely derive them with no ABI breakage fear. Keep in mind that due to pimpl _you cannot access member variables directly_. Instead, rely on provided getters/setters
+
 ## `WideTitleV3`
 Now registers itself automatically, as all (potential) settings + slightly revamped. See [WideTitleV3.md](../reference/settingsV3/WideTitleV3.md) for the current API
 
