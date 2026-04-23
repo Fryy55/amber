@@ -7,7 +7,7 @@ amber v2.0.0 introduced a lot of new utilities and classes, but it also _broke_ 
 # Table of Contents
 - [Structure Changes](#structure-changes)
   - [`geode::prelude`](#geodeprelude)
-  - [`<amber/classes/...>`](#amberclasses)
+  - [Include Paths](#include-paths)
 - [Removals](#removals)
 - [API Changes](#api-changes)
   - [`WideTitleV3`](#widetitlev3)
@@ -18,7 +18,6 @@ amber v2.0.0 introduced a lot of new utilities and classes, but it also _broke_ 
 - [Fixes and Improvements](#fixes-and-improvements)
   - [`ContentTo`](#contentto)
   - [`QuickNotification` and `ScrollTextArea`](#quicknotification-and-scrolltextarea)
-  - [`WideTitleV3`](#widetitlev3-1)
 - [Additions](#additions)
 
 
@@ -26,8 +25,10 @@ amber v2.0.0 introduced a lot of new utilities and classes, but it also _broke_ 
 ## `geode::prelude`
 Prior to v2, amber added all its namespaces into `geode::prelude`. This was handy in case you are fine with having amber entities everywhere, but ultimately was removed. Due to the dynamic nature of amber v2, _there is currently no way to automatically use amber's namespace_
 
-## `<amber/classes/...>`
-Previously all _classes_ were accessible directly at the root of the amber include directory (e.g. `<amber/QuickNotification.hpp>`). Now all classes have their own subdirectory `classes/`, so the example include will become `<amber/classes/QuickNotification.hpp>`. Classes, of course, have their own "include everything header" at `<amber/classes/classes.hpp>`
+## Include Paths
+Due to a migration to a dynamic library the common `<amber/` prefix now becomes `<fryy_55.amber/include/`. For example, `#include <amber/actions/ContentTo.hpp>` will now be `#include <fryy_55.amber/include/actions/ContentTo.hpp>`
+
+Previously all _classes_ were accessible directly at the root of the amber include directory (e.g. `<amber/QuickNotification.hpp>`). Now all classes have their own subdirectory `classes/`, so the example include will become `<fryy_55.amber/include/classes/QuickNotification.hpp>` (accounting for the new include prefix). Classes, of course, have their own "include everything header" at `<fryy_55.amber/include/classes/classes.hpp>`
 
 
 # Removals
@@ -57,9 +58,6 @@ All setters now have a `bool updateLabel` parameter, which tells if the label sh
 
 ## `QuickNotification` and `ScrollTextArea`
 Color tag parsing now handles more edge cases without failing
-
-## `WideTitleV3`
-`WideTitleV3` now fully supports descriptions, adding an `i` button at the top right of the node
 
 
 # Additions

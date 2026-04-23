@@ -3,8 +3,6 @@ Finally, a repo name that isn't an acronym, waow.
 
 Offers general purpose classes/utilities I made for using in my Geode mods!
 
-Check out [cue](https://github.com/dankmeme01/cue), another Geode library!
-
 # Features
 - Actions
     - `ContentTo`
@@ -27,23 +25,19 @@ Check out [cue](https://github.com/dankmeme01/cue), another Geode library!
 See [amber documentation](docs/reference) for full reference and examples
 
 # Usage
-## Installing
-Add the following lines to your `CMakeLists.txt`:
-
-```cmake
-CPMAddPackage("gh:Fryy55/amber@2.0.0")
-target_link_libraries(${PROJECT_NAME} amber)
+Add amber as a dependency in your `mod.json`
+```json
+"dependencies": {
+    "fryy_55.amber": {
+        "version": ">=2.0.0",
+        "required": true
+    }
+}
 ```
-Replace `2.0.0` with the version you want to use.
 
-You can also use a specific tag/branch/commit of amber like this:
+After that simply include headers (e.g. `#include <fryy_55.amber/include/classes/QuickNotification.hpp>`) and use them in your mods!
 
-`CPMAddPackage("gh:Fryy55/amber#b492c63")` - tag/branch/commit hash
-
-## Using
-Simply include headers (e.g. `#include <amber/classes/QuickNotification.hpp>`) and use them in your mods!
-
-There is also a general "include everything" header (`<amber/amber.hpp>`), as well as grouped headers (e.g. `<amber/classes/classes.hpp>`).
+There is also a general "include everything" header (`<fryy_55.amber/include/amber.hpp>`), as well as grouped headers (e.g. `<fryy_55.amber/include/classes/classes.hpp>`)
 
 # Migration
 To help you migrate between major amber versions (e.g. from v1.x.x to v2.0.0) there is special [documentation](docs/migration). All relevant information is contained in files there (e.g. `V1_TO_V2.md` for v1 to v2 migration)
