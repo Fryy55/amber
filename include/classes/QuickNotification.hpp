@@ -17,7 +17,7 @@
 */
 #pragma once
 
-#include <amber/classes/ColoredLabel.hpp>
+#include "ColoredLabel.hpp"
 
 #include <cocos2d.h>
 #include <cocos-ext.h>

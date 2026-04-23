@@ -16,7 +16,7 @@
 	replace "info-alert.png"_spr with "geode.loader/info-alert.png", silence the warning
 	add `CCRemoveSelf` before `nullptr` in `hide`
 */
-#include <amber/classes/QuickNotification.hpp>
+#include "include/classes/QuickNotification.hpp"
 
 #include <Geode/loader/Mod.hpp>
 #include <Geode/ui/LoadingSpinner.hpp>

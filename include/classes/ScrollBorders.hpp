@@ -2,7 +2,7 @@
 
 #include <Geode/cocos/base_nodes/CCNode.h>
 
-#include <amber/classes/ColoredLabel.hpp>
+#include "ColoredLabel.hpp"
 
 
 namespace amber {

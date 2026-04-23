@@ -1,4 +1,4 @@
-#include <amber/classes/ColoredLabel.hpp>
+#include "include/classes/ColoredLabel.hpp"
 
 #include <stack>
 

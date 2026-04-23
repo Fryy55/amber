@@ -1,4 +1,4 @@
-#include <amber/classes/Separator.hpp>
+#include "include/classes/Separator.hpp"
 
 using namespace amber;
 using namespace geode::prelude;

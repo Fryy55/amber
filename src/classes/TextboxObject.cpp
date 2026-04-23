@@ -1,4 +1,4 @@
-#include <amber/classes/TextboxObject.hpp>
+#include "include/classes/TextboxObject.hpp"
 
 using namespace amber;
 using namespace geode::prelude;

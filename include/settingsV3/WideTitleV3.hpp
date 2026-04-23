@@ -2,7 +2,7 @@
 
 #include <Geode/loader/SettingV3.hpp>
 
-#include <amber/classes/ColoredLabel.hpp>
+#include "../classes/ColoredLabel.hpp"
 
 
 namespace amber::settingsV3 {

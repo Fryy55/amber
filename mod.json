@@ -17,6 +17,11 @@
 		"interface",
 		"utility"
 	],
+	"api": {
+		"include": [
+			"include/**/*.hpp"
+		]
+	},
 	"links": {
 		"source": "https://github.com/Fryy55/amber",
 		"community": "https://discord.com/invite/4vqtjfdhTk"

@@ -1,6 +1,6 @@
-#include <amber/classes/TextboxChain.hpp>
+#include "include/classes/TextboxChain.hpp"
 
-#include <amber/classes/ColoredLabel.hpp>
+#include "include/classes/ColoredLabel.hpp"
 
 #include <Geode/modify/DialogLayer.hpp>
 
