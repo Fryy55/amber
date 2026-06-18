@@ -1,13 +1,20 @@
 #pragma once
 
-#include <Geode/cocos/base_nodes/CCNode.h>
+#include "../_internal/common.hpp"
 
-#include "ColoredLabel.hpp"
+#include <Geode/cocos/base_nodes/CCNode.h>
 
 
 namespace amber {
 
-class ScrollBorders final : public cocos2d::CCNode {
+class AMBER_DLL ScrollBorders : public cocos2d::CCNode {
+	struct Impl;
+	std::unique_ptr<Impl> m_impl;
+
+protected:
+	ScrollBorders();
+	~ScrollBorders() override;
+
 public:
 	enum class Background : std::uint8_t {
 		Brown = 1u,
@@ -28,14 +35,14 @@ public:
 	);
 	static ScrollBorders* create(geode::ScrollLayer* childScrollLayer);
 
-private:
+protected:
 	bool init(cocos2d::CCSize const&, geode::ZStringView, geode::ZStringView);
 
 public:
 	void addBackground(Background background = Background::Brown);
 	void addBackground(geode::ZStringView sprite);
 
-private:
+protected:
 	void positionBG();
 
 public:
@@ -43,17 +50,6 @@ public:
 	void setString(geode::ZStringView title);
 
 	void setContentSize(cocos2d::CCSize const& size) override;
-
-// Fields
-private:
-	static constexpr float s_sideSpriteOffset = 15.f;
-
-	ColoredLabel* m_title;
-	geode::NineSlice* m_top;
-	geode::NineSlice* m_bottom;
-	cocos2d::extension::CCScale9Sprite* m_left;
-	cocos2d::extension::CCScale9Sprite* m_right;
-	geode::NineSlice* m_bg = nullptr;
 };
 
 } // namespace amber

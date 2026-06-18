@@ -1,7 +1,25 @@
 #include "include/classes/ScrollBorders.hpp"
 
+#include "../../include/classes/ColoredLabel.hpp"
+
 using namespace amber;
 using namespace geode::prelude;
+
+
+static constexpr float s_sideSpriteOffset = 15.f;
+
+struct ScrollBorders::Impl final {
+	ColoredLabel* title;
+	geode::NineSlice* top;
+	geode::NineSlice* bottom;
+	cocos2d::extension::CCScale9Sprite* left;
+	cocos2d::extension::CCScale9Sprite* right;
+	geode::NineSlice* bg = nullptr;
+};
+
+ScrollBorders::ScrollBorders() : m_impl(std::make_unique<Impl>()) {}
+
+ScrollBorders::~ScrollBorders() = default;
 
 
 ScrollBorders* ScrollBorders::create(CCSize const& size) {
@@ -39,26 +57,26 @@ bool ScrollBorders::init(CCSize const& size, ZStringView title, ZStringView font
 	if (!CCNode::init())
 		return false;
 
-	m_title = ColoredLabel::create(title, font);
-	m_title->setID("title");
-	this->addChild(m_title, 11);
+	m_impl->title = ColoredLabel::create(title, font);
+	m_impl->title->setID("title");
+	this->addChild(m_impl->title, 11);
 
-	m_top = NineSlice::createWithSpriteFrameName("GJ_table_top_001.png");
-	m_top->setID("top-sprite");
-	this->addChild(m_top, 10);
+	m_impl->top = NineSlice::createWithSpriteFrameName("GJ_table_top_001.png");
+	m_impl->top->setID("top-sprite");
+	this->addChild(m_impl->top, 10);
 
-	m_bottom = NineSlice::createWithSpriteFrameName("GJ_table_bottom_001.png");
-	m_bottom->setID("bottom-sprite");
-	this->addChild(m_bottom, 10);
+	m_impl->bottom = NineSlice::createWithSpriteFrameName("GJ_table_bottom_impl->001.png");
+	m_impl->bottom->setID("bottom-sprite");
+	this->addChild(m_impl->bottom, 10);
 
-	m_left = CCScale9Sprite::createWithSpriteFrameName("GJ_table_side_001.png");
-	m_left->setID("left-sprite");
-	this->addChild(m_left, 9);
+	m_impl->left = CCScale9Sprite::createWithSpriteFrameName("GJ_table_side_001.png");
+	m_impl->left->setID("left-sprite");
+	this->addChild(m_impl->left, 9);
 
-	m_right = CCScale9Sprite::createWithSpriteFrameName("GJ_table_side_001.png");
-	m_right->setRotation(180.f);
-	m_right->setID("right-sprite");
-	this->addChild(m_right, 9);
+	m_impl->right = CCScale9Sprite::createWithSpriteFrameName("GJ_table_side_001.png");
+	m_impl->right->setRotation(180.f);
+	m_impl->right->setID("right-sprite");
+	this->addChild(m_impl->right, 9);
 
 	this->setAnchorPoint({ 0.5f, 0.5f });
 	this->setContentSize(size);
@@ -75,12 +93,13 @@ void ScrollBorders::addBackground(Background background) {
 }
 
 void ScrollBorders::addBackground(ZStringView sprite) {
-	if (m_bg)
-		m_bg->removeFromParent();
+	auto bg = m_impl->bg;
+	if (bg)
+		bg->removeFromParent();
 
-	m_bg = NineSlice::create(sprite);
-	m_bg->setID("background");
-	this->addChild(m_bg, -10);
+	bg = NineSlice::create(sprite);
+	bg->setID("background");
+	this->addChild(bg, -10);
 
 	this->positionBG();
 
@@ -90,20 +109,20 @@ void ScrollBorders::addBackground(ZStringView sprite) {
 void ScrollBorders::positionBG() {
 	auto size = this->getContentSize();
 
-	m_bg->setPosition(size / 2.f);
-	m_bg->setContentSize(size - CCSize(25.f, 45.f));
+	m_impl->bg->setPosition(size / 2.f);
+	m_impl->bg->setContentSize(size - CCSize(25.f, 45.f));
 
 	return;
 }
 
 void ScrollBorders::setTitle(ZStringView title) {
-	m_title->setText(title);
+	m_impl->title->setText(title);
 
 	return;
 }
 
 void ScrollBorders::setString(ZStringView title) {
-	m_title->setString(title.c_str());
+	m_impl->title->setString(title.c_str());
 
 	return;
 }
@@ -111,22 +130,22 @@ void ScrollBorders::setString(ZStringView title) {
 void ScrollBorders::setContentSize(CCSize const& size) {
 	CCNode::setContentSize(size + CCSize(0.f, 40.f));
 
-	m_title->setPosition(size.width / 2.f, size.height + 27.f);
-	m_title->limitLabelWidth(size.width - 70.f, 0.95f, 0.1f);
+	m_impl->title->setPosition(size.width / 2.f, size.height + 27.f);
+	m_impl->title->limitLabelWidth(size.width - 70.f, 0.95f, 0.1f);
 
-	m_top->setPosition(size.width / 2.f, size.height + 19.f);
-	m_top->setContentWidth(size.width);
+	m_impl->top->setPosition(size.width / 2.f, size.height + 19.f);
+	m_impl->top->setContentWidth(size.width);
 
-	m_bottom->setPosition(size.width / 2.f, 19.f);
-	m_bottom->setContentWidth(size.width - 2.f); // adjust for side sprites
+	m_impl->bottom->setPosition(size.width / 2.f, 19.f);
+	m_impl->bottom->setContentWidth(size.width - 2.f); // adjust for side sprites
 
-	m_left->setPosition(s_sideSpriteOffset,	size.height / 2.f + 19.f);
-	m_left->setContentHeight(size.height);
+	m_impl->left->setPosition(s_sideSpriteOffset,	size.height / 2.f + 19.f);
+	m_impl->left->setContentHeight(size.height);
 
-	m_right->setPosition(size.width - s_sideSpriteOffset, size.height / 2.f + 19.f);
-	m_right->setContentHeight(size.height);
+	m_impl->right->setPosition(size.width - s_sideSpriteOffset, size.height / 2.f + 19.f);
+	m_impl->right->setContentHeight(size.height);
 
-	if (m_bg)
+	if (m_impl->bg)
 		this->positionBG();
 
 	return;
