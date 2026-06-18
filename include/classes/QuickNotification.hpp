@@ -17,6 +17,8 @@
 */
 #pragma once
 
+#include "../_internal/common.hpp"
+
 #include "ColoredLabel.hpp"
 
 #include <cocos2d.h>
@@ -26,7 +28,7 @@
 
 namespace amber {
 
-class QuickNotification : public cocos2d::CCNodeRGBA {
+class AMBER_DLL QuickNotification : public cocos2d::CCNodeRGBA {
 	class Impl;
 	std::unique_ptr<Impl> m_impl;
 protected:
