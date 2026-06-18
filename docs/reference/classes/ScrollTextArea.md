@@ -21,11 +21,11 @@ ScrollTextArea* create(
 
 ## Member
 ```c++
-[[nodiscard]] geode::ZStringView getFont() const;
+[[nodiscard]] geode::ZStringView getFont() const noexcept;
 void setFont(std::string_view bmFont, bool updateLabel = true);
-[[nodiscard]] float getFontScale() const;
+[[nodiscard]] float getFontScale() const noexcept;
 void setFontScale(float fontScale, bool updateLabel = true);
-[[nodiscard]] geode::ZStringView getText() const;
+[[nodiscard]] geode::ZStringView getText() const noexcept;
 void setText(std::string_view text, bool updateLabel = true);
 ```
 Getters/setters for font, font scale and displayed text. Set `updateLabel` to `false` if you're updating multiple different values to not re-render every time!

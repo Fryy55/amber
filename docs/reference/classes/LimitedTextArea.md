@@ -22,13 +22,13 @@ LimitedTextArea* create(
 
 ## Member
 ```c++
-[[nodiscard]] geode::ZStringView getText() const;
+[[nodiscard]] geode::ZStringView getText() const noexcept;
 void setText(geode::ZStringView text);
 ```
 Getters/setters for the displayed string. String received via the getter is **not** truncated - it's the exact string passed via `create`/`setText`. The display string is automatically truncated after calling `setText`
 
 ```c++
-[[nodiscard]] cocos2d::CCLabelBMFont* getLabel() const;
+[[nodiscard]] cocos2d::CCLabelBMFont* getLabel() const noexcept;
 ```
 Getter for the `cocos2d::CCLabelBMFont` that is used for display
 
