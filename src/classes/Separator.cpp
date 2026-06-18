@@ -4,6 +4,20 @@ using namespace amber;
 using namespace geode::prelude;
 
 
+struct Separator::Impl final {
+	cocos2d::CCLayerGradient* leftGradient;
+	cocos2d::CCLayerColor* middle;
+	cocos2d::CCLayerGradient* rightGradient;
+	float fadeLength;
+	cocos2d::ccColor3B color;
+	GLubyte opacity = 255u;
+};
+
+Separator::Separator() : m_impl(std::make_unique<Impl>()) {}
+
+Separator::~Separator() = default;
+
+
 Separator* Separator::create(ccColor3B const& color, float fadeLength, float totalLength, float width) {
 	auto ret = new Separator;
 
@@ -20,73 +34,92 @@ bool Separator::init(ccColor3B const& color, float fadeLength, float totalLength
 	if (!CCNodeRGBA::init())
 		return false;
 
-	m_fadeLength = fadeLength;
-	m_color = color;
+	m_impl->fadeLength = fadeLength;
+	m_impl->color = color;
 
 	this->setAnchorPoint({ 0.5f, 0.5f });
 
-	auto color4B = to4B(m_color);
+	auto color4B = to4B(color);
 
-	m_leftGradient = CCLayerGradient::create(color4B, {}, { -1.f, 0.f });
-	m_leftGradient->setID("left-gradient");
-	m_middle = CCLayerColor::create(color4B);
-	m_middle->setID("middle");
-	m_rightGradient = CCLayerGradient::create(color4B, {}, { 1.f, 0.f });
-	m_rightGradient->setID("right-gradient");
 
-	this->addChild(m_leftGradient);
-	this->addChild(m_middle);
-	this->addChild(m_rightGradient);
+	auto leftGradient = m_impl->leftGradient;
+	auto middle = m_impl->middle;
+	auto rightGradient = m_impl->rightGradient;
+
+	leftGradient = CCLayerGradient::create(color4B, {}, { -1.f, 0.f });
+	leftGradient->setID("left-gradient");
+	middle = CCLayerColor::create(color4B);
+	middle->setID("middle");
+	rightGradient = CCLayerGradient::create(color4B, {}, { 1.f, 0.f });
+	rightGradient->setID("right-gradient");
+
+	this->addChild(leftGradient);
+	this->addChild(middle);
+	this->addChild(rightGradient);
 
 	this->setContentSize({ totalLength, width });
 
 	return true;
 }
 
+
 void Separator::setContentSize(CCSize const& size) {
 	CCNodeRGBA::setContentSize(size);
 
 	auto width = size.width;
 	auto height = size.height;
+	auto fadeLengthMember = m_impl->fadeLength;
 
-	bool addMiddle = m_fadeLength * 2.f < width;
-	float middleLength = addMiddle ? width - m_fadeLength * 2.f : 0.f;
-	float fadeLength = addMiddle ? m_fadeLength : width / 2.f;
+	bool addMiddle = fadeLengthMember * 2.f < width;
+	float middleLength = addMiddle ? width - fadeLengthMember * 2.f : 0.f;
+	float fadeLength = addMiddle ? fadeLengthMember : width / 2.f;
 
-	m_leftGradient->setContentSize({ fadeLength, height });
-	m_middle->setContentSize({ middleLength, height });
-	m_rightGradient->setContentSize({ fadeLength, height });
+	m_impl->leftGradient->setContentSize({ fadeLength, height });
+	m_impl->middle->setContentSize({ middleLength, height });
+	m_impl->rightGradient->setContentSize({ fadeLength, height });
 
-	m_middle->setPositionX(fadeLength);
-	m_rightGradient->setPositionX(fadeLength + middleLength);
+	m_impl->middle->setPositionX(fadeLength);
+	m_impl->rightGradient->setPositionX(fadeLength + middleLength);
 
 	return;
 }
 
+float Separator::getFadeLength() const noexcept {
+	return m_impl->fadeLength;
+}
+
 void Separator::setFadeLength(float fadeLength) {
-	m_fadeLength = fadeLength;
+	m_impl->fadeLength = fadeLength;
 
 	this->setContentSize(this->getContentSize());
 
 	return;
 }
 
-void Separator::setColor(ccColor3B const& color) {
-	m_color = color;
+ccColor3B const& Separator::getColor() noexcept {
+	return m_impl->color;
+}
 
-	m_leftGradient->setStartColor(color);
-	m_middle->setColor(color);
-	m_rightGradient->setStartColor(color);
+void Separator::setColor(ccColor3B const& color) {
+	m_impl->color = color;
+
+	m_impl->leftGradient->setStartColor(color);
+	m_impl->middle->setColor(color);
+	m_impl->rightGradient->setStartColor(color);
 
 	return;
 }
 
-void Separator::setOpacity(GLubyte opacity) {
-	m_opacity = opacity;
+GLubyte Separator::getOpacity() noexcept {
+	return m_impl->opacity;
+}
 
-	m_leftGradient->setStartOpacity(opacity);
-	m_middle->setOpacity(opacity);
-	m_rightGradient->setStartOpacity(opacity);
+void Separator::setOpacity(GLubyte opacity) {
+	m_impl->opacity = opacity;
+
+	m_impl->leftGradient->setStartOpacity(opacity);
+	m_impl->middle->setOpacity(opacity);
+	m_impl->rightGradient->setStartOpacity(opacity);
 
 	return;
 }
