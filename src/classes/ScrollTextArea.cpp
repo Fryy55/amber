@@ -4,6 +4,25 @@ using namespace amber;
 using namespace geode::prelude;
 
 
+static constexpr float s_totalScrollLayerOffset = 15.f;
+
+struct ScrollTextArea::Impl final {
+	std::string font;
+	std::string text;
+	geode::ScrollLayer* scrollLayer;
+	cocos2d::CCMenu* contentMenu;
+	geode::TextRenderer* textRenderer;
+	cocos2d::CCSize size;
+	float fontScale;
+};
+
+ScrollTextArea::ScrollTextArea() : m_impl(std::make_unique<Impl>()) {}
+
+ScrollTextArea::~ScrollTextArea() {
+	m_impl->textRenderer->release();
+}
+
+
 ScrollTextArea* ScrollTextArea::create(
 	std::string_view text,
 	cocos2d::CCSize const& size,
@@ -32,12 +51,12 @@ bool ScrollTextArea::init(
 	if (!CCNode::init())
 		return false;
 
-	m_fontScale = fontScale;
-	m_font = font;
-	m_text = text;
-	m_size = size - CCSize(s_totalScrollLayerOffset, 0.f);
-	m_textRenderer = TextRenderer::create();
-	m_textRenderer->retain();
+	m_impl->fontScale = fontScale;
+	m_impl->font = font;
+	m_impl->text = text;
+	m_impl->size = size - CCSize(s_totalScrollLayerOffset, 0.f);
+	m_impl->textRenderer = TextRenderer::create();
+	m_impl->textRenderer->retain();
 
 
 	this->setContentSize(size);
@@ -53,16 +72,16 @@ bool ScrollTextArea::init(
 	this->addChildAtPosition(bg, Anchor::Center);
 
 
-	m_scrollLayer = ScrollLayer::create(m_size);
+	auto scrollLayer = m_impl->scrollLayer = ScrollLayer::create(m_impl->size);
 
-	m_contentMenu = CCMenu::create();
-	m_contentMenu->setID("scroll-menu");
+	auto contentMenu = m_impl->contentMenu = CCMenu::create();
+	contentMenu->setID("scroll-menu");
 
-	m_scrollLayer->m_contentLayer->addChild(m_contentMenu);
+	scrollLayer->m_contentLayer->addChild(contentMenu);
 
-	m_scrollLayer->setID("scroll-layer");
-	this->addChildAtPosition(m_scrollLayer, Anchor::Center);
-	m_scrollLayer->setPosition(s_totalScrollLayerOffset / 2.f, 0.f);
+	scrollLayer->setID("scroll-layer");
+	this->addChildAtPosition(scrollLayer, Anchor::Center);
+	scrollLayer->setPosition(s_totalScrollLayerOffset / 2.f, 0.f);
 
 
 
@@ -71,30 +90,39 @@ bool ScrollTextArea::init(
 	return true;
 }
 
-ScrollTextArea::~ScrollTextArea() {
-	m_textRenderer->release();
+
+ZStringView ScrollTextArea::getFont() const noexcept {
+	return m_impl->font;
 }
 
 void ScrollTextArea::setFont(std::string_view bmFont, bool updateLabel) {
-	m_font = bmFont;
+	m_impl->font = bmFont;
 
 	if (updateLabel)
 		this->updateLabel();
 
 	return;
+}
+
+float ScrollTextArea::getFontScale() const noexcept {
+	return m_impl->fontScale;
 }
 
 void ScrollTextArea::setFontScale(float fontScale, bool updateLabel) {
-	m_fontScale = fontScale;
+	m_impl->fontScale = fontScale;
 
 	if (updateLabel)
 		this->updateLabel();
 
 	return;
+}
+
+ZStringView ScrollTextArea::getText() const noexcept {
+	return m_impl->text;
 }
 
 void ScrollTextArea::setText(std::string_view text, bool updateLabel) {
-	m_text = text;
+	m_impl->text = text;
 
 	if (updateLabel)
 		this->updateLabel();
@@ -102,58 +130,65 @@ void ScrollTextArea::setText(std::string_view text, bool updateLabel) {
 	return;
 }
 
-void ScrollTextArea::updateLabel() {
-	m_textRenderer->begin(m_contentMenu, { 0.f, 0.f }, m_size);
 
-	m_textRenderer->pushBMFont(m_font.c_str());
-	m_textRenderer->pushScale(m_fontScale);
+void ScrollTextArea::updateLabel() {
+	auto textRenderer = m_impl->textRenderer;
+	auto contentMenu = m_impl->contentMenu;
+	auto scrollLayer = m_impl->scrollLayer;
+
+	textRenderer->begin(contentMenu, { 0.f, 0.f }, m_impl->size);
+
+	textRenderer->pushBMFont(m_impl->font.c_str());
+	textRenderer->pushScale(m_impl->fontScale);
 
 	if (!this->parseAndRenderText()) {
-		m_textRenderer->end();
+		textRenderer->end();
 
 		this->setText("<cr>Failed to parse text.</c>"); // it will not recurse trust :pray:
 		return;
 	}
 
-	m_textRenderer->end();
+	textRenderer->end();
 
 
 	// this is just straight up stolen impl but it works flawlessly so yeah
-	if (m_contentMenu->getContentSize().height > m_size.height) {
-		m_scrollLayer->m_contentLayer->setContentSize(
-			m_contentMenu->getContentSize() + CCSize(0.f, 12.5f)
+	if (contentMenu->getContentSize().height > m_impl->size.height) {
+		scrollLayer->m_contentLayer->setContentSize(
+			contentMenu->getContentSize() + CCSize(0.f, 12.5f)
 		);
-		m_contentMenu->setPositionY(10.f);
+		contentMenu->setPositionY(10.f);
 	} else {
-		m_scrollLayer->m_contentLayer->setContentSize(m_contentMenu->getContentSize());
-		m_contentMenu->setPositionY(-2.5f);
+		scrollLayer->m_contentLayer->setContentSize(contentMenu->getContentSize());
+		contentMenu->setPositionY(-2.5f);
 	}
 
-	m_scrollLayer->scrollToTop();
+	scrollLayer->scrollToTop();
 
 	return;
 }
 
 bool ScrollTextArea::parseAndRenderText() {
 	std::string buffer = "";
-	std::size_t textSize = m_text.size();
+	auto const& text = m_impl->text;
+	std::size_t textSize = text.size();
+	auto textRenderer = m_impl->textRenderer;
 
 	for (std::size_t i = 0u; i < textSize; ++i) {
-		char c = m_text[i];
+		char c = text[i];
 		if (c == '<') {
 			if (i + 1 >= textSize)
 				goto skip;
 
-			m_textRenderer->renderString(buffer);
+			textRenderer->renderString(buffer);
 			buffer.clear();
 
-			if (char c1 = m_text[i + 1]; c1 == 'c') {
+			if (char c1 = text[i + 1]; c1 == 'c') {
 				auto tagOpt = collectTag(i);
 				if (!tagOpt)
 					return false;
 				auto const& tag = tagOpt.value();
 
-				m_textRenderer->pushColor(colorForTag(tag));
+				textRenderer->pushColor(colorForTag(tag));
 
 				// v
 				// <cg>
@@ -172,7 +207,7 @@ bool ScrollTextArea::parseAndRenderText() {
 				if (tag != "c")
 					goto skip; // safe equivalent of `c1 == '/' && tag == "c"` in `if`
 
-				m_textRenderer->popColor();
+				textRenderer->popColor();
 
 				// v
 				// </c>
@@ -190,21 +225,21 @@ bool ScrollTextArea::parseAndRenderText() {
 		buffer.append(1, c);
 	}
 
-	m_textRenderer->renderString(buffer);
+	textRenderer->renderString(buffer);
 
 	return true;
 }
 
 std::optional<std::string> ScrollTextArea::collectTag(std::size_t curPos) {
 	std::string colorTag = "";
-	auto textSize = m_text.size();
+	auto textSize = m_impl->text.size();
 
 	for (std::size_t offset = 2u;; ++offset) {
 		if (curPos + offset >= textSize)
 			return std::nullopt;
 
 		// replace the `for` condition
-		if (auto c = m_text[curPos + offset]; c == '>')
+		if (auto c = m_impl->text[curPos + offset]; c == '>')
 			break;
 		else
 			colorTag.append(1, c);
