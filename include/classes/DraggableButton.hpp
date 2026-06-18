@@ -1,11 +1,20 @@
 #pragma once
 
+#include "../_internal/common.hpp"
+
 #include <Geode/ui/Button.hpp>
 
 
 namespace amber {
 
-class DraggableButton final : public geode::Button {
+class AMBER_DLL DraggableButton : public geode::Button {
+	struct Impl;
+	std::unique_ptr<Impl> m_impl;
+
+protected:
+	DraggableButton();
+	~DraggableButton() override;
+
 public:
 	using ActivateCallback = geode::Function<void(DraggableButton* sender)>;
 	using DragStartedCallback = geode::Function<void(DraggableButton* self)>;
@@ -33,7 +42,7 @@ public:
 		ActivateCallback callback
 	);
 
-private:
+protected:
 	bool init(cocos2d::CCSprite*, ActivateCallback&);
 	bool init(geode::ZStringView, ActivateCallback&);
 	bool init(geode::ZStringView, geode::ZStringView, ActivateCallback&);
@@ -41,24 +50,24 @@ private:
 	bool commonInit();
 
 public:
-	[[nodiscard]] float getDelay() const noexcept { return m_delay; }
-	void setDelay(float delay) noexcept { m_delay = delay; }
-	[[nodiscard]] bool getSnap() const noexcept { return m_snap; }
-	void setSnap(bool snap) noexcept { m_snap = snap; }
-	[[nodiscard]] cocos2d::CCRect getArea() const noexcept { return m_area; }
+	[[nodiscard]] float getDelay() const noexcept;
+	void setDelay(float delay) noexcept;
+	[[nodiscard]] bool getSnap() const noexcept;
+	void setSnap(bool snap) noexcept;
+	[[nodiscard]] cocos2d::CCRect getArea() const noexcept;
 	[[nodiscard]] bool setArea(Area area);
 	[[nodiscard]] bool setArea(cocos2d::CCNode* node);
-	void setAreaRaw(cocos2d::CCRect const& area) noexcept { m_area = area; }
+	void setAreaRaw(cocos2d::CCRect const& area) noexcept;
 
-	void setDragStartedCallback(DragStartedCallback callback) { m_dragStartedCallback = std::move(callback); }
-	void setDragCallback(DragCallback callback) { m_dragCallback = std::move(callback); }
-	void setReleaseCallback(ReleaseCallback callback) { m_releaseCallback = std::move(callback); }
+	void setDragStartedCallback(DragStartedCallback callback);
+	void setDragCallback(DragCallback callback);
+	void setReleaseCallback(ReleaseCallback callback);
 
 	void activate() override;
 	void selected() override;
 	void unselected() override;
 
-private:
+protected:
 	bool ccTouchBegan(cocos2d::CCTouch*, cocos2d::CCEvent*) override;
 	void startDrag(float);
 
@@ -67,20 +76,6 @@ private:
 	void ccTouchEnded(cocos2d::CCTouch*, cocos2d::CCEvent*) override;
 	void ccTouchCancelled(cocos2d::CCTouch*, cocos2d::CCEvent*) override;
 	void dragReleased();
-
-// Fields
-private:
-	static constexpr cocos2d::CCRect s_noLimitRect{ -1.f, -1.f, 0.f, 0.f };
-	static inline DraggableButton* s_draggedButton = nullptr;
-	static inline cocos2d::CCTouch* s_lastTouch = nullptr;
-
-	DragStartedCallback m_dragStartedCallback{};
-	DragCallback m_dragCallback{};
-	ReleaseCallback m_releaseCallback{};
-	cocos2d::CCRect m_area;
-	cocos2d::CCPoint m_lastValidPoint{ 0.f, 0.f };
-	float m_delay = 0.5f;
-	bool m_snap = true;
 };
 
 } // namespace amber

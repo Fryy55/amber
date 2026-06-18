@@ -6,6 +6,25 @@ using namespace amber;
 using namespace geode::prelude;
 
 
+static constexpr cocos2d::CCRect s_noLimitRect{ -1.f, -1.f, 0.f, 0.f };
+static DraggableButton* s_draggedButton = nullptr;
+static cocos2d::CCTouch* s_lastTouch = nullptr;
+
+struct DraggableButton::Impl final {
+	DragStartedCallback dragStartedCallback{};
+	DragCallback dragCallback{};
+	ReleaseCallback releaseCallback{};
+	cocos2d::CCRect area;
+	cocos2d::CCPoint lastValidPoint{ 0.f, 0.f };
+	float delay = 0.5f;
+	bool snap = true;
+};
+
+DraggableButton::DraggableButton() : m_impl(std::make_unique<Impl>()) {}
+
+DraggableButton::~DraggableButton() = default;
+
+
 DraggableButton* DraggableButton::create(
 	CCSprite* sprite,
 	ActivateCallback callback
@@ -103,14 +122,39 @@ bool DraggableButton::commonInit() {
 	return true;
 }
 
+
+float DraggableButton::getDelay() const noexcept {
+	return m_impl->delay;
+}
+
+void DraggableButton::setDelay(float delay) noexcept {
+	m_impl->delay = delay;
+
+	return;
+}
+
+bool DraggableButton::getSnap() const noexcept {
+	return m_impl->snap;
+}
+
+void DraggableButton::setSnap(bool snap) noexcept {
+	m_impl->snap = snap;
+
+	return;
+}
+
+CCRect DraggableButton::getArea() const noexcept {
+	return m_impl->area;
+}
+
 bool DraggableButton::setArea(Area area) {
 	switch (area) {
 		case Area::NoLimit:
-			m_area = s_noLimitRect;
+			m_impl->area = s_noLimitRect;
 			return true;
 
 		case Area::Screen:
-			m_area = { { 0.f, 0.f }, CCDirector::get()->getWinSize() };
+			m_impl->area = { { 0.f, 0.f }, CCDirector::get()->getWinSize() };
 			return true;
 
 		case Area::Parent:
@@ -125,10 +169,35 @@ bool DraggableButton::setArea(CCNode* node) {
 	if (!node)
 		return false;
 
-	m_area = utils::convertBoxToWorldSpace(node);
+	m_impl->area = utils::convertBoxToWorldSpace(node);
 
 	return true;
 }
+
+void DraggableButton::setAreaRaw(CCRect const& area) noexcept {
+	m_impl->area = area;
+
+	return;
+}
+
+void DraggableButton::setDragStartedCallback(DragStartedCallback callback) {
+	m_impl->dragStartedCallback = std::move(callback);
+
+	return;
+}
+
+void DraggableButton::setDragCallback(DragCallback callback) {
+	m_impl->dragCallback = std::move(callback);
+
+	return;
+}
+
+void DraggableButton::setReleaseCallback(ReleaseCallback callback) {
+	m_impl->releaseCallback = std::move(callback);
+
+	return;
+}
+
 
 void DraggableButton::activate() {
 	// gode::Button resets pos on activate for some reason
@@ -144,7 +213,7 @@ void DraggableButton::activate() {
 void DraggableButton::selected() {
 	Button::selected();
 
-	this->scheduleOnce(schedule_selector(DraggableButton::startDrag), m_delay);
+	this->scheduleOnce(schedule_selector(DraggableButton::startDrag), m_impl->delay);
 
 	return;
 }
@@ -166,11 +235,11 @@ bool DraggableButton::ccTouchBegan(CCTouch* touch, CCEvent* event) {
 void DraggableButton::startDrag(float) {
 	s_draggedButton = this;
 
-	if (auto parent = this->getParent(); m_snap && parent)
+	if (auto parent = this->getParent(); m_impl->snap && parent)
 		this->setPosition(parent->convertTouchToNodeSpace(s_lastTouch));
 
-	if (m_dragStartedCallback)
-		m_dragStartedCallback(this);
+	if (m_impl->dragStartedCallback)
+		m_impl->dragStartedCallback(this);
 
 	return;
 }
@@ -185,8 +254,8 @@ void DraggableButton::ccTouchMoved(CCTouch* touch, CCEvent* event) {
 		return;
 
 	auto pos = btn->getPosition();
-	if (utils::rectContains(btn->m_area, utils::convertBoxToWorldSpace(btn)))
-		btn->m_lastValidPoint = pos;
+	if (utils::rectContains(btn->m_impl->area, utils::convertBoxToWorldSpace(btn)))
+		btn->m_impl->lastValidPoint = pos;
 	if (auto parent = btn->getParent()) {
 		btn->setPosition(
 			parent->convertToNodeSpace(
@@ -197,8 +266,8 @@ void DraggableButton::ccTouchMoved(CCTouch* touch, CCEvent* event) {
 		);
 	}
 
-	if (btn->m_dragCallback)
-		btn->m_dragCallback(btn, touch);
+	if (btn->m_impl->dragCallback)
+		btn->m_impl->dragCallback(btn, touch);
 
 	return;
 }
@@ -229,13 +298,13 @@ void DraggableButton::dragReleased() {
 	s_draggedButton = nullptr;
 
 	if (
-		m_area != s_noLimitRect
+		m_impl->area != s_noLimitRect
 		&&
-		!utils::rectContains(m_area, utils::convertBoxToWorldSpace(this))
-	) this->setPosition(m_lastValidPoint);
+		!utils::rectContains(m_impl->area, utils::convertBoxToWorldSpace(this))
+	) this->setPosition(m_impl->lastValidPoint);
 
-	if (m_releaseCallback)
-		m_releaseCallback(this);
+	if (m_impl->releaseCallback)
+		m_impl->releaseCallback(this);
 
 	return;
 }
