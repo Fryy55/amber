@@ -1,11 +1,20 @@
 #pragma once
 
+#include "../_internal/common.hpp"
+
 #include <Geode/cocos/base_nodes/CCNode.h>
 
 
 namespace amber {
 
-class LimitedTextArea final : public cocos2d::CCNode {
+class AMBER_DLL LimitedTextArea : public cocos2d::CCNode {
+	struct Impl;
+	std::unique_ptr<Impl> m_impl;
+
+protected:
+	LimitedTextArea();
+	~LimitedTextArea() override;
+
 public:
 	static LimitedTextArea* create(
 		cocos2d::CCSize const& size,
@@ -16,7 +25,7 @@ public:
 		cocos2d::ccColor4B const& bgColor = { .r=0u, .g=0u, .b=0u, .a=90u }
 	);
 
-private:
+protected:
 	bool init(
 		cocos2d::CCSize const&,
 		geode::ZStringView,
@@ -27,20 +36,14 @@ private:
 	);
 
 public:
-	[[nodiscard]] geode::ZStringView getText() const { return m_text; }
+	[[nodiscard]] geode::ZStringView getText() const noexcept;
 	void setText(geode::ZStringView text);
-	[[nodiscard]] cocos2d::CCLabelBMFont* getLabel() const { return m_textLabel; }
+	[[nodiscard]] cocos2d::CCLabelBMFont* getLabel() const noexcept;
 
 	void setContentSize(cocos2d::CCSize const& size) override;
 
-private:
+protected:
 	void updateLabelWidth();
-
-	// Fields
-	geode::NineSlice* m_bg;
-	std::string m_text;
-	cocos2d::CCLabelBMFont* m_textLabel;
-	std::size_t m_charLimit;
 };
 
 } // namespace amber
