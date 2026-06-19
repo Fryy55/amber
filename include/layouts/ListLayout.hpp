@@ -1,18 +1,20 @@
 #pragma once
 
+#include "../_internal/common.hpp"
+
 #include <Geode/ui/Layout.hpp>
 
 
 namespace amber::layouts {
 
-class ListLayout final : public geode::AxisLayout {
-private:
+class AMBER_DLL ListLayout : public geode::AxisLayout {
+protected:
 	ListLayout();
 
 public:
 	static ListLayout* create(float scrollLayerHeight, float gap = 0.f);
 
-private:
+protected:
 	bool init(float, float);
 };
 
