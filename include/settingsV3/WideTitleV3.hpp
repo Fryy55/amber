@@ -1,13 +1,20 @@
 #pragma once
 
-#include <Geode/loader/SettingV3.hpp>
+#include "../_internal/common.hpp"
 
-#include "../classes/ColoredLabel.hpp"
+#include <Geode/loader/SettingV3.hpp>
 
 
 namespace amber::settingsV3 {
 
-class WideTitleV3 : public geode::SettingV3 {
+class AMBER_DLL WideTitleV3 : public geode::SettingV3 {
+	struct Impl;
+	std::unique_ptr<Impl> m_impl;
+
+public:
+	WideTitleV3();
+	~WideTitleV3() override;
+
 public:
 	static geode::Result<std::shared_ptr<geode::SettingV3>> parse(
 		std::string const&,
@@ -22,15 +29,18 @@ public:
 	void reset() override {}
 
 	geode::SettingNodeV3* createNode(float) override;
-
-protected:
-	// Fields
-	float m_padding = 10.f;
-	std::string m_font = "goldFont.fnt";
 };
 
 
-class WideTitleNodeV3 : public geode::SettingNodeV3 {
+
+class AMBER_DLL WideTitleNodeV3 : public geode::SettingNodeV3 {
+	struct Impl;
+	std::unique_ptr<Impl> m_impl;
+
+protected:
+	WideTitleNodeV3();
+	~WideTitleNodeV3() override;
+
 public:
 	static WideTitleNodeV3* create(std::shared_ptr<WideTitleV3> const&, float, float, char const*);
 
@@ -45,13 +55,6 @@ public:
 
 	[[nodiscard]] bool hasUncommittedChanges() const override { return false; }
 	[[nodiscard]] bool hasNonDefaultValue() const override { return false; }
-
-protected:
-	// Fields
-	static constexpr float s_statusBGPaddingWidth = 10.f;
-
-	amber::ColoredLabel* m_label;
-	geode::NineSlice* m_statusBG;
 };
 
 } // namespace amber::settingsV3

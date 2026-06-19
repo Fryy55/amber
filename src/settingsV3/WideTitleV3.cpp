@@ -1,10 +1,22 @@
 #include "include/settingsV3/WideTitleV3.hpp"
 
+#include "../../include/classes/ColoredLabel.hpp"
+
 using namespace amber::settingsV3;
 using namespace geode::prelude;
 
 
 //* Setting
+struct WideTitleV3::Impl final {
+	std::string font{ "goldFont.fnt" };
+	float padding = 10.f;
+};
+
+WideTitleV3::WideTitleV3() : m_impl(std::make_unique<Impl>()) {}
+
+WideTitleV3::~WideTitleV3() = default;
+
+
 Result<std::shared_ptr<SettingV3>> WideTitleV3::parse(
 	std::string const& key,
 	std::string const& modID,
@@ -16,8 +28,8 @@ Result<std::shared_ptr<SettingV3>> WideTitleV3::parse(
 	ret->init(key, modID);
 	ret->parseNameAndDescription(root);
 	ret->parseEnableIf(root);
-	root.has("padding").into(ret->m_padding);
-	root.has("font").into(ret->m_font);
+	root.has("padding").into(ret->m_impl->padding);
+	root.has("font").into(ret->m_impl->font);
 
 	return root.ok(std::static_pointer_cast<SettingV3>(ret));
 }
@@ -26,12 +38,25 @@ SettingNodeV3* WideTitleV3::createNode(float width) {
 	return WideTitleNodeV3::create(
 		std::static_pointer_cast<WideTitleV3>(shared_from_this()),
 		width,
-		m_padding,
-		m_font.c_str()
+		m_impl->padding,
+		m_impl->font.c_str()
 	);
 }
 
+
+
 //* SettingNode
+static constexpr float s_statusBGPaddingWidth = 10.f;
+
+struct WideTitleNodeV3::Impl final {
+	amber::ColoredLabel* label;
+	geode::NineSlice* statusBG;
+};
+
+WideTitleNodeV3::WideTitleNodeV3() : m_impl(std::make_unique<Impl>()) {}
+
+WideTitleNodeV3::~WideTitleNodeV3() = default;
+
 WideTitleNodeV3* WideTitleNodeV3::create(
 	std::shared_ptr<WideTitleV3> const& setting,
 	float width,
@@ -63,14 +88,14 @@ bool WideTitleNodeV3::init(
 
 	float menuCW = this->getContentWidth() - padding * 2.f;
 
-	m_label = ColoredLabel::create(this->getSetting()->getDisplayName(), font);
-	m_label->limitLabelWidth(menuCW, 5.f, 0.1f);
+	auto label = m_impl->label = ColoredLabel::create(this->getSetting()->getDisplayName(), font);
+	label->limitLabelWidth(menuCW, 5.f, 0.1f);
 
 	menu->setPositionX(padding);
 	menu->setAnchorPoint({ 0.f, 0.5f });
 	menu->setContentWidth(menuCW);
 
-	menu->addChildAtPosition(m_label, Anchor::Center);
+	menu->addChildAtPosition(label, Anchor::Center);
 
 	if (auto descBtn = this->getDescriptionButton()) {
 		descBtn->removeFromParent();
@@ -81,16 +106,16 @@ bool WideTitleNodeV3::init(
 	statusLabel->setPositionY(7.f);
 	statusLabel->setZOrder(7);
 
-	m_statusBG = NineSlice::create("square02b_small.png");
-	m_statusBG->setPosition(
+	auto statusBG = m_impl->statusBG = NineSlice::create("square02b_small.png");
+	statusBG->setPosition(
 		statusLabel->getPosition()
 		-
 		CCPoint{ s_statusBGPaddingWidth / 2.f, 0.f }
 	);
-	m_statusBG->setAnchorPoint({ 0.f, 0.5f });
-	m_statusBG->setColor({ .r=0u, .g=0u, .b=0u });
-	m_statusBG->setOpacity(120u);
-	this->addChild(m_statusBG, 6);
+	statusBG->setAnchorPoint({ 0.f, 0.5f });
+	statusBG->setColor({ .r=0u, .g=0u, .b=0u });
+	statusBG->setOpacity(120u);
+	this->addChild(statusBG, 6);
 
 	this->updateState(nullptr);
 
@@ -102,12 +127,12 @@ void WideTitleNodeV3::updateState(CCNode* invoker) {
 
 	bool shouldEnable = this->getSetting()->shouldEnable();
 
-	m_label->setColor(
+	m_impl->label->setColor(
 		shouldEnable ? ccc3(255, 255, 255) : ccc3(166, 166, 166)
 	);
 
-	m_statusBG->setVisible(!shouldEnable);
-	m_statusBG->setContentSize(
+	m_impl->statusBG->setVisible(!shouldEnable);
+	m_impl->statusBG->setContentSize(
 		this->getStatusLabel()->getScaledContentSize()
 		+
 		CCSize{ s_statusBGPaddingWidth, 5.f }
