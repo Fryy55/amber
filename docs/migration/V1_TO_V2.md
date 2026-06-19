@@ -29,11 +29,11 @@ Prior to v2, amber added all its namespaces into `geode::prelude`. This was hand
 ## Include Paths
 Due to a migration to a dynamic library the common `<amber/` prefix now becomes `<fryy_55.amber/include/`. For example, `#include <amber/actions/ContentTo.hpp>` will now be `#include <fryy_55.amber/include/actions/ContentTo.hpp>`
 
-Previously all _classes_ were accessible directly at the root of the amber include directory (e.g. `<amber/QuickNotification.hpp>`). Now all classes have their own subdirectory `classes/`, so the example include will become `<fryy_55.amber/include/classes/QuickNotification.hpp>` (accounting for the new include prefix). Classes, of course, have their own "include everything header" at `<fryy_55.amber/include/classes/classes.hpp>`
+Previously all _classes_ were accessible directly at the root of the amber include directory (e.g. `<amber/QuickNotification.hpp>`). Now all classes have their own subdirectory (`classes/`), so the example include will become `<fryy_55.amber/include/classes/QuickNotification.hpp>` (accounting for the new include prefix). Classes, of course, have their own "include everything" header at `<fryy_55.amber/include/classes/classes.hpp>`
 
 
 # Removals
-Random utilities (`random.hpp`) and `Padding` classes have been removed entirely due to Geode counterparts existing in v5. You can find them in `geode::utils` and `geode::Layout` scopes respectively
+Random utilities (`random.hpp`) and the `Padding` class have been removed entirely due to Geode counterparts existing in v5. You can find them in `geode::utils` and `geode::Layout` scopes respectively
 
 
 # API Changes
@@ -65,4 +65,4 @@ Color tag parsing now handles more edge cases without failing
 
 
 # Additions
-4 new classes ([ColoredLabel](../reference/classes/ColoredLabel.md), [DraggableButton](../reference/classes/DraggableButton.md), [TextboxObject](../reference/classes/TextboxObject.md) and [TextboxChain](../reference/classes/TextboxChain.md)) and new utilities ([geometry.hpp](../reference/utils/geometry.md)) have been added. You can read their short descriptions in the README.md and their detailed API by in the links above
+4 new classes ([ColoredLabel](../reference/classes/ColoredLabel.md), [DraggableButton](../reference/classes/DraggableButton.md), [TextboxObject](../reference/classes/TextboxObject.md) and [TextboxChain](../reference/classes/TextboxChain.md)) and new utilities ([geometry.hpp](../reference/utils/geometry.md)) have been added. You can read their short descriptions in the README.md and their detailed API following the links above

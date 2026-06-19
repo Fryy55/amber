@@ -1,7 +1,7 @@
 # amber
 <c-db91ed>My collection of general purpose classes/utilities for Geode</c>
 
-<cl>Note that this mod does <cj>nothing</c> by itself! It is a <co>library</c> that is supposed to be used by other <cc>developers</c> for their mods!</c>
+### <cl>Note that this mod does <cr>nothing</c> by itself! It is a <co>library</c> that is supposed to be used by other <cc>developers</c> for their mods!</c>
 
 ## Features
 See [README.md](https://github.com/Fryy55/amber/blob/main/README.md) for a more detailed description and usage, and [docs](https://github.com/Fryy55/amber/tree/main/docs/reference) for a full per-class/header reference
