@@ -19,7 +19,7 @@ void TextboxChain::show(
 	else
 		this->animateIn(static_cast<DialogAnimationType>(startAnimation));
 
-	OverlayManager::get()->addChild(this, 5555);
+	OverlayManager::get()->addChild(this, CCScene::get()->getHighestChildZ());
 
 	return;
 }
@@ -38,11 +38,11 @@ struct HDialogLayer final : Modify<HDialogLayer, DialogLayer> {
 	void displayDialogObject(DialogObject* object) {
 		DialogLayer::displayDialogObject(object);
 
-		if (!this->getUserFlag("amber-instance"_spr))
+		if (!typeinfo_cast<TextboxChain*>(this))
 			return;
 
 
-		log::debug("[amber] amber::TextboxObject shown (from {})", Mod::get()->getID());
+		log::info("amber::TextboxObject shown");
 
 		auto obj = static_cast<TextboxObject*>(object);
 
@@ -53,7 +53,7 @@ struct HDialogLayer final : Modify<HDialogLayer, DialogLayer> {
 		label->setColor(obj->m_color);
 		label->setText(obj->m_character);
 		label->setAnchorPoint(m_characterLabel->getAnchorPoint());
-		label->setID("amber/custom-label");
+		label->setID("custom-label"_spr);
 
 		m_mainLayer->addChild(label, m_characterLabel->getZOrder());
 		m_characterLabel->removeFromParent();
@@ -80,7 +80,7 @@ struct HDialogLayer final : Modify<HDialogLayer, DialogLayer> {
 			sprite->setScaleY(
 				scaledCS.height / sprite->getContentHeight() * obj->m_spriteScaleY
 			);
-			sprite->setID("amber/custom-sprite");
+			sprite->setID("custom-sprite"_spr);
 
 			m_mainLayer->addChild(sprite, m_characterSprite->getZOrder());
 			m_characterSprite->removeFromParent();

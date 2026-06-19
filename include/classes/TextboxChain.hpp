@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../_internal/common.hpp"
+
 #include <Geode/binding/DialogLayer.hpp>
 
 #include "TextboxObject.hpp"
@@ -7,7 +9,7 @@
 
 namespace amber {
 
-class TextboxChain final : public DialogLayer {
+class AMBER_DLL TextboxChain : public DialogLayer {
 public:
 	enum class Background : std::uint8_t {
 		Brown = 1u,
@@ -53,16 +55,13 @@ public:
 		return nullptr;
 	}
 
-private:
+protected:
 	template <typename ...TextboxObjects>
 	bool init(
 		Background background,
 		TextboxObject* object,
 		TextboxObjects... objects
 	) {
-		// init calls displayDialogObject so we set the flag early
-		this->setUserFlag("amber-instance"_spr);
-
 		if constexpr (sizeof...(objects) == 0u) {
 			if (!DialogLayer::init(object, nullptr, static_cast<int>(background)))
 				return false;
