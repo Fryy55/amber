@@ -5,11 +5,11 @@ using namespace geode::prelude;
 
 
 struct Separator::Impl final {
-	cocos2d::CCLayerGradient* leftGradient;
-	cocos2d::CCLayerColor* middle;
-	cocos2d::CCLayerGradient* rightGradient;
+	CCLayerGradient* leftGradient;
+	CCLayerColor* middle;
+	CCLayerGradient* rightGradient;
 	float fadeLength;
-	cocos2d::ccColor3B color;
+	ccColor3B color;
 	GLubyte opacity = 255u;
 };
 

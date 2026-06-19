@@ -10,11 +10,11 @@ static constexpr float s_sideSpriteOffset = 15.f;
 
 struct ScrollBorders::Impl final {
 	ColoredLabel* title;
-	geode::NineSlice* top;
-	geode::NineSlice* bottom;
-	cocos2d::extension::CCScale9Sprite* left;
-	cocos2d::extension::CCScale9Sprite* right;
-	geode::NineSlice* bg = nullptr;
+	NineSlice* top;
+	NineSlice* bottom;
+	CCScale9Sprite* left;
+	CCScale9Sprite* right;
+	NineSlice* bg = nullptr;
 };
 
 ScrollBorders::ScrollBorders() : m_impl(std::make_unique<Impl>()) {}

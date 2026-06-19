@@ -6,16 +6,16 @@ using namespace amber;
 using namespace geode::prelude;
 
 
-static constexpr cocos2d::CCRect s_noLimitRect{ -1.f, -1.f, 0.f, 0.f };
+static constexpr CCRect s_noLimitRect{ -1.f, -1.f, 0.f, 0.f };
 static DraggableButton* s_draggedButton = nullptr;
-static cocos2d::CCTouch* s_lastTouch = nullptr;
+static CCTouch* s_lastTouch = nullptr;
 
 struct DraggableButton::Impl final {
 	DragStartedCallback dragStartedCallback{};
 	DragCallback dragCallback{};
 	ReleaseCallback releaseCallback{};
-	cocos2d::CCRect area;
-	cocos2d::CCPoint lastValidPoint{ 0.f, 0.f };
+	CCRect area;
+	CCPoint lastValidPoint{ 0.f, 0.f };
 	float delay = 0.5f;
 	bool snap = true;
 };

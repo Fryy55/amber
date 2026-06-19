@@ -1,21 +1,30 @@
 #pragma once
 
+#include "../_internal/common.hpp"
+
 #include <Geode/binding/DialogObject.hpp>
 
 
 namespace amber {
 
-namespace internal {
+namespace _internal {
 
 struct HDialogLayer;
 
-} // namespace internal
+} // namespace _internal
 
 
 class TextboxChain;
 
-class TextboxObject final : public DialogObject {
-	friend struct internal::HDialogLayer;
+class AMBER_DLL TextboxObject : public DialogObject {
+	friend struct _internal::HDialogLayer;
+
+	struct Impl;
+	std::unique_ptr<Impl> m_impl;
+
+protected:
+	TextboxObject();
+	~TextboxObject() override;
 
 public:
 	enum class DefaultSprite : std::uint8_t {
@@ -102,7 +111,7 @@ public:
 		cocos2d::CCPoint const& spriteOffset = { 0.f, 0.f }, bool skippable = true
 	);
 
-private:
+protected:
 	bool init(
 		std::string_view name, std::string_view text,
 		cocos2d::CCSprite* sprite,
@@ -125,13 +134,13 @@ public:
 	TextboxObject* setSpriteScaleY(float scaleY);
 	TextboxObject* setSpriteScales(float scaleX, float scaleY);
 
-// Fields
+
+// secret hook getters
 private:
-	ShowCallback m_callback{};
-	geode::Ref<cocos2d::CCSprite> m_sprite;
-	cocos2d::CCPoint m_spriteOffset;
-	float m_spriteScaleX;
-	float m_spriteScaleY;
+	[[nodiscard]] cocos2d::CCSprite* _getSprite() const noexcept;
+	[[nodiscard]] cocos2d::CCPoint const& _getSpriteOffset() const noexcept;
+	[[nodiscard]] std::pair<float, float> _getSpriteScales() const noexcept;
+	[[nodiscard]] ShowCallback& _getShowCallback() noexcept;
 };
 
 } // namespace amber

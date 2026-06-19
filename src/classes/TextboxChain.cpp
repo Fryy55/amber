@@ -31,7 +31,7 @@ void TextboxChain::setTextboxPosition(TextboxPosition position) {
 }
 
 
-namespace amber::internal {
+namespace amber::_internal {
 
 struct HDialogLayer final : Modify<HDialogLayer, DialogLayer> {
 	$override
@@ -59,26 +59,29 @@ struct HDialogLayer final : Modify<HDialogLayer, DialogLayer> {
 		m_characterLabel->removeFromParent();
 		m_characterLabel = label;
 
-		if (auto sprite = obj->m_sprite.data(); !sprite) { // if default sprite
+
+		auto [spriteScaleX, spriteScaleY] = obj->_getSpriteScales();
+
+		if (auto sprite = obj->_getSprite(); !sprite) { // if default sprite
 			m_characterSprite->setPosition(
-				m_characterSprite->getPosition() + obj->m_spriteOffset
+				m_characterSprite->getPosition() + obj->_getSpriteOffset()
 			);
 			m_characterSprite->setScaleX(
-				m_characterSprite->getScaleX() * obj->m_spriteScaleX
+				m_characterSprite->getScaleX() * spriteScaleX
 			);
 			m_characterSprite->setScaleY(
-				m_characterSprite->getScaleY() * obj->m_spriteScaleY
+				m_characterSprite->getScaleY() * spriteScaleY
 			);
 		} else {
 			sprite->setPosition(
-				m_characterSprite->getPosition() + obj->m_spriteOffset
+				m_characterSprite->getPosition() + obj->_getSpriteOffset()
 			);
 			auto scaledCS = m_characterSprite->getScaledContentSize();
 			sprite->setScaleX(
-				scaledCS.width / sprite->getContentWidth() * obj->m_spriteScaleX
+				scaledCS.width / sprite->getContentWidth() * spriteScaleX
 			);
 			sprite->setScaleY(
-				scaledCS.height / sprite->getContentHeight() * obj->m_spriteScaleY
+				scaledCS.height / sprite->getContentHeight() * spriteScaleY
 			);
 			sprite->setID("custom-sprite"_spr);
 
@@ -87,11 +90,11 @@ struct HDialogLayer final : Modify<HDialogLayer, DialogLayer> {
 			m_characterSprite = sprite;
 		}
 
-		if (auto& callback = obj->m_callback)
+		if (auto& callback = obj->_getShowCallback())
 			callback(reinterpret_cast<TextboxChain*>(this));
 
 		return;
 	}
 };
 
-} // namespace amber::internal
+} // namespace amber::_internal

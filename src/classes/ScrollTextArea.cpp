@@ -9,10 +9,10 @@ static constexpr float s_totalScrollLayerOffset = 15.f;
 struct ScrollTextArea::Impl final {
 	std::string font;
 	std::string text;
-	geode::ScrollLayer* scrollLayer;
-	cocos2d::CCMenu* contentMenu;
-	geode::TextRenderer* textRenderer;
-	cocos2d::CCSize size;
+	ScrollLayer* scrollLayer;
+	CCMenu* contentMenu;
+	TextRenderer* textRenderer;
+	CCSize size;
 	float fontScale;
 };
 
@@ -25,10 +25,10 @@ ScrollTextArea::~ScrollTextArea() {
 
 ScrollTextArea* ScrollTextArea::create(
 	std::string_view text,
-	cocos2d::CCSize const& size,
+	CCSize const& size,
 	float fontScale,
 	std::string_view font,
-	cocos2d::ccColor4B const& bgColor
+	ccColor4B const& bgColor
 ) {
 	auto ret = new ScrollTextArea;
 
@@ -43,10 +43,10 @@ ScrollTextArea* ScrollTextArea::create(
 
 bool ScrollTextArea::init(
 	std::string_view text,
-	cocos2d::CCSize const& size,
+	CCSize const& size,
 	float fontScale,
 	std::string_view font,
-	cocos2d::ccColor4B const& bgColor
+	ccColor4B const& bgColor
 ) {
 	if (!CCNode::init())
 		return false;

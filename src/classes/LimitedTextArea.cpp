@@ -6,8 +6,8 @@ using namespace geode::prelude;
 
 struct LimitedTextArea::Impl final {
 	std::string text;
-	geode::NineSlice* bg;
-	cocos2d::CCLabelBMFont* textLabel;
+	NineSlice* bg;
+	CCLabelBMFont* textLabel;
 	std::size_t charLimit;
 };
 
@@ -21,7 +21,7 @@ LimitedTextArea* LimitedTextArea::create(
 	ZStringView text,
 	std::size_t charLimit,
 	ZStringView font,
-	cocos2d::CCPoint const& textOffset,
+	CCPoint const& textOffset,
 	ccColor4B const& bgColor
 ) {
 	auto ret = new LimitedTextArea;
@@ -40,7 +40,7 @@ bool LimitedTextArea::init(
 	ZStringView text,
 	std::size_t charLimit,
 	ZStringView font,
-	cocos2d::CCPoint const& textOffset,
+	CCPoint const& textOffset,
 	ccColor4B const& bgColor
 ) {
 	if (!CCNode::init())
