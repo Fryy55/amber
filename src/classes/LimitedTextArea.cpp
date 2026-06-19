@@ -50,16 +50,14 @@ bool LimitedTextArea::init(
 
 
 
-	auto bg = m_impl->bg;
-	bg = NineSlice::create("square02b_001.png");
+	auto bg = m_impl->bg = NineSlice::create("square02b_001.png");
 	bg->setScale(0.5f);
 	bg->setColor(to3B(bgColor));
 	bg->setOpacity(bgColor.a);
 	bg->setID("background");
 
 
-	auto textLabel = m_impl->textLabel;
-	textLabel = CCLabelBMFont::create("", font.c_str());
+	auto textLabel = m_impl->textLabel = CCLabelBMFont::create("", font.c_str());
 	textLabel->setID("text-label");
 
 

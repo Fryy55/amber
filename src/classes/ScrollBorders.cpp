@@ -65,7 +65,7 @@ bool ScrollBorders::init(CCSize const& size, ZStringView title, ZStringView font
 	m_impl->top->setID("top-sprite");
 	this->addChild(m_impl->top, 10);
 
-	m_impl->bottom = NineSlice::createWithSpriteFrameName("GJ_table_bottom_impl->001.png");
+	m_impl->bottom = NineSlice::createWithSpriteFrameName("GJ_table_bottom_001.png");
 	m_impl->bottom->setID("bottom-sprite");
 	this->addChild(m_impl->bottom, 10);
 
@@ -93,7 +93,7 @@ void ScrollBorders::addBackground(Background background) {
 }
 
 void ScrollBorders::addBackground(ZStringView sprite) {
-	auto bg = m_impl->bg;
+	auto& bg = m_impl->bg;
 	if (bg)
 		bg->removeFromParent();
 

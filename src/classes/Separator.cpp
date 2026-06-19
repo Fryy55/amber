@@ -42,9 +42,9 @@ bool Separator::init(ccColor3B const& color, float fadeLength, float totalLength
 	auto color4B = to4B(color);
 
 
-	auto leftGradient = m_impl->leftGradient;
-	auto middle = m_impl->middle;
-	auto rightGradient = m_impl->rightGradient;
+	auto& leftGradient = m_impl->leftGradient;
+	auto& middle = m_impl->middle;
+	auto& rightGradient = m_impl->rightGradient;
 
 	leftGradient = CCLayerGradient::create(color4B, {}, { -1.f, 0.f });
 	leftGradient->setID("left-gradient");
