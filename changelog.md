@@ -1,3 +1,6 @@
+# 2.0.1
+- Updated `[[nodiscard]]` attribution in `geometry.hpp` docs
+
 # 2.0.0
 - amber is now a _dynamic library_
 - `geode::prelude` behavior moved to `amber::prelude`

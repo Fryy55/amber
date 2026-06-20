@@ -8,12 +8,12 @@ Geometry-related functions, particularly focusing on `cocos2d::CCRect`
 
 # Functions
 ```c++
-cocos2d::CCRect convertBoxToWorldSpace(cocos2d::CCNode* node) noexcept;
+[[nodiscard]] cocos2d::CCRect convertBoxToWorldSpace(cocos2d::CCNode* node) noexcept;
 ```
 Converts `node`'s bounding box to a world-relative `cocos2d::CCRect`
 
 ```c++
-bool rectContains(cocos2d::CCRect const& outer, cocos2d::CCRect const& inner) noexcept;
+[[nodiscard]] bool rectContains(cocos2d::CCRect const& outer, cocos2d::CCRect const& inner) noexcept;
 ```
 Checks if one rectangle contains another
 
