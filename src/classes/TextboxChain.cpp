@@ -44,6 +44,13 @@ struct HDialogLayer final : Modify<HDialogLayer, DialogLayer> {
 
 		log::debug("amber::TextboxObject shown");
 
+		// cleanup from the previous object
+		if (auto label = m_mainLayer->getChildByID("custom-label"_spr))
+			label->removeFromParent();
+		if (auto sprite = m_mainLayer->getChildByID("custom-sprite"_spr))
+			sprite->removeFromParent();
+
+
 		auto obj = static_cast<TextboxObject*>(object);
 
 		auto label = ColoredLabel::create("");
@@ -56,8 +63,7 @@ struct HDialogLayer final : Modify<HDialogLayer, DialogLayer> {
 		label->setID("custom-label"_spr);
 
 		m_mainLayer->addChild(label, m_characterLabel->getZOrder());
-		m_characterLabel->removeFromParent();
-		m_characterLabel = label;
+		m_characterLabel->setVisible(false);
 
 
 		auto [spriteScaleX, spriteScaleY] = obj->_getSpriteScales();
@@ -86,8 +92,7 @@ struct HDialogLayer final : Modify<HDialogLayer, DialogLayer> {
 			sprite->setID("custom-sprite"_spr);
 
 			m_mainLayer->addChild(sprite, m_characterSprite->getZOrder());
-			m_characterSprite->removeFromParent();
-			m_characterSprite = sprite;
+			m_characterSprite->setVisible(false);
 		}
 
 		if (auto& callback = obj->_getShowCallback())

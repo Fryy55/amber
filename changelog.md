@@ -1,4 +1,5 @@
 # 2.0.1
+- Improved compatibility with other mods for `TextboxChain`
 - Updated `[[nodiscard]]` attribution in `geometry.hpp` docs
 
 # 2.0.0

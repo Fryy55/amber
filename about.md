@@ -1,5 +1,5 @@
 # amber
-<c-db91ed>My collection of general purpose classes/utilities for Geode</c>
+<c-db91ed>**My collection of general purpose classes/utilities for Geode**</c>
 
 ### <cl>Note that this mod does <cr>nothing</c> by itself! It is a <co>library</c> that is supposed to be used by other <cc>developers</c> for their mods!</c>
 
