@@ -1,5 +1,6 @@
 # 2.0.1
 - Improved compatibility with other mods for `TextboxChain`
+- `TextboxChain` now uses higher Z-order instead of exactly the highest on the scene
 - Updated `[[nodiscard]]` attribution in `geometry.hpp` docs
 
 # 2.0.0

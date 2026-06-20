@@ -19,7 +19,7 @@ void TextboxChain::show(
 	else
 		this->animateIn(static_cast<DialogAnimationType>(startAnimation));
 
-	OverlayManager::get()->addChild(this, CCScene::get()->getHighestChildZ());
+	OverlayManager::get()->addChild(this, CCScene::get()->getHighestChildZ() + 1);
 
 	return;
 }
