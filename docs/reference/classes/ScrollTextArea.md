@@ -50,7 +50,3 @@ scrollArea->setText(text, false);
 scrollArea->setFont("goldFont.fnt", false);
 scrollArea->setFontScale(2.f); // re-renders
 ```
-
-
-# Notes
-Color tag parsing is the same as it is in [ColoredLabel](ColoredLabel.md)

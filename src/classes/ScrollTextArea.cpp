@@ -1,5 +1,8 @@
 #include "include/classes/ScrollTextArea.hpp"
 
+#include <Geode/ui/ScrollLayer.hpp>
+#include <Geode/ui/NineSlice.hpp>
+
 using namespace amber;
 using namespace geode::prelude;
 
