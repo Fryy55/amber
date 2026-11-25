@@ -1,5 +1,7 @@
 #include "include/classes/TextboxObject.hpp"
 
+#include <Geode/utils/cocos.hpp>
+
 using namespace amber;
 using namespace geode::prelude;
 
@@ -131,9 +133,8 @@ TextboxObject* TextboxObject::setShowCallback(
 }
 
 TextboxObject* TextboxObject::setSkippable(bool skippable) {
-	// robtop :troll:
-	// (tbf this is bindings peoples not calling it correctly smh my head)
-	m_skippable = !skippable;
+	// w bindings gg fixed :tada:
+	m_unskippable = !skippable;
 
 	return this;
 }

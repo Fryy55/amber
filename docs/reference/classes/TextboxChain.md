@@ -44,6 +44,13 @@ amber::TextboxChain::create(
         1.2f, 0.85f, { -7.f, 5.f }, false
     ),
     amber::TextboxObject::create(
+        "A sprite example",
+        "This passes a <cf>raw sprite</c>,<d025> that is then <cg>resized</c> automatically",
+        CCSprite::create("GJ_square01.png")
+    )->setShowCallback([](amber::TextboxChain* chain) static {
+        chain->setTextboxPosition(amber::TextboxChain::TextboxPosition::Bottom);
+    })->setSkippable(false),
+    amber::TextboxObject::create(
         "A sprite frame example",
         "<cl>This text has a delay,<d050> however</c>\n"
         "<cl>nothing stops you from <i150>skipping</i></c>\n"
@@ -51,11 +58,9 @@ amber::TextboxChain::create(
         "GJ_coinsIcon2_001.png"
     )->setSpriteScales(0.5f, 2.f),
     amber::TextboxObject::create(
-        "A sprite example",
-        "This passes a <cf>raw sprite</c>,<d025> that is then <cg>resized</c> automatically",
-        CCSprite::create("GJ_square01.png")
-    )->setShowCallback([](amber::TextboxChain* chain) static {
-        chain->setTextboxPosition(amber::TextboxChain::TextboxPosition::Bottom);
-    })->setSkippable(false)
+        "The most basic default example",
+        "Text with <cg>color tags</c>",
+        amber::TextboxObject::DefaultSprite::RobTop_28
+    )
 )->show(amber::TextboxChain::StartAnimation::FromCenter);
 ```

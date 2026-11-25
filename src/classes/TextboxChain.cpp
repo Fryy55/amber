@@ -1,6 +1,6 @@
 #include "include/classes/TextboxChain.hpp"
 
-#include "include/classes/ColoredLabel.hpp"
+#include <Geode/ui/OverlayManager.hpp>
 
 #include <Geode/modify/DialogLayer.hpp>
 
@@ -53,12 +53,12 @@ struct HDialogLayer final : Modify<HDialogLayer, DialogLayer> {
 
 		auto obj = static_cast<TextboxObject*>(object);
 
-		auto label = ColoredLabel::create("");
+		auto label = Label::create("");
 		auto pos = m_characterLabel->getPosition();
 		label->setPosition(pos.x, pos.y);
 		label->setScale(m_characterLabel->getScale());
-		label->setColor(obj->m_color);
-		label->setText(obj->m_character);
+		label->setColor(obj->m_nameColor);
+		label->setRichText(obj->m_character);
 		label->setAnchorPoint(m_characterLabel->getAnchorPoint());
 		label->setID("custom-label"_spr);
 

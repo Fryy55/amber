@@ -33,7 +33,7 @@ TextboxObject* create(
 ```
 `create` functions. The only difference between them is what you pass - a ready `cocos2d::CCSprite`, a sprite frame name that will be used to create a sprite from a spritesheet or a default sprite from the enum. Default sprites are named like `CharacterExpression_Num`, where `Num` is the number of the sprite in the files (e.g. `ScratchTalking_10`)
 
-The name in the created `amber::TextboxChain` is an `amber::ColoredLabel`, meaning _color tags works just fine with names_. Moreover, the `baseNameColor` parameter defines the _base color_, meaning setting it to green and setting the name to `"Example <cr>colored</c> name"` will color both `Example` and `name` green, while `colored` will be red
+The name in the created `amber::TextboxChain` is a `geode::Label` with rich text, meaning _color tags works just fine with names_. Moreover, the `baseNameColor` parameter defines the _base color_, meaning setting it to green and setting the name to `"Example <cr>colored</c> name"` will color both `Example` and `name` green, while `colored` will be red
 
 By default, all custom sprites are resized to fit the chat box, however you may pass custom scale as `spriteScale` and custom offset as `spriteOffset` to change its default properties
 

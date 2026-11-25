@@ -9,5 +9,6 @@ Following this, classes that internally relied on `ColoredLabel` are switching t
 - `QuickNotification`'s underlying label (following `geode::Notification` changes); keep in mind that it still has rich-text-enabled setters by default!
 - `LimitedTextArea`'s underlying label
 - `ScrollBorders`' underlying label
+- `TextboxChain` and `TextboxObject` underlying name label
 
 `LimitedTextArea` also gets a new parameter as a part of its string setter - `bool rich = false`. Old code might need to explicitly pass `true` to mimic old `ColoredLabel` behavior
