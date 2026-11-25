@@ -76,6 +76,7 @@ bool ScrollTextArea::init(
 
 
 	auto scrollLayer = m_impl->scrollLayer = ScrollLayer::create(m_impl->size);
+	scrollLayer->ignoreAnchorPointForPosition(true);
 
 	auto contentMenu = m_impl->contentMenu = CCMenu::create();
 	contentMenu->setID("scroll-menu");
