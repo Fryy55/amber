@@ -1,5 +1,7 @@
 #include "include/utils/geometry.hpp"
 
+#include <Geode/cocos/base_nodes/CCNode.h>
+
 using namespace geode::prelude;
 
 
