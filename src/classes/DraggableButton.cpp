@@ -300,7 +300,7 @@ void DraggableButton::dragReleased() {
 	s_draggedButton = nullptr;
 
 	if (
-		m_impl->area.equals(s_noLimitRect)
+		m_impl->area == s_noLimitRect
 		&&
 		!utils::rectContains(m_impl->area, utils::convertBoxToWorldSpace(this))
 	) this->setPosition(m_impl->lastValidPoint);

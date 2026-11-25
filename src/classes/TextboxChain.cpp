@@ -53,7 +53,7 @@ struct HDialogLayer final : Modify<HDialogLayer, DialogLayer> {
 
 		auto obj = static_cast<TextboxObject*>(object);
 
-		auto label = Label::create("");
+		auto label = Label::create("", "bigFont.fnt");
 		auto pos = m_characterLabel->getPosition();
 		label->setPosition(pos.x, pos.y);
 		label->setScale(m_characterLabel->getScale());
