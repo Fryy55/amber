@@ -1,6 +1,6 @@
 <!-- omit from toc -->
 # amber v1 to v2 Migration Guide
-amber v2.0.0 introduced a lot of new utilities and classes, but it also _broke_ a lot of existing APIs for the sake of better future experience and due to some breaking changes introduced in Geode v5. This documents aims to be the main migration guide to help ease the transition for your mods, in case you by some miracle were using amber before
+amber v2.0.0 introduced a lot of new utilities and classes, but it also _broke_ a lot of existing APIs for the sake of better future experience and due to some breaking changes introduced in Geode v5. This document aims to be the main migration guide to help ease the transition for your mods, in case you by some miracle were using amber before
 
 
 <!-- omit from toc -->

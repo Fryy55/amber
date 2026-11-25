@@ -3,6 +3,7 @@
 #include "../_internal/common.hpp"
 
 #include <Geode/cocos/base_nodes/CCNode.h>
+#include <Geode/ui/Label.hpp>
 
 
 namespace amber {
@@ -37,8 +38,8 @@ protected:
 
 public:
 	[[nodiscard]] geode::ZStringView getText() const noexcept;
-	void setText(geode::ZStringView text);
-	[[nodiscard]] cocos2d::CCLabelBMFont* getLabel() const noexcept;
+	void setText(geode::ZStringView text, bool rich = false);
+	[[nodiscard]] geode::Label* getLabel() const noexcept;
 
 	void setContentSize(cocos2d::CCSize const& size) override;
 

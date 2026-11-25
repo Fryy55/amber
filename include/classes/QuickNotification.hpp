@@ -1,30 +1,28 @@
 /*
 	vendored and modified from https://github.com/geode-sdk/geode/blob/main/loader/include/Geode/ui/Notification.hpp
-	1376878
+	3987441
 
 	list of changes:
 	replace `namespace geode` with `namespace amber`
-	remove `GEODE_DLL`
+	replace `GEODE_DLL` with `AMBER_DLL` and include internal
 	remove doxygen
 	replace `Notification` with `QuickNotification`
 	remove `NotificationIcon` enum
+	include Geode/ui/Notification.hpp for the enum
 	put constexpr globals as static members (including globals from `Notification.cpp`)
 	adjust namespace indent
 	make the dtor `override`
 	add `geode::` qualification wherever needed
-	include `ColoredLabel` and replace `CCLabelBMFont` with it in the getter
 	remove `showNextNotification`
 */
 #pragma once
 
 #include "../_internal/common.hpp"
 
-#include "ColoredLabel.hpp"
-
-#include <cocos2d.h>
-#include <cocos-ext.h>
 #include <Geode/binding/TextAlertPopup.hpp>
 #include <Geode/ui/NineSlice.hpp>
+#include <Geode/ui/Label.hpp>
+#include <Geode/ui/Notification.hpp>
 
 namespace amber {
 
@@ -43,7 +41,7 @@ protected:
 	void waitThenHide();
 
 	geode::NineSlice* getBG();
-	ColoredLabel* getLabel();
+	geode::Label* getLabel();
 	cocos2d::CCNodeRGBA* getContent();
 
 public:
@@ -52,7 +50,6 @@ public:
 		geode::NotificationIcon icon = geode::NotificationIcon::None,
 		float time = NOTIFICATION_DEFAULT_TIME
 	);
-
 	static QuickNotification* create(
 		geode::ZStringView text,
 		cocos2d::CCNode* icon,
@@ -74,8 +71,7 @@ public:
 
 	void cancel();
 
-// Fields
-public:
+public: // Fields
 	static constexpr float NOTIFICATION_DEFAULT_TIME = 1.8f;
 	static constexpr float NOTIFICATION_LONG_TIME = 4.f;
 	static constexpr float NOTIFICATION_FADEIN = .3f;

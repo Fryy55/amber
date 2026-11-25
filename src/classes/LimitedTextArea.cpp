@@ -1,5 +1,7 @@
 #include "include/classes/LimitedTextArea.hpp"
 
+#include <Geode/ui/NineSlice.hpp>
+
 using namespace amber;
 using namespace geode::prelude;
 
@@ -7,7 +9,7 @@ using namespace geode::prelude;
 struct LimitedTextArea::Impl final {
 	std::string text;
 	NineSlice* bg;
-	CCLabelBMFont* textLabel;
+	Label* textLabel;
 	std::size_t charLimit;
 };
 
@@ -57,7 +59,7 @@ bool LimitedTextArea::init(
 	bg->setID("background");
 
 
-	auto textLabel = m_impl->textLabel = CCLabelBMFont::create("", font.c_str());
+	auto textLabel = m_impl->textLabel = Label::create("", font);
 	textLabel->setID("text-label");
 
 
@@ -73,15 +75,16 @@ ZStringView LimitedTextArea::getText() const noexcept {
 	return m_impl->text;
 }
 
-void LimitedTextArea::setText(ZStringView text) {
+void LimitedTextArea::setText(ZStringView text, bool rich) {
 	m_impl->text = text;
 
+	auto func = rich ? &Label::setRichText : &Label::setText;
 	if (text.size() > m_impl->charLimit) {
-		m_impl->textLabel->setString(
+		(m_impl->textLabel->*func)(
 			fmt::format("{}...", text.view().substr(0, m_impl->charLimit)).c_str()
 		);
 	} else {
-		m_impl->textLabel->setString(text.c_str());
+		(m_impl->textLabel->*func)(text);
 	}
 
 	this->updateLabelWidth();
@@ -89,7 +92,7 @@ void LimitedTextArea::setText(ZStringView text) {
 	return;
 }
 
-CCLabelBMFont* LimitedTextArea::getLabel() const noexcept {
+Label* LimitedTextArea::getLabel() const noexcept {
 	return m_impl->textLabel;
 }
 
@@ -103,7 +106,7 @@ void LimitedTextArea::setContentSize(CCSize const& size) {
 }
 
 void LimitedTextArea::updateLabelWidth() {
-	m_impl->textLabel->limitLabelWidth(this->getContentWidth() - 4.f, 1.f, 0.1f);
+	m_impl->textLabel->setLimitLabelWidth(this->getContentWidth() - 4.f, 1.f, 0.1f);
 
 	return;
 }

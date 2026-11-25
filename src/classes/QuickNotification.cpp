@@ -1,16 +1,14 @@
 /*
 	vendored and modified from https://github.com/geode-sdk/geode/blob/main/loader/src/ui/nodes/Notification.cpp
-	a90d204
+	3987441
 
 	list of changes:
 	remove `showNextNotification`
 	replace `Notification` with `QuickNotification`
-	replace #include for `Notification` to `QuickNotification`
+	replace #include for `Notification` with `QuickNotification`
 	add `using namespace amber;`
 	remove constexpr globals as they are defined in `QuickNotification.hpp`
-	replace `CCLabelBMFont` with `ColoredLabel` in:
-		`Impl`
-		all broken definitions
+	replace calls to the label to use rich text by default
 	update the string setter to use `ColoredLabel::setText`
 	remove all mentions of `s_queue` and `showNextNotification`, adjust code logically
 	replace "info-alert.png"_spr with "geode.loader/info-alert.png", silence the warning
@@ -19,8 +17,10 @@
 #include "include/classes/QuickNotification.hpp"
 
 #include <Geode/loader/Mod.hpp>
+#include <Geode/ui/Label.hpp>
 #include <Geode/ui/LoadingSpinner.hpp>
 #include <Geode/ui/OverlayManager.hpp>
+#include <Geode/cocos/actions/CCActionEase.h>
 
 using namespace amber;
 using namespace geode::prelude;
@@ -29,7 +29,7 @@ using namespace geode::prelude;
 class QuickNotification::Impl final {
 public:
 	NineSlice* bg;
-	ColoredLabel* label;
+	Label* label;
 	CCNodeRGBA* content;
 	CCNode* icon = nullptr;
 	float time;
@@ -65,7 +65,7 @@ bool QuickNotification::init(ZStringView text, CCNode* icon, float time) {
 		m_impl->content->addChild(icon);
 	}
 
-	m_impl->label = ColoredLabel::create(text);
+	m_impl->label = Label::createRich(text, "bigFont.fnt");
 	m_impl->label->setScale(.6f);
 	m_impl->content->addChild(m_impl->label);
 
@@ -132,7 +132,7 @@ QuickNotification* QuickNotification::create(ZStringView text, CCNode* icon, flo
 }
 
 void QuickNotification::setString(ZStringView text) {
-	m_impl->label->setText(text);
+	m_impl->label->setRichText(text);
 	this->updateLayout();
 }
 
@@ -171,7 +171,7 @@ NineSlice* QuickNotification::getBG() {
 	return m_impl->bg;
 }
 
-ColoredLabel* QuickNotification::getLabel() {
+Label* QuickNotification::getLabel() {
 	return m_impl->label;
 }
 

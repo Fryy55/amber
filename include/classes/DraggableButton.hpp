@@ -3,6 +3,7 @@
 #include "../_internal/common.hpp"
 
 #include <Geode/ui/Button.hpp>
+#include <Geode/cocos/sprite_nodes/CCSprite.h>
 
 
 namespace amber {

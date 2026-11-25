@@ -9,7 +9,6 @@ See [README.md](https://github.com/Fryy55/amber/blob/main/README.md) for a more 
 - <cb>Actions</c>
     - `ContentTo`
 - <cg>General classes</c>
-    - `ColoredLabel`
     - `DraggableButton`
     - `LimitedTextArea`
     - `QuickNotification`

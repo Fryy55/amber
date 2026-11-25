@@ -7,9 +7,7 @@ Notifications that can be spammed; more visually appealing notifications
 
 
 # Key Methods
-Same API as `geode::Notification`, except strings support color tags (e.g. `"<cr>Error!</c>"`). Color tags specifics are exactly the same as in [ColoredLabel](ColoredLabel.md), as it is used internally
-
-`void setString(geode::ZStringView)` works with color tags as expected
+Same API as `geode::Notification`, except by default it sets _rich text_ for the underlying `geode::Label` on creation/`void setString(geode::ZStringView)`, which is mainly useful for color tags (e.g. `"<cr>Error!</c>"`)
 
 
 # Usage

@@ -1,5 +1,6 @@
 # 3.0.0
-
+- Removed `ColoredLabel` in favor of `geode::Label`
+    - 
 
 # 2.0.1
 - Improved compatibility with other mods for `TextboxChain`
