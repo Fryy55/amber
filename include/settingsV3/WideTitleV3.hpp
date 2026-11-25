@@ -8,6 +8,8 @@
 namespace amber::settingsV3 {
 
 class AMBER_DLL WideTitleV3 : public geode::SettingV3 {
+	friend class WideTitleNodeV3;
+
 	struct Impl;
 	std::unique_ptr<Impl> m_impl;
 
@@ -42,10 +44,10 @@ protected:
 	~WideTitleNodeV3() override;
 
 public:
-	static WideTitleNodeV3* create(std::shared_ptr<WideTitleV3> const&, float, float, char const*);
+	static WideTitleNodeV3* create(std::shared_ptr<WideTitleV3> const&, float);
 
 protected:
-	bool init(std::shared_ptr<WideTitleV3> const&, float, float, char const*);
+	bool init(std::shared_ptr<WideTitleV3> const&, float);
 
 	void updateState(cocos2d::CCNode*) override;
 

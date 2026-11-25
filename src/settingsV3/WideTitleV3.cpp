@@ -11,7 +11,8 @@ using namespace geode::prelude;
 //* Setting
 struct WideTitleV3::Impl final {
 	std::string font{ "goldFont.fnt" };
-	float padding = 10.f;
+	float padding = 15.f;
+	float offset = 0.f;
 };
 
 WideTitleV3::WideTitleV3() : m_impl(std::make_unique<Impl>()) {}
@@ -32,17 +33,13 @@ Result<std::shared_ptr<SettingV3>> WideTitleV3::parse(
 	ret->parseEnableIf(root);
 	root.has("padding").into(ret->m_impl->padding);
 	root.has("font").into(ret->m_impl->font);
+	root.has("offset").into(ret->m_impl->offset);
 
 	return root.ok(std::static_pointer_cast<SettingV3>(ret));
 }
 
 SettingNodeV3* WideTitleV3::createNode(float width) {
-	return WideTitleNodeV3::create(
-		std::static_pointer_cast<WideTitleV3>(shared_from_this()),
-		width,
-		m_impl->padding,
-		m_impl->font.c_str()
-	);
+	return WideTitleNodeV3::create(std::static_pointer_cast<WideTitleV3>(shared_from_this()), width);
 }
 
 
@@ -59,15 +56,10 @@ WideTitleNodeV3::WideTitleNodeV3() : m_impl(std::make_unique<Impl>()) {}
 
 WideTitleNodeV3::~WideTitleNodeV3() = default;
 
-WideTitleNodeV3* WideTitleNodeV3::create(
-	std::shared_ptr<WideTitleV3> const& setting,
-	float width,
-	float padding,
-	char const* font
-) {
+WideTitleNodeV3* WideTitleNodeV3::create(std::shared_ptr<WideTitleV3> const& setting, float width) {
 	auto ret = new WideTitleNodeV3;
 
-	if (ret->init(setting, width, padding, font)) {
+	if (ret->init(setting, width)) {
 		ret->autorelease();
 		return ret;
 	}
@@ -76,28 +68,25 @@ WideTitleNodeV3* WideTitleNodeV3::create(
 	return nullptr;
 }
 
-bool WideTitleNodeV3::init(
-	std::shared_ptr<WideTitleV3> const& setting,
-	float width,
-	float padding,
-	char const* font
-) {
+bool WideTitleNodeV3::init(std::shared_ptr<WideTitleV3> const& setting, float width) {
 	if (!SettingNodeV3::init(setting, width))
 		return false;
+
+	auto padding = setting->m_impl->padding;
 
 	auto menu = this->getButtonMenu();
 	this->getNameLabel()->setVisible(false);
 
 	float menuCW = this->getContentWidth() - padding * 2.f;
 
-	auto label = m_impl->label = Label::createRich(this->getSetting()->getDisplayName(), font);
+	auto label = m_impl->label = Label::createRich(setting->getDisplayName(), setting->m_impl->font);
 	label->setLimitLabelWidth(menuCW, 5.f, 0.1f);
 
 	menu->setPositionX(padding);
 	menu->setAnchorPoint({ 0.f, 0.5f });
 	menu->setContentWidth(menuCW);
 
-	menu->addChildAtPosition(label, Anchor::Center);
+	menu->addChildAtPosition(label, Anchor::Center, { 0.f, setting->m_impl->offset });
 
 	if (auto descBtn = this->getDescriptionButton()) {
 		descBtn->removeFromParent();

@@ -15,9 +15,11 @@ Attention-grabbing labels in settings
 `"enable-if"` - makes the title look grayed-out and shows an enable hint if false
 
 ## Custom
-`"font"` (string) - sets the font of the label
+`"font"` (string) - sets the font of the label (default `"goldFont.fnt"`)
 
-`"padding"` (float) - adds padding to the sides of the label
+`"padding"` (float) - adds padding to the sides of the label (default `15.0`)
+
+`"offset"` (float) - adds vertical offset to the label (default `0.0`)
 
 
 # Usage
@@ -28,6 +30,7 @@ Attention-grabbing labels in settings
     "description": "Example <cj>description</c>",
     "font": "bigFont.fnt",
     "padding": 100.0,
+    "offset": 2.0,
     "enable-if": "example-toggle",
     "enable-if-description": "\"Enable if\" desc"
 }

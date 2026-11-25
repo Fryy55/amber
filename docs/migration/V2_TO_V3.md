@@ -19,4 +19,7 @@ Just like with most API mods in Geode v6, amber include paths change from `<fryy
 ### `LimitedTextArea`
 `LimitedTextArea` gets a new parameter as a part of its `create` function - `bool rich = false`, which enables/disables color tag parsing. Old code might need to rearrange parameters to compile and, possibly, explicitly pass `true` to mimic old `ColoredLabel` behavior
 
+### `WideTitleV3`
+`WideTitleV3`'s padding now defaults to `15.0` instead of `10.0`. The setting itself also got a new key (`"offset"`) which defaults to `0.0` and dictates vertical offset of the label (see [WideTitleV3.md](../reference/settingsV3/WideTitleV3.md))
+
 That's it, go enjoy this small but meaningful update!
