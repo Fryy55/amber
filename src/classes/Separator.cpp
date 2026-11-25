@@ -1,5 +1,7 @@
 #include "include/classes/Separator.hpp"
 
+#include <Geode/utils/cocos.hpp>
+
 using namespace amber;
 using namespace geode::prelude;
 
