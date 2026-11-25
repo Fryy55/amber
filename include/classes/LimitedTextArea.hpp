@@ -40,7 +40,7 @@ protected:
 
 public:
 	[[nodiscard]] geode::ZStringView getText() const noexcept;
-	void setText(geode::ZStringView text, bool rich = false);
+	void setText(geode::ZStringView text);
 	[[nodiscard]] geode::Label* getLabel() const noexcept;
 
 	void setContentSize(cocos2d::CCSize const& size) override;

@@ -62,13 +62,14 @@ bool LimitedTextArea::init(
 
 
 	auto textLabel = m_impl->textLabel = Label::create("", font);
+	textLabel->setRichTextEnabled(rich);
 	textLabel->setID("text-label");
 
 
 	this->setContentSize(size);
 	this->addChildAtPosition(bg, Anchor::Center);
 	this->addChildAtPosition(textLabel, Anchor::Center, textOffset);
-	this->setText(text, rich);
+	this->setText(text);
 
 	return true;
 }
@@ -77,16 +78,15 @@ ZStringView LimitedTextArea::getText() const noexcept {
 	return m_impl->text;
 }
 
-void LimitedTextArea::setText(ZStringView text, bool rich) {
+void LimitedTextArea::setText(ZStringView text) {
 	m_impl->text = text;
 
-	auto func = rich ? &Label::setRichText : &Label::setText;
 	if (text.size() > m_impl->charLimit) {
-		(m_impl->textLabel->*func)(
+		m_impl->textLabel->setText(
 			fmt::format("{}...", text.view().substr(0, m_impl->charLimit)).c_str()
 		);
 	} else {
-		(m_impl->textLabel->*func)(text);
+		m_impl->textLabel->setText(text);
 	}
 
 	this->updateLabelWidth();

@@ -6,7 +6,7 @@
         - `ScrollBorders`
         - `TextboxChain`/`TextboxObject`
         - `WideTitleV3`
-- Added rich text bool parameters to `LimitedTextArea`
+- Added rich text bool parameter to `LimitedTextArea`
 - Changed include paths from `<fryy_55.amber/include/...>` to `<fryy_55.amber/...>`
 
 For a more detailed changelog and migration guide see [V2_TO_V3.md](https://github.com/Fryy55/amber/blob/main/docs/migration/V2_TO_V3.md)

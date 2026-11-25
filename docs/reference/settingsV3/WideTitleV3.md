@@ -8,7 +8,7 @@ Attention-grabbing labels in settings
 
 # Key Fields
 ## Default
-`"name"` - the actual string displayed as a title. [Supports color tags](../classes/ColoredLabel.md)
+`"name"` - the actual string displayed as a title. Supports color tags
 
 `"description"` - creates a description button (like on most settings)
 

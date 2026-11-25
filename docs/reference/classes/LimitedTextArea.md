@@ -19,14 +19,14 @@ LimitedTextArea* create(
     cocos2d::ccColor4B const& bgColor = { 0u, 0u, 0u, 90u }
 );
 ```
-`create` function
+`create` function. `bool rich` toggles color tags parsing
 
 ## Member
 ```c++
 [[nodiscard]] geode::ZStringView getText() const noexcept;
-void setText(geode::ZStringView text, bool rich = false);
+void setText(geode::ZStringView text);
 ```
-Getters/setters for the displayed string. String received via the getter is **not** truncated - it's the exact string passed via `create`/`setText`. The display string is automatically truncated after calling `setText`. `bool rich` toggles rich text support, like color tags parsing
+Getters/setters for the displayed string. String received via the getter is **not** truncated - it's the exact string passed via `create`/`setText`. The display string is automatically truncated after calling `setText`
 
 ```c++
 [[nodiscard]] geode::Label* getLabel() const noexcept;

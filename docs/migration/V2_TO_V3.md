@@ -17,6 +17,6 @@ Following this, classes that internally relied on `ColoredLabel` are switching t
 Just like with most API mods in Geode v6, amber include paths change from `<fryy_55.amber/include/**/*.hpp>` to `<fryy_55.amber/**/*.hpp`, dropping `include`. Thus, to use `LimitedTextArea`, for example, in amber v3 you need to include `<fryy_55.amber/classes/LimitedTextArea.hpp>`. General header structure remains the same
 
 ### `LimitedTextArea`
-`LimitedTextArea` gets a new parameter as a part of its `create` function and its string setter - `bool rich = false`. Old code might need to explicitly pass `true` to mimic old `ColoredLabel` behavior and/or rearrange parameters to compile
+`LimitedTextArea` gets a new parameter as a part of its `create` function - `bool rich = false`, which enables/disables color tag parsing. Old code might need to rearrange parameters to compile and, possibly, explicitly pass `true` to mimic old `ColoredLabel` behavior
 
 That's it, go enjoy this small but meaningful update!

@@ -9,7 +9,6 @@
 	add `using namespace amber;`
 	remove constexpr globals as they are defined in `QuickNotification.hpp`
 	replace calls to the label to use rich text by default
-	update the string setter to use `ColoredLabel::setText`
 	remove all mentions of `s_queue` and `showNextNotification`, adjust code logically
 	replace "info-alert.png"_spr with "geode.loader/info-alert.png", silence the warning
 	add `CCRemoveSelf` before `nullptr` in `hide`
