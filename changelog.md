@@ -1,6 +1,15 @@
 # 3.0.0
 - Removed `ColoredLabel` in favor of `geode::Label`
-    - 
+    - This affects behavior/getter return types of the following classes:
+        - `QuickNotification`
+        - `LimitedTextArea`
+        - `ScrollBorders`
+        - `TextboxChain`/`TextboxObject`
+        - `WideTitleV3`
+- Added a rich text bool parameter to `LimitedTextArea::setText`
+- Changed include paths from `<fryy_55.amber/include/...>` to `<fryy_55.amber/...>`
+
+For a more detailed changelog and migration guide see [V2_TO_V3.md](https://github.com/Fryy55/amber/blob/main/docs/migration/V2_TO_V3.md)
 
 # 2.0.1
 - Improved compatibility with other mods for `TextboxChain`
