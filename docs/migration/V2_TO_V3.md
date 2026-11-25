@@ -10,5 +10,6 @@ Following this, classes that internally relied on `ColoredLabel` are switching t
 - `LimitedTextArea`'s underlying label
 - `ScrollBorders`' underlying label
 - `TextboxChain` and `TextboxObject` underlying name label
+- `WideTitleV3` underlying label
 
 `LimitedTextArea` also gets a new parameter as a part of its string setter - `bool rich = false`. Old code might need to explicitly pass `true` to mimic old `ColoredLabel` behavior

@@ -1,6 +1,8 @@
 #include "include/settingsV3/WideTitleV3.hpp"
 
-#include "../../include/classes/ColoredLabel.hpp"
+#include <Geode/ui/NineSlice.hpp>
+#include <Geode/loader/ModEvent.hpp>
+#include <Geode/loader/Mod.hpp>
 
 using namespace amber::settingsV3;
 using namespace geode::prelude;
@@ -49,8 +51,8 @@ SettingNodeV3* WideTitleV3::createNode(float width) {
 static constexpr float s_statusBGPaddingWidth = 10.f;
 
 struct WideTitleNodeV3::Impl final {
-	amber::ColoredLabel* label;
-	geode::NineSlice* statusBG;
+	Label* label;
+	NineSlice* statusBG;
 };
 
 WideTitleNodeV3::WideTitleNodeV3() : m_impl(std::make_unique<Impl>()) {}
@@ -88,8 +90,8 @@ bool WideTitleNodeV3::init(
 
 	float menuCW = this->getContentWidth() - padding * 2.f;
 
-	auto label = m_impl->label = ColoredLabel::create(this->getSetting()->getDisplayName(), font);
-	label->limitLabelWidth(menuCW, 5.f, 0.1f);
+	auto label = m_impl->label = Label::createRich(this->getSetting()->getDisplayName(), font);
+	label->setLimitLabelWidth(menuCW, 5.f, 0.1f);
 
 	menu->setPositionX(padding);
 	menu->setAnchorPoint({ 0.f, 0.5f });
