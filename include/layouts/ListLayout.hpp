@@ -2,6 +2,7 @@
 
 #include "../_internal/common.hpp"
 
+#include <Geode/cocos/base_nodes/CCNode.h> //! temporary fix for layout include
 #include <Geode/ui/Layout.hpp>
 
 
