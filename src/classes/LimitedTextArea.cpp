@@ -22,13 +22,14 @@ LimitedTextArea* LimitedTextArea::create(
 	CCSize const& size,
 	ZStringView text,
 	std::size_t charLimit,
+	bool rich,
 	ZStringView font,
 	CCPoint const& textOffset,
 	ccColor4B const& bgColor
 ) {
 	auto ret = new LimitedTextArea;
 
-	if (ret->init(size, text, charLimit, font, textOffset, bgColor)) {
+	if (ret->init(size, text, charLimit, rich, font, textOffset, bgColor)) {
 		ret->autorelease();
 		return ret;
 	}
@@ -41,6 +42,7 @@ bool LimitedTextArea::init(
 	CCSize const& size,
 	ZStringView text,
 	std::size_t charLimit,
+	bool rich,
 	ZStringView font,
 	CCPoint const& textOffset,
 	ccColor4B const& bgColor
@@ -66,7 +68,7 @@ bool LimitedTextArea::init(
 	this->setContentSize(size);
 	this->addChildAtPosition(bg, Anchor::Center);
 	this->addChildAtPosition(textLabel, Anchor::Center, textOffset);
-	this->setText(text);
+	this->setText(text, rich);
 
 	return true;
 }

@@ -13,6 +13,7 @@ LimitedTextArea* create(
     cocos2d::CCSize const& size,
     geode::ZStringView text,
     std::size_t charLimit = 16z,
+    bool rich = false,
     geode::ZStringView font = "bigFont.fnt",
     cocos2d::CCPoint const& textOffset = { 0.f, 2.f },
     cocos2d::ccColor4B const& bgColor = { 0u, 0u, 0u, 90u }
@@ -45,3 +46,7 @@ node->addChildAtPosition(area, Anchor::Center);
 // in some function
 area->setText(base64Data);
 ```
+
+
+# Notes
+Color tags _count towards data to display_ and _may get truncated_, so if you're using them with this class, calculate your preferred character limits accordingly
