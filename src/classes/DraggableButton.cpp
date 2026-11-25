@@ -290,8 +290,8 @@ void DraggableButton::ccTouchEnded(CCTouch* touch, CCEvent* event) {
 void DraggableButton::ccTouchCancelled(CCTouch* touch, CCEvent* event) {
 	Button::ccTouchCancelled(touch, event);
 
-	if (auto btn = s_draggedButton)
-		btn->dragReleased();
+	if (s_draggedButton)
+		s_draggedButton->dragReleased();
 
 	return;
 }
@@ -300,7 +300,7 @@ void DraggableButton::dragReleased() {
 	s_draggedButton = nullptr;
 
 	if (
-		m_impl->area == s_noLimitRect
+		m_impl->area != s_noLimitRect
 		&&
 		!utils::rectContains(m_impl->area, utils::convertBoxToWorldSpace(this))
 	) this->setPosition(m_impl->lastValidPoint);
