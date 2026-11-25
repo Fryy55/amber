@@ -29,15 +29,15 @@ Add amber as a dependency in your `mod.json`
 ```json
 "dependencies": {
     "fryy_55.amber": {
-        "version": ">=2.0.0",
+        "version": ">=3.0.0",
         "required": true
     }
 }
 ```
 
-After that simply include headers (e.g. `#include <fryy_55.amber/include/classes/QuickNotification.hpp>`) and use them in your mods!
+After that simply include headers (e.g. `#include <fryy_55.amber/classes/QuickNotification.hpp>`) and use them in your mods!
 
-There is also a general "include everything" header (`<fryy_55.amber/include/amber.hpp>`), as well as grouped headers (e.g. `<fryy_55.amber/include/classes/classes.hpp>`)
+There is also a general "include everything" header (`<fryy_55.amber/amber.hpp>`), as well as grouped headers (e.g. `<fryy_55.amber/classes/classes.hpp>`)
 
 > [!TIP]
 > If you want to bring all amber entities to the global namespace you can use a `using namespace amber::prelude;` directive
