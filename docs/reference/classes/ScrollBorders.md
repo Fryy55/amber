@@ -30,7 +30,7 @@ Functions to add a background to the borders. You can select from default backgr
 void setTitle(geode::ZStringView title);
 void setString(geode::ZStringView title);
 ```
-Title setters. Since `amber::ColoredLabel` is used for title, `setTitle` _parses color tags_, while `setString` just sets the raw string as title
+Title setters. Since `geode::Label` is used for title, `setTitle` _parses color tags and rich text_, while `setString` just sets the raw string as title
 
 
 # Usage

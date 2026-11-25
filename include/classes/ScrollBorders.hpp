@@ -3,6 +3,7 @@
 #include "../_internal/common.hpp"
 
 #include <Geode/cocos/base_nodes/CCNode.h>
+#include <Geode/ui/ScrollLayer.hpp>
 
 
 namespace amber {

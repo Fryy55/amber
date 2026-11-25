@@ -1,6 +1,7 @@
 #include "include/classes/ScrollBorders.hpp"
 
-#include "../../include/classes/ColoredLabel.hpp"
+#include <Geode/ui/GeodeUI.hpp>
+#include <Geode/cocos/extensions/GUI/CCControlExtension/CCScale9Sprite.h>
 
 using namespace amber;
 using namespace geode::prelude;
@@ -9,7 +10,7 @@ using namespace geode::prelude;
 static constexpr float s_sideSpriteOffset = 15.f;
 
 struct ScrollBorders::Impl final {
-	ColoredLabel* title;
+	Label* title;
 	NineSlice* top;
 	NineSlice* bottom;
 	CCScale9Sprite* left;
@@ -57,7 +58,7 @@ bool ScrollBorders::init(CCSize const& size, ZStringView title, ZStringView font
 	if (!CCNode::init())
 		return false;
 
-	m_impl->title = ColoredLabel::create(title, font);
+	m_impl->title = Label::createRich(title, font);
 	m_impl->title->setID("title");
 	this->addChild(m_impl->title, 11);
 
@@ -116,7 +117,7 @@ void ScrollBorders::positionBG() {
 }
 
 void ScrollBorders::setTitle(ZStringView title) {
-	m_impl->title->setText(title);
+	m_impl->title->setRichText(title);
 
 	return;
 }
@@ -131,7 +132,7 @@ void ScrollBorders::setContentSize(CCSize const& size) {
 	CCNode::setContentSize(size + CCSize(0.f, 40.f));
 
 	m_impl->title->setPosition(size.width / 2.f, size.height + 27.f);
-	m_impl->title->limitLabelWidth(size.width - 70.f, 0.95f, 0.1f);
+	m_impl->title->setLimitLabelWidth(size.width - 70.f, 0.95f, 0.1f);
 
 	m_impl->top->setPosition(size.width / 2.f, size.height + 19.f);
 	m_impl->top->setContentWidth(size.width);
